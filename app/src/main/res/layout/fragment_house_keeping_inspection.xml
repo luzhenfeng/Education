@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.frame.HouseKeepingInspectionFragment"
+    android:paddingTop="22px">
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_EBEBEB" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_check_title"
+            android:layout_width="328px"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingLeft="60px"
+            android:paddingRight="60px">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:layout_marginTop="10px"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="39px"
+                    android:src="@drawable/inspect7"
+                    android:layout_marginRight="20px">
+
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="46px"
+                    android:text="地面及卫生工具(11项)">
+
+                </TextView>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_EBEBEB">
+
+            </View>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_check_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10px">
+
+            </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="39px"
+                    android:src="@drawable/inspect7"
+                    android:layout_marginRight="20px">
+
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="46px"
+                    android:text="床上(11项)">
+
+                </TextView>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_EBEBEB">
+
+            </View>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="28px"
+                android:paddingBottom="28px"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="57px"
+                    android:layout_height="57px"
+                    android:background="@drawable/bg_oval_6bb978"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="39px"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginRight="20px">
+
+                </TextView>
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_919191"
+                    android:textSize="38px"
+                    android:text="床上有杂物">
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/iv_bed_1"
+                    android:layout_width="55px"
+                    android:layout_height="37px"
+                    android:src="@drawable/inspect7">
+
+                </ImageView>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="43px">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="床号:"
+                    android:textSize="36px"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_6BB978"
+                    android:layout_marginRight="24px">
+
+                </TextView>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed1"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#1"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed2"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#2"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed3"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#3"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed4"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#4"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed5"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#5"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed6"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#6"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed7"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#7"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed8"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#8"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed9"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#9"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tv_bed10"
+                        android:layout_width="88px"
+                        android:layout_height="50px"
+                        android:textColor="@drawable/select_text_bed"
+                        android:background="@drawable/select_bg_bed"
+                        android:text="#10"
+                        android:textSize="36px"
+                        android:gravity="center">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_EBEBEB">
+
+            </View>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="120px"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="57px"
+                    android:layout_height="57px"
+                    android:background="@drawable/bg_oval_6bb978"
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:textSize="39px"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginRight="20px">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_919191"
+                    android:textSize="38px"
+                    android:text="卫生角旁边发现垃圾">
+
+                </TextView>
+                <RelativeLayout
+                    android:layout_width="88px"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/et_rubbish_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="@color/color_919191"
+                        android:textSize="38px">
+
+                    </EditText>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/color_919191"
+                    android:textSize="38px"
+                    android:text="个。">
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/iv_bed_2"
+                    android:layout_width="55px"
+                    android:layout_height="37px"
+                    android:src="@drawable/inspect7">
+
+                </ImageView>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_EBEBEB"
+                android:layout_marginBottom="10px">
+
+            </View>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="150px"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="34px"
+                    android:layout_height="39px"
+                    android:src="@drawable/inspect7"
+                    android:layout_marginRight="20px">
+
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="46px"
+                    android:text="自定义(1项)">
+
+                </TextView>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_EBEBEB">
+
+            </View>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="130px"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="57px"
+                    android:layout_height="57px"
+                    android:background="@drawable/bg_oval_6bb978"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="39px"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginRight="20px">
+
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_custom"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color_919191"
+                    android:textSize="38px"
+                    android:background="@android:color/transparent"
+                    android:hint="请输入自定义内容">
+
+                </EditText>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_C78E29"
+                    android:textSize="38px"
+                    android:textStyle="bold"
+                    android:text="扣分"
+                    android:layout_marginRight="28px">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tv_deduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="38px"
+                    android:textColor="@color/color_919191"
+                    android:text="0"
+                    android:layout_marginRight="100px">
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/iv_custom"
+                    android:layout_width="55px"
+                    android:layout_height="37px"
+                    android:src="@drawable/inspect7">
+
+                </ImageView>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <!--常用-->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="color_6BB978">#6BB978</color>
+    <color name="color_aaaaaa">#aaaaaa</color>
+    <color name="color_F5F5F5">#F5F5F5</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_a6a6a6">#a6a6a6</color>
+    <color name="color_919191">#919191</color>
+    <color name="color_EBEBEB">#EBEBEB</color>
+    <color name="color_ff6060">#ff6060</color>
+    <color name="color_F3F3F3">#F3F3F3</color>
+    <color name="color_C78E29">#C78E29</color>
+</resources>
