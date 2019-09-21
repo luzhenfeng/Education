@@ -54,6 +54,12 @@ public class CheckActivity extends BaseActivity {
     @Override
     protected void initView() {
         mMyActionBar.setName("常规检查");
+        mMyActionBar.setOnClickBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mTvFloor.setText("1号楼 101");
         mTvTime.setText(DateUtil.getCurrentTime());
         mTvFraction.setText("已扣8分");
