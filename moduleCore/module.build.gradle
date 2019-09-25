@@ -32,7 +32,7 @@ android {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 resources {
                     //正式版本时，排除alone文件夹下所有调试文件
-                    exclude 'src/main/alone/*'
+                    exclude 'src/main/manifest/*'
                 }
             }
         }

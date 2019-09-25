@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nhsoft.pxview.constant.Constant;
+import com.nhsoft.pxview.utils.RelayoutViewTool;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.lang.reflect.ParameterizedType;
@@ -48,8 +50,11 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
+        RelayoutViewTool.relayoutViewWithScale(binding.getRoot(), Constant.mScreenWidthScale);
         return binding.getRoot();
     }
+
+
 
     @Override
     public void onDestroyView() {

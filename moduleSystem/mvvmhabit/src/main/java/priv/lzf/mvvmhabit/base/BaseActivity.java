@@ -9,8 +9,11 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nhsoft.pxview.constant.Constant;
+import com.nhsoft.pxview.utils.RelayoutViewTool;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.ParameterizedType;
@@ -61,6 +64,20 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         if(binding != null){
             binding.unbind();
         }
+    }
+
+    @Override
+    public void setContentView(View view) {
+        if (Constant.isScale){
+            RelayoutViewTool.relayoutViewWithScale(view,Constant.mScreenWidthScale);
+        }
+        super.setContentView(view);
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        View mView = View.inflate(this, layoutResID, null);
+        this.setContentView(mView);
     }
 
     /**

@@ -5,13 +5,15 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.nhsoft.pxview.base.PXApplication;
+
 import priv.lzf.mvvmhabit.utils.Utils;
 
 /**
  * Created by goldze on 2017/6/15.
  */
 
-public class BaseApplication extends Application {
+public class BaseApplication extends PXApplication {
     private static Application sInstance;
 
     @Override

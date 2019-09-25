@@ -1,2 +1,2 @@
-include ':app', 'moduleSystem:mvvmhabit'
+include ':app', ':moduleSystem:mvvmhabit', ':moduleSystem:base', ':modulePublic:res', ':moduleCore:upload', ':moduleCore:check', ':app1', ':modulePublic:utils', ':moduleSystem:pxview'
 rootProject.name='Education'
