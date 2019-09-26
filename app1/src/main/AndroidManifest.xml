@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.nhsoft.upload.ui.SplashActivity"
+            android:name="com.nhsoft.upload.ui.activity.SplashActivity"
             android:theme="@style/AppTheme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

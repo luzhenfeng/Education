@@ -1,4 +1,4 @@
-package com.nhsoft.upload.ui;
+package com.nhsoft.upload.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;

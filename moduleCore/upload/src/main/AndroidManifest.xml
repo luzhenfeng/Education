@@ -3,7 +3,7 @@
     package="com.nhsoft.upload">
 
     <application>
-        <activity android:name=".ui.UploadActivity"></activity>
+        <activity android:name=".ui.activity.UploadActivity"></activity>
     </application>
 
 </manifest>

@@ -1,9 +1,11 @@
-package com.nhsoft.upload.ui;
+package com.nhsoft.upload.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
+import com.nhsoft.upload.adapter.ViewPagerBindingAdapter;
 import com.nhsoft.upload.databinding.ActivityUploadBinding;
 import com.nhsoft.upload.viewModel.UploadViewModel;
 
@@ -27,5 +29,11 @@ public class UploadActivity extends BaseActivity<ActivityUploadBinding, UploadVi
     public void initData() {
         super.initData();
         viewModel.initToolbar();
+        // 使用 TabLayout 和 ViewPager 相关联
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
+        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout));
+        //给ViewPager设置adapter
+        binding.setAdapter(new ViewPagerBindingAdapter());
+
     }
 }
