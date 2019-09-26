@@ -46,4 +46,7 @@ dependencies {
     api project(':moduleSystem:mvvmhabit')
     //阿里路由框架
     api rootProject.ext.dependencies["arouter-api"]
+
+    //Recyclerview上拉加载和下拉刷新
+    api rootProject.ext.dependencies["tkrefreshlayout"]
 }
