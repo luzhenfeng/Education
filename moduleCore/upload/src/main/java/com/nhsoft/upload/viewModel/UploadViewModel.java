@@ -2,19 +2,17 @@ package com.nhsoft.upload.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.view.View;
 import android.widget.Button;
 
-import com.nhsoft.base.base.viewModel.ToolbarViewModel;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
 import com.nhsoft.upload.entity.UploadModel;
 
-import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
@@ -65,7 +63,7 @@ public class UploadViewModel extends BaseViewModel {
     public BindingCommand<Button> onClickBtn=new BindingCommand<>(new BindingAction() {
         @Override
         public void call() {
-            ToastUtils.showShort("点击上传");
+            ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
         }
     });
 

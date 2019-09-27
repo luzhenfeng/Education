@@ -7,36 +7,48 @@ package com.nhsoft.base.router;
  */
 
 public class RouterActivityPath {
-    /**
-     * 主业务组件
-     */
-    public static class Main {
-        private static final String MAIN = "/main";
-        /*主业务界面*/
-        public static final String PAGER_MAIN = MAIN +"/Main";
-    }
+//    /**
+//     * 主业务组件
+//     */
+//    public static class Main {
+//        private static final String MAIN = "/main";
+//        /*主业务界面*/
+//        public static final String PAGER_MAIN = MAIN +"/Main";
+//    }
+//
+//    /**
+//     * 身份验证组件
+//     */
+//    public static class Sign {
+//        private static final String SIGN = "/sign";
+//        /*登录界面*/
+//        public static final String PAGER_LOGIN = SIGN + "/Login";
+//    }
+//
+//    /**
+//     * 用户组件
+//     */
+//    public static class User {
+//        private static final String USER = "/user";
+//        /*用户详情*/
+//        public static final String PAGER_USERDETAIL = USER + "/UserDetail";
+//    }
 
     /**
-     * 身份验证组件
+     * 上传文件组件
      */
-    public static class Sign {
-        private static final String SIGN = "/sign";
-        /*登录界面*/
-        public static final String PAGER_LOGIN = SIGN + "/Login";
-    }
-
-    /**
-     * 用户组件
-     */
-    public static class User {
-        private static final String USER = "/user";
-        /*用户详情*/
-        public static final String PAGER_USERDETAIL = USER + "/UserDetail";
-    }
-
     public static class Upload{
         private static final String UPLOAD = "/upload";
         /*上传文件界面*/
         public static final String PAGER_UPLOAD = UPLOAD + "/upload";
+    }
+
+    /**
+     * 常规检查组件
+     */
+    public static class Check{
+        private static final String CHECK = "/check";
+        /*上传文件界面*/
+        public static final String PAGER_CHECK = CHECK + "/check";
     }
 }

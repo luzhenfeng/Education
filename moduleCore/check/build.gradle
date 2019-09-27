@@ -12,6 +12,7 @@ android {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation rootProject.ext.support["junit"]
     //组件依赖基础库
     api project(':moduleSystem:base')

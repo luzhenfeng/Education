@@ -4,10 +4,8 @@ package com.nhsoft.upload.ui.fragment;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.nhsoft.upload.BR;
@@ -16,7 +14,6 @@ import com.nhsoft.upload.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.upload.databinding.FragmentUploadBinding;
 import com.nhsoft.upload.viewModel.UploadViewModel;
 
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import priv.lzf.mvvmhabit.base.BaseFragment;
 
 /**

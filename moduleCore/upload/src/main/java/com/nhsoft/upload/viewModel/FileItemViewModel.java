@@ -1,9 +1,7 @@
 package com.nhsoft.upload.viewModel;
 
-import android.database.Observable;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
@@ -14,7 +12,6 @@ import com.nhsoft.upload.entity.UploadModel;
 import priv.lzf.mvvmhabit.base.ItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
-import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * Created by lzf on 2019/9/26.
