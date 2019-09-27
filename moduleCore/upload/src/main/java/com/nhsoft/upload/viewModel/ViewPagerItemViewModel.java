@@ -4,8 +4,11 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 
+import com.nhsoft.pxview.utils.RelayoutViewTool;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
+import com.nhsoft.upload.adapter.ViewPagerBindingAdapter;
+import com.nhsoft.upload.databinding.ItemViewpagerBinding;
 import com.nhsoft.upload.entity.UploadModel;
 
 import io.reactivex.disposables.Disposable;
@@ -26,10 +29,13 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  */
 
 public class ViewPagerItemViewModel extends ItemViewModel<UploadViewModel> {
+    public ItemViewpagerBinding binding;
+
     public SingleLiveEvent<FileItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
 
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
+
 
     public class UIChangeObservable {
         //下拉刷新完成

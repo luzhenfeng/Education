@@ -7,7 +7,12 @@ android {
             applicationId "com.goldze.main"
         }
     }
-    //统一资源前缀，规范资源引用
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+        //统一资源前缀，规范资源引用
     resourcePrefix "upload_"
 }
 dependencies {

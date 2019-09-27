@@ -1,4 +1,4 @@
-package com.nhsoft.base.viewModel;
+package com.nhsoft.base.base.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableField;

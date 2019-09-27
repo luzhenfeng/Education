@@ -3,17 +3,17 @@
 
     <data>
 
-        <import type="com.nhsoft.upload.viewModel.ViewPagerItemViewModel" />
-        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
-        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
-        <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
-        <variable
-            name="viewModel"
-            type="ViewPagerItemViewModel" />
+<!--        <import type="com.nhsoft.upload.viewModel.ViewPagerItemViewModel" />-->
+<!--        <import type="com.nhsoft.upload.adapter.RecyclerViewBindingAdapter" />-->
+<!--        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />-->
+<!--        <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />-->
+<!--        <variable-->
+<!--            name="viewModel"-->
+<!--            type="ViewPagerItemViewModel" />-->
 
-        <variable
-            name="adapter"
-            type="BindingRecyclerViewAdapter" />
+<!--        <variable-->
+<!--            name="adapter"-->
+<!--            type="RecyclerViewBindingAdapter" />-->
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,41 +23,41 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="match_parent"
-            android:layout_height="140px"
-            android:layout_marginLeft="278px"
-            android:layout_marginRight="278px"
-            android:layout_marginBottom="100px"
-            android:layout_marginTop="100px"
-            android:background="@drawable/bg_solid_6bb978_corner_20"
-            android:text="一键上传"
-            android:textColor="@color/white"
-            android:textSize="55px"
-            android:textStyle="bold"
-            android:layout_alignParentBottom="true"/>
-        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-            android:id="@+id/twinklingRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/btn_upload"
-            binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"
-            binding:onRefreshCommand="@{viewModel.onRefreshCommand}"
-            binding:tr_head_height="80dp"
-            binding:tr_wave_height="80dp">
+<!--        <Button-->
+<!--            android:id="@+id/btn_upload"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="140px"-->
+<!--            android:layout_marginLeft="278px"-->
+<!--            android:layout_marginRight="278px"-->
+<!--            android:layout_marginBottom="100px"-->
+<!--            android:layout_marginTop="100px"-->
+<!--            android:background="@drawable/bg_solid_6bb978_corner_20"-->
+<!--            android:text="一键上传"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="55px"-->
+<!--            android:textStyle="bold"-->
+<!--            android:layout_alignParentBottom="true"/>-->
+<!--        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
+<!--            android:id="@+id/twinklingRefreshLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0px"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_above="@id/btn_upload"-->
+<!--            binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"-->
+<!--            binding:onRefreshCommand="@{viewModel.onRefreshCommand}"-->
+<!--            binding:tr_head_height="80dp"-->
+<!--            binding:tr_wave_height="80dp">-->
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                binding:adapter="@{adapter}"
-                binding:itemBinding="@{viewModel.itemBinding}"
-                binding:items="@{viewModel.observableList}"
-                binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}" />
+<!--            <android.support.v7.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                binding:adapter="@{adapter}"-->
+<!--                binding:itemBinding="@{viewModel.itemBinding}"-->
+<!--                binding:items="@{viewModel.observableList}"-->
+<!--                binding:layoutManager="@{LayoutManagers.linear()}"-->
+<!--                binding:lineManager="@{LineManagers.horizontal()}" />-->
 
-        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+<!--        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>-->
 
     </RelativeLayout>
 </layout>

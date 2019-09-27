@@ -5,10 +5,9 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 
-import com.nhsoft.base.viewModel.ToolbarViewModel;
+import com.nhsoft.base.base.viewModel.ToolbarViewModel;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
 

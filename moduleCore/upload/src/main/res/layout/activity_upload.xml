@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="ResourceName">
     <data>
-        <import type="com.nhsoft.upload.viewModel.UploadViewModel" />
-        <import type="com.nhsoft.upload.adapter.ViewPagerBindingAdapter" />
-        <variable
-            name="viewModel"
-            type="com.nhsoft.upload.viewModel.UploadViewModel" />
+<!--        <import type="com.nhsoft.upload.viewModel.UploadViewModel" />-->
+<!--        <import type="com.nhsoft.upload.adapter.ViewPagerBindingAdapter" />-->
+<!--        <variable-->
+<!--            name="viewModel"-->
+<!--            type="com.nhsoft.upload.viewModel.UploadViewModel" />-->
 
-        <variable
-            name="adapter"
-            type="com.nhsoft.upload.adapter.ViewPagerBindingAdapter" />
+<!--        <variable-->
+<!--            name="adapter"-->
+<!--            type="com.nhsoft.upload.adapter.ViewPagerBindingAdapter" />-->
     </data>
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,36 +20,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/color_F5F5F5">
-        <include
-            android:id="@+id/include"
-            layout="@layout/layout_toolbar"
-            binding:toolbarViewModel="@{viewModel.toolbarViewModel}">
-        </include>
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="180px"
-            app:layout_constraintTop_toBottomOf="@id/include"
-            app:tabIndicatorColor="@color/color_6BB978"
-            app:tabIndicatorHeight="2px"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextColor="@color/color_666666"
-            android:background="@color/white">
-        </android.support.design.widget.TabLayout>
+<!--        <include-->
+<!--            android:id="@+id/include"-->
+<!--            layout="@layout/layout_toolbar"-->
+<!--            binding:toolbarViewModel="@{viewModel.toolbarViewModel}">-->
+<!--        </include>-->
+<!--        <android.support.design.widget.TabLayout-->
+<!--            android:id="@+id/tabLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="180px"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/include"-->
+<!--            app:tabIndicatorColor="@color/color_6BB978"-->
+<!--            app:tabIndicatorHeight="2px"-->
+<!--            app:tabSelectedTextColor="@color/black"-->
+<!--            app:tabTextColor="@color/color_666666"-->
+<!--            android:background="@color/white">-->
+<!--        </android.support.design.widget.TabLayout>-->
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout"
-            android:layout_marginTop="395px"
-            binding:adapter="@{adapter}"
-            binding:itemBinding="@{viewModel.itemBinding}"
-            binding:items="@{viewModel.items}"
-            binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
-            binding:pageTitles="@{viewModel.pageTitles}">
+<!--        <android.support.v4.view.ViewPager-->
+<!--            android:id="@+id/viewPager"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tabLayout"-->
+<!--            android:layout_marginTop="395px"-->
+<!--            binding:adapter="@{adapter}"-->
+<!--            binding:itemBinding="@{viewModel.itemBinding}"-->
+<!--            binding:items="@{viewModel.items}"-->
+<!--            binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"-->
+<!--            binding:pageTitles="@{viewModel.pageTitles}">-->
 
-        </android.support.v4.view.ViewPager>
+<!--        </android.support.v4.view.ViewPager>-->
 
         <!--<Button-->
             <!--android:id="@+id/btn_upload"-->
