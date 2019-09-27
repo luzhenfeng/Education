@@ -1,5 +1,7 @@
 package com.nhsoft.upload.ui.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.nhsoft.base.base.BasePagerFragment;
@@ -14,12 +16,14 @@ import java.util.List;
  * 时间：Created on 2019/9/27.
  */
 public class UploadViewPageFragment extends BasePagerFragment<FragmentBasePagerBinding, ViewPagerViewModel> {
+
+
     @Override
     protected List<Fragment> pagerFragment() {
         List<Fragment> list = new ArrayList<>();
-        list.add(new UploadFragment());
-        list.add(new UploadFragment());
-        list.add(new UploadFragment());
+        list.add(new UploadOneFragment());
+        list.add(new UploadOneFragment());
+        list.add(new UploadOneFragment());
         return list;
     }
 
@@ -30,5 +34,21 @@ public class UploadViewPageFragment extends BasePagerFragment<FragmentBasePagerB
         list.add("已上传");
         list.add("全部");
         return list;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+    }
+
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+        viewModel.uc.onPageSelectedCommand.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+
+            }
+        });
     }
 }

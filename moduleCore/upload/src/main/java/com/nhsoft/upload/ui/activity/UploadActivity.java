@@ -19,7 +19,7 @@ public class UploadActivity extends BaseToolBarActivity<ActivityUploadBinding,To
 
     @Override
     protected Fragment initFragment() {
-        return new UploadViewPageFragment();
+        return new UploadFragment();
     }
 
 

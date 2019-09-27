@@ -71,6 +71,7 @@
     <declare-styleable name="ImageView">
         <!--  load bitmap from uri(string type) -->
         <attr name="url" />
+        <!--<attr name="imgRes" format="integer"/>-->
         <!--width for ResizeOptions (use Fresco to load bitmap). -->
         <attr name="request_width" format="integer" />
         <!--height for ResizeOptions (use Fresco to load bitmap). -->
@@ -166,5 +167,11 @@
     <!-- 自定义控制事件分发的LinearLayout -->
     <declare-styleable name="ControlDistributeLinearLayout">
         <attr name="distribute_event" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="TabLayout">
+        <attr name="onTabSelectedCommand" format="reference"/>
+        <attr name="onTabUnselectedCommand" format="reference"/>
+        <attr name="onTabReselectedCommand" format="reference"/>
     </declare-styleable>
 </resources>

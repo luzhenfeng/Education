@@ -22,5 +22,14 @@ public final class ViewAdapter {
                     .into(imageView);
         }
     }
+
+//    @BindingAdapter(value = {"imgRes", "placeholderRes"}, requireAll = false)
+//    public static void setImageRes(ImageView imageView, int placeholderRes) {
+//        //使用Glide框架加载图片
+//        Glide.with(imageView.getContext())
+//                .load(new RequestOptions().placeholder(placeholderRes))
+//                .into(imageView);
+//
+//    }
 }
 

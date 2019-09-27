@@ -17,13 +17,13 @@ import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
  * 时间：Created on 2019/9/26.
  */
 public class RecyclerViewBindingAdapter extends BindingRecyclerViewAdapter<FileItemViewModel> {
-    @Override
-    public void onBindBinding(ViewDataBinding binding, int variableId, int layoutRes, int position, FileItemViewModel item) {
-        if (Constant.isScale){
-            RelayoutViewTool.relayoutViewWithScale(binding.getRoot(),Constant.mScreenWidthScale);
-        }
-        super.onBindBinding(binding, variableId, layoutRes, position, item);
-    }
+//    @Override
+//    public void onBindBinding(ViewDataBinding binding, int variableId, int layoutRes, int position, FileItemViewModel item) {
+//        if (Constant.isScale){
+//            RelayoutViewTool.relayoutViewWithScale(binding.getRoot(),Constant.mScreenWidthScale);
+//        }
+//        super.onBindBinding(binding, variableId, layoutRes, position, item);
+//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewDataBinding binding) {

@@ -1,10 +1,8 @@
 package com.nhsoft.upload.ui.fragment;
 
 
-import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +11,19 @@ import android.view.ViewGroup;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
 import com.nhsoft.upload.adapter.RecyclerViewBindingAdapter;
-import com.nhsoft.upload.databinding.FragmentUploadBinding;
+import com.nhsoft.upload.databinding.FragmentUploadOneBinding;
 import com.nhsoft.upload.viewModel.UploadViewModel;
 
-import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter;
 import priv.lzf.mvvmhabit.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadViewModel> {
-
+public class UploadOneFragment extends BaseFragment<FragmentUploadOneBinding, UploadViewModel> {
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.fragment_upload;
+        return R.layout.fragment_upload_one;
     }
 
     @Override
@@ -36,27 +32,10 @@ public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadVi
     }
 
     @Override
-    public void initViewObservable() {
-        super.initViewObservable();
-        viewModel.uc.onTabSelectedCommand.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-
-            }
-        });
-    }
-
-    @Override
     public void initData() {
         super.initData();
         binding.setAdapter(new RecyclerViewBindingAdapter());
         viewModel.requestNetWork();
-        setTabs();
     }
 
-    private void setTabs(){
-        for (String s:viewModel.tabs){
-            binding.tabs.addTab(binding.tabs.newTab().setText(s));
-        }
-    }
 }

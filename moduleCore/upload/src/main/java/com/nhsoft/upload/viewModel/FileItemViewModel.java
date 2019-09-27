@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 
 import com.nhsoft.upload.R;
 import com.nhsoft.upload.entity.UploadModel;
@@ -35,7 +36,7 @@ public class FileItemViewModel extends ItemViewModel<UploadViewModel> {
      * @return
      */
     public int getPosition() {
-        return viewModel.getItem().getItemPosition(this);
+        return viewModel.getItemPosition(this);
     }
 
     //条目的点击事件
@@ -63,4 +64,15 @@ public class FileItemViewModel extends ItemViewModel<UploadViewModel> {
 //            ToastUtils.showShort(entity.get().getName());
         }
     });
+
+
+    public BindingCommand<ImageView> onClickCheckBox=new BindingCommand<>(new BindingAction() {
+        @Override
+        public void call() {
+            entity.get().setSelect(!entity.get().isSelect());
+            viewModel.observableList.set(getPosition(),FileItemViewModel.this);
+//            ToastUtils.showShort("点击上传");
+        }
+    });
+
 }
