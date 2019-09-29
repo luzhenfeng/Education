@@ -2,7 +2,7 @@
 <layout>
     <data>
         <import type="com.nhsoft.upload.viewModel.UploadViewModel" />
-        <import type="com.nhsoft.upload.adapter.RecyclerViewBindingAdapter" />
+        <import type="com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter" />
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
         <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
         <variable
@@ -38,8 +38,8 @@
             android:layout_height="0px"
             android:layout_alignParentTop="true"
             android:layout_above="@id/btn_upload"
-            binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"
-            binding:onRefreshCommand="@{viewModel.onRefreshCommand}"
+            binding:onTwinklingLoadMoreCommand="@{viewModel.onTwinklingLoadMoreCommand}"
+            binding:onTwinklingRefreshCommand="@{viewModel.onTwinklingRefreshCommand}"
             binding:tr_head_height="80dp"
             binding:tr_wave_height="80dp">
 

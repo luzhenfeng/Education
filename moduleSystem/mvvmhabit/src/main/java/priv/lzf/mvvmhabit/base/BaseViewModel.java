@@ -49,6 +49,13 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
     }
 
     /**
+     * 事件绑定
+     */
+    public void bindingCommand(){
+
+    }
+
+    /**
      * 注入RxLifecycle生命周期
      *
      * @param lifecycle

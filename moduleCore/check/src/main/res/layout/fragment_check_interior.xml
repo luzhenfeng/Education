@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.nhsoft.check.viewModel.CheckInteriorViewModel"></import>
+        <import type="com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter"></import>
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+        <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
+        <variable
+            name="viewModel"
+            type="com.nhsoft.check.viewModel.CheckInteriorViewModel" />
+        <variable
+            name="adapter"
+            type="RecyclerViewBindingAdapter" />
+        <variable
+            name="rightAdapter"
+            type="RecyclerViewBindingAdapter" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.CheckInteriorFragment"
+        android:paddingTop="22px"
+        android:background="@color/color_F5F5F5">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:paddingLeft="32px"
+            android:paddingRight="32px"
+            android:gravity="center_vertical"
+            android:background="@color/white">
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="54px"
+                android:src="@drawable/inspect10"
+                android:layout_marginRight="20px">
+
+            </ImageView>
+            <TextView
+                android:id="@+id/tv_student_name"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="违规学生"
+                android:textSize="48px"
+                android:textColor="@color/black">
+
+            </TextView>
+            <ImageView
+                android:id="@+id/iv_add_student"
+                android:layout_width="76px"
+                android:layout_height="match_parent"
+                android:src="@drawable/inspect9"
+                binding:onClickCommand="@{viewModel.onClickAdd}">
+
+            </ImageView>
+        </LinearLayout>
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_left"
+                android:layout_width="328px"
+                android:layout_height="match_parent"
+                binding:adapter="@{adapter}"
+                binding:itemBinding="@{viewModel.entity.itemLeftBinding}"
+                binding:layoutManager="@{LayoutManagers.linear()}"
+                binding:lineManager="@{LineManagers.horizontal()}"
+                binding:items="@{viewModel.entity.observableLeftList}"
+                binding:itemAnimator="@{null}">
+
+            </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_right"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingLeft="60px"
+                android:paddingRight="60px"
+                binding:adapter="@{rightAdapter}"
+                binding:itemBinding="@{viewModel.entity.itemRightBinding}"
+                binding:layoutManager="@{LayoutManagers.linear()}"
+                binding:lineManager="@{LineManagers.horizontal()}"
+                binding:items="@{viewModel.entity.observableRightList}"
+                binding:itemAnimator="@{null}">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

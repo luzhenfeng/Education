@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.nhsoft.check.viewModel.LeftItemViewModel"></import>
+        <variable
+            name="viewModel"
+            type="LeftItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="230px"
+        android:gravity="center_vertical"
+        android:background="@{viewModel.entity.mDrawable}"
+        binding:onClickCommand="@{viewModel.entity.itemClick}">
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="54px"
+            android:layout_height="50px"
+            android:layout_marginLeft="36px"
+            android:layout_marginRight="27px"
+            android:src="@{viewModel.entity.image}" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="48px"
+            android:text="@{viewModel.entity.title}"
+            android:maxLines="2" />
+
+    </LinearLayout>
+</layout>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- require boolean value to decide whether requestFocus for view. -->
     <attr name="requestFocus" format="boolean" />
@@ -173,5 +173,19 @@
         <attr name="onTabSelectedCommand" format="reference"/>
         <attr name="onTabUnselectedCommand" format="reference"/>
         <attr name="onTabReselectedCommand" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="TwinklingRefreshLayout">
+        <attr name="tr_wave_height" format="dimension" />
+        <attr name="tr_head_height" format="dimension" />
+        <attr name="tr_bottom_height" format="dimension" />
+        <attr name="tr_overscroll_height" format="dimension" />
+        <attr name="tr_enable_loadmore" format="boolean" />
+        <attr name="tr_pureScrollMode_on" format="boolean" />
+        <attr name="tr_show_overlay_refreshview" format="boolean" />
+        <attr name="tr_headerView" format="dimension" />
+        <attr name="tr_bottomView" format="dimension" />
+        <attr name="onTwinklingRefreshCommand" format="reference" />
+        <attr name="onTwinklingLoadMoreCommand" format="reference" />
     </declare-styleable>
 </resources>

@@ -7,9 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
-import com.nhsoft.upload.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.upload.databinding.FragmentUploadOneBinding;
 import com.nhsoft.upload.viewModel.UploadViewModel;
 

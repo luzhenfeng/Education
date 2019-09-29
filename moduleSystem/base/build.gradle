@@ -47,7 +47,5 @@ dependencies {
     //阿里路由框架
     api rootProject.ext.dependencies["arouter-api"]
 
-    //Recyclerview上拉加载和下拉刷新
-    api rootProject.ext.dependencies["tkrefreshlayout"]
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }

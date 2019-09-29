@@ -7,21 +7,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
-import com.nhsoft.check.databinding.FragmentCheckBinding;
-import com.nhsoft.check.viewModel.CheckViewModel;
+import com.nhsoft.check.databinding.FragmentCheckRoutineBinding;
+import com.nhsoft.check.viewModel.CheckRoutineViewModel;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewModel> {
+public class CheckRoutineFragment extends BaseFragment<FragmentCheckRoutineBinding, CheckRoutineViewModel> {
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.fragment_check;
+        return R.layout.fragment_check_routine;
     }
 
     @Override
@@ -32,6 +33,9 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
     @Override
     public void initData() {
         super.initData();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frame_check,new CheckViewPagerFragment()).commit();
+        binding.setAdapter(new RecyclerViewBindingAdapter());
+        viewModel.initLeftItem();
+        binding.setRightAdapter(new RecyclerViewBindingAdapter());
+        viewModel.initRightItem();
     }
 }

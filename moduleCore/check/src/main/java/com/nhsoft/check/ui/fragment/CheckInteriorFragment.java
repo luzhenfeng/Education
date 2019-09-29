@@ -3,25 +3,26 @@ package com.nhsoft.check.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
-import com.nhsoft.check.databinding.FragmentCheckBinding;
-import com.nhsoft.check.viewModel.CheckViewModel;
+import com.nhsoft.check.databinding.FragmentCheckInteriorBinding;
+import com.nhsoft.check.viewModel.CheckInteriorViewModel;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 内务检查
  */
-public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewModel> {
+public class CheckInteriorFragment extends BaseFragment<FragmentCheckInteriorBinding, CheckInteriorViewModel> {
+
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.fragment_check;
+        return R.layout.fragment_check_interior;
     }
 
     @Override
@@ -32,6 +33,9 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
     @Override
     public void initData() {
         super.initData();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frame_check,new CheckViewPagerFragment()).commit();
+        binding.setAdapter(new RecyclerViewBindingAdapter());
+        viewModel.initLeftItem();
+        binding.setRightAdapter(new RecyclerViewBindingAdapter());
+        viewModel.initRightItem();
     }
 }

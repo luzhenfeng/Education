@@ -7,7 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.nhsoft.upload.R;
-import com.nhsoft.upload.entity.UploadModel;
+import com.nhsoft.upload.entity.UploadEntity;
 
 import priv.lzf.mvvmhabit.base.ItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
@@ -19,9 +19,9 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
  */
 
 public class FileItemViewModel extends ItemViewModel<UploadViewModel> {
-    public ObservableField<UploadModel> entity = new ObservableField<>();
+    public ObservableField<UploadEntity> entity = new ObservableField<>();
     public Drawable drawableImg;
-    public FileItemViewModel(@NonNull UploadViewModel viewModel,UploadModel model) {
+    public FileItemViewModel(@NonNull UploadViewModel viewModel, UploadEntity model) {
         super(viewModel);
         this.entity.set(model);
         drawableImg = ContextCompat.getDrawable(viewModel.getApplication(), R.drawable.off_line);

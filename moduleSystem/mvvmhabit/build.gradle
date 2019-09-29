@@ -81,5 +81,8 @@ dependencies {
     api rootProject.ext.dependencies["lifecycle-extensions"]
     annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
 
+    //Recyclerview上拉加载和下拉刷新
+    api rootProject.ext.dependencies["tkrefreshlayout"]
+
     api project(':moduleSystem:pxview')
 }

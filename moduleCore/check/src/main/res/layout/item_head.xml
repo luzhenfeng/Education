@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.nhsoft.check.viewModel.HeadViewModel"></import>
+        <variable
+            name="viewModel"
+            type="HeadViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="34px"
+                android:layout_height="39px"
+                android:src="@{viewModel.entity.image,default=@drawable/inspect7}"
+                android:layout_marginRight="20px">
+
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="46px"
+                android:text="@{viewModel.entity.title}">
+
+            </TextView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+    </LinearLayout>
+</layout>

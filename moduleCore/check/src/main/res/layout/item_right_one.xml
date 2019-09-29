@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <data>
+        <import type="com.nhsoft.check.viewModel.RightOneItemViewModel"></import>
+        <variable
+            name="viewModel"
+            type="RightOneItemViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="120px"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_item_num"
+            android:layout_width="57px"
+            android:layout_height="57px"
+            android:layout_marginRight="20px"
+            android:background="@drawable/bg_oval_6bb978"
+            android:gravity="center"
+            android:text="@{String.valueOf(viewModel.entity.index)}"
+            android:textColor="@color/white"
+            android:textSize="39px"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_item_content"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{viewModel.entity.content}"
+            android:textColor="@color/color_919191"
+            android:textSize="38px"
+            android:maxLines="1">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_item_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.entity.classes}"
+            android:textColor="@color/color_666666"
+            android:layout_marginRight="58px"
+            android:textSize="38px"
+            android:maxLines="1">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/iv_item_image"
+            android:layout_width="55px"
+            android:layout_height="37px"
+            android:src="@drawable/inspect7"
+            binding:onClickCommand="@{viewModel.entity.onSelectClass}">
+
+        </ImageView>
+
+    </LinearLayout>
+</layout>

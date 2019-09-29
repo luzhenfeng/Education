@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
-import com.nhsoft.upload.entity.UploadModel;
+import com.nhsoft.upload.entity.UploadEntity;
 
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
@@ -85,7 +85,7 @@ public class UploadViewModel extends BaseViewModel {
 //     *
 //     * @param uploadModel
 //     */
-//    public void notifyItem(UploadModel uploadModel) {
+//    public void notifyItem(UploadEntity uploadModel) {
 //        //点击确定，在 observableList 绑定中删除，界面立即刷新
 //        getItemPosition()
 //
@@ -93,7 +93,7 @@ public class UploadViewModel extends BaseViewModel {
 
 
     //下拉刷新
-    public BindingCommand onRefreshCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand onTwinklingRefreshCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             ToastUtils.showShort("下拉刷新");
@@ -101,7 +101,7 @@ public class UploadViewModel extends BaseViewModel {
         }
     });
     //上拉加载
-    public BindingCommand onLoadMoreCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand onTwinklingLoadMoreCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
 //            if (observableList.size() > 50) {
@@ -141,13 +141,13 @@ public class UploadViewModel extends BaseViewModel {
         //addSubscribe();
 
         for (int i=0;i<50;i++) {
-            UploadModel uploadModel=new UploadModel();
-            uploadModel.setId(i+1);
-            uploadModel.setText1("101-(18三维2)");
-            uploadModel.setText2("内务检查(晚上-扣1分)");
-            uploadModel.setText3("地面有垃圾");
-            uploadModel.setText4("类型：寝室纪律 周次：27");
-            FileItemViewModel itemViewModel = new FileItemViewModel(this, uploadModel);
+            UploadEntity uploadEntity =new UploadEntity();
+            uploadEntity.setId(i+1);
+            uploadEntity.setText1("101-(18三维2)");
+            uploadEntity.setText2("内务检查(晚上-扣1分)");
+            uploadEntity.setText3("地面有垃圾");
+            uploadEntity.setText4("类型：寝室纪律 周次：27");
+            FileItemViewModel itemViewModel = new FileItemViewModel(this, uploadEntity);
             //双向绑定动态添加Item
             observableList.add(itemViewModel);
         }

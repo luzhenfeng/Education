@@ -4,7 +4,7 @@ package com.nhsoft.upload.entity;
  * 作者：Created by 45703
  * 时间：Created on 2019/9/20.
  */
-public class UploadModel {
+public class UploadEntity {
     private int id;
     private String text1;
     private String text2;
