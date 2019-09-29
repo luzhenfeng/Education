@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.nhsoft.check.viewModel.RightFourItemViewModel" />
+        <variable
+            name="viewModel"
+            type="RightFourItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="130px"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="57px"
+                android:layout_height="57px"
+                android:background="@drawable/bg_oval_6bb978"
+                android:text="@{String.valueOf(viewModel.entity.index)}"
+                android:textColor="@color/white"
+                android:textSize="39px"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginRight="20px">
+
+            </TextView>
+
+            <EditText
+                android:id="@+id/et_custom"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_919191"
+                android:textSize="38px"
+                android:background="@android:color/transparent"
+                android:hint="请输入自定义内容"
+                android:text="@{viewModel.entity.editText}"
+                android:inputType="text"
+                android:imeOptions="actionDone">
+
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_C78E29"
+                android:textSize="38px"
+                android:textStyle="bold"
+                android:text="扣分"
+                android:layout_marginRight="28px">
+
+            </TextView>
+            <TextView
+                android:id="@+id/tv_deduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="38px"
+                android:textColor="@color/color_919191"
+                android:text="@{String.valueOf(viewModel.entity.deduction)}"
+                android:layout_marginRight="100px">
+
+            </TextView>
+            <ImageView
+                android:id="@+id/iv_custom"
+                android:layout_width="55px"
+                android:layout_height="37px"
+                android:src="@drawable/inspect7">
+
+            </ImageView>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+    </LinearLayout>
+</layout>
+

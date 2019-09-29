@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.nhsoft.check.viewModel.RightThreeItemViewModel" />
+        <variable
+            name="viewModel"
+            type="RightThreeItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="122px">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="57px"
+                android:layout_height="57px"
+                android:background="@drawable/bg_oval_6bb978"
+                android:text="@{String.valueOf(viewModel.entity.index)}"
+                android:textColor="@color/white"
+                android:textSize="39px"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginRight="20px">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_919191"
+                android:textSize="38px"
+                android:text="@{viewModel.entity.leftText}">
+
+            </TextView>
+            <RelativeLayout
+                android:layout_width="88px"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/et_rubbish_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/color_919191"
+                    android:textSize="38px"
+                    android:inputType="number"
+                    android:imeOptions="actionDone"
+                    android:text="@{viewModel.entity.editText}">
+
+                </EditText>
+            </RelativeLayout>
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/color_919191"
+                android:textSize="38px"
+                android:text="@{viewModel.entity.rightText}">
+
+            </TextView>
+            <ImageView
+                android:id="@+id/iv_bed_2"
+                android:layout_width="55px"
+                android:layout_height="37px"
+                android:src="@drawable/inspect7">
+
+            </ImageView>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+
+    </LinearLayout>
+</layout>

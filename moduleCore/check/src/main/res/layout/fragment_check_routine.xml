@@ -5,6 +5,7 @@
         <import type="com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter"></import>
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
         <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
+        <import type="com.nhsoft.check.manager.GridLayoutManagers" />
         <variable
             name="viewModel"
             type="CheckRoutineViewModel" />
@@ -49,8 +50,7 @@
                 android:paddingRight="60px"
                 binding:adapter="@{rightAdapter}"
                 binding:itemBinding="@{viewModel.entity.itemRightBinding}"
-                binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}"
+                binding:layoutManager="@{GridLayoutManagers.grids(viewModel.entity.gridCount,viewModel.entity.gridStartPos,viewModel.entity.gridEndPos)}"
                 binding:items="@{viewModel.entity.observableRightList}"
                 binding:itemAnimator="@{null}">
 

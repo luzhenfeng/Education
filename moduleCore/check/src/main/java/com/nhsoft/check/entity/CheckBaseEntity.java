@@ -1,6 +1,7 @@
 package com.nhsoft.check.entity;
 
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 
 import com.nhsoft.check.BR;
@@ -24,5 +25,10 @@ public class CheckBaseEntity {
     public ObservableList<MultiItemViewModel> observableRightList = new ObservableArrayList<>();
     //右边RecyclerView多布局添加ItemBinding
     public ItemBinding<MultiItemViewModel> itemRightBinding ;
-
+    //grid分成几份
+    public ObservableInt gridCount=new ObservableInt(11);
+    //grid是开始位置
+    public ObservableInt gridStartPos=new ObservableInt();
+    //grid是结束位置
+    public ObservableInt gridEndPos=new ObservableInt();
 }

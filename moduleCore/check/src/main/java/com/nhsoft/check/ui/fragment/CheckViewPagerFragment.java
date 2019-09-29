@@ -1,5 +1,6 @@
 package com.nhsoft.check.ui.fragment;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 
 import com.nhsoft.base.base.BasePagerFragment;
@@ -36,5 +37,11 @@ public class CheckViewPagerFragment extends BasePagerFragment<FragmentBasePagerB
         list.add("常规");
         list.add("妨碍检查");
         return list;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 }

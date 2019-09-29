@@ -88,7 +88,6 @@
                 binding:adapter="@{rightAdapter}"
                 binding:itemBinding="@{viewModel.entity.itemRightBinding}"
                 binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}"
                 binding:items="@{viewModel.entity.observableRightList}"
                 binding:itemAnimator="@{null}">
 

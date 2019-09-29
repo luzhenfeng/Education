@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.nhsoft.check.viewModel.RightTwoItemViewModel" />
+        <variable
+            name="viewModel"
+            type="RightTwoItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="43px">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.entity.leftText}"
+                android:textSize="36px"
+                android:textStyle="bold"
+                android:textColor="@color/color_6BB978"
+                android:layout_marginRight="24px"
+                android:visibility="@{viewModel.entity.leftTextShow}">
+
+            </TextView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tv_bed1"
+                    android:layout_width="88px"
+                    android:layout_height="50px"
+                    android:textColor="@{viewModel.entity.rightTextSelect?@color/white:@color/color_666666}"
+                    android:background="@{viewModel.entity.rightTextSelect?@drawable/bg_solid_6bb978_corner_10:@drawable/bg_solid_f3f3f3_corner_10}"
+                    android:text="@{viewModel.entity.rightText}"
+                    android:textSize="36px"
+                    android:gravity="center"
+                    binding:onClickCommand="@{viewModel.entity.onClick}">
+
+                </TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+    </LinearLayout>
+
+</layout>

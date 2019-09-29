@@ -27,6 +27,8 @@ public class CheckBaseViewModel extends BaseViewModel {
     protected static final String MultiRecycleType_Head = "head";
     protected static final String MultiRecycleType_Right1 = "right1";
     protected static final String MultiRecycleType_Right2 = "right2";
+    protected static final String MultiRecycleType_Right3 = "right3";
+    protected static final String MultiRecycleType_Right4 = "right4";
 
     public ObservableInt selectPos=new ObservableInt(0);
 
@@ -51,12 +53,16 @@ public class CheckBaseViewModel extends BaseViewModel {
                     itemBinding.set(BR.viewModel, R.layout.item_head);
                 } else if (MultiRecycleType_Right1.equals(itemType)) {
                     itemBinding.set(BR.viewModel, R.layout.item_right_one);
+                } else if (MultiRecycleType_Right2.equals(itemType)) {
+                    itemBinding.set(BR.viewModel, R.layout.item_right_two);
+                }else if (MultiRecycleType_Right3.equals(itemType)){
+                    itemBinding.set(BR.viewModel, R.layout.item_right_three);
+                }else if (MultiRecycleType_Right4.equals(itemType)){
+                    itemBinding.set(BR.viewModel, R.layout.item_right_four);
                 }
-//                else if (MultiRecycleType_Right2.equals(itemType)) {
-//                    itemBinding.set(BR.viewModel, R.layout.item_left);
-//                }
             }
         });
+
     }
 
     /**
