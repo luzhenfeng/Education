@@ -1,6 +1,7 @@
 package com.nhsoft.check.viewModel;
 
 import android.app.Application;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
@@ -17,6 +18,10 @@ import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
+import priv.lzf.mvvmhabit.bus.Messenger;
+import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
+import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -30,9 +35,22 @@ public class CheckBaseViewModel extends BaseViewModel {
     protected static final String MultiRecycleType_Right3 = "right3";
     protected static final String MultiRecycleType_Right4 = "right4";
 
+//    public static final String TOKEN_CHECKBASEVIEWMODEL_SHOWSELECTCLASS = "tokenCheckBaseViewModelShowSelectClass";
+
     public ObservableInt selectPos=new ObservableInt(0);
 
     public ObservableField<CheckBaseEntity> entity=new ObservableField<>();
+
+
+    //封装一个界面发生改变的观察者
+    public UIChangeObservable uc=new UIChangeObservable();
+
+    public class UIChangeObservable {
+        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
+        public SingleLiveEvent<Integer> type = new SingleLiveEvent<>();
+    }
+
+
 
     public CheckBaseViewModel(@NonNull Application application) {
         super(application);
@@ -40,6 +58,38 @@ public class CheckBaseViewModel extends BaseViewModel {
         itemBinding();
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+//        registerMessenger();
+    }
+
+
+    /**
+     * 选择班级
+     */
+    public void onSelectClassImage(){
+        uc.showSelectClassPopupWindow.set(!uc.showSelectClassPopupWindow.get());
+        uc.type.setValue(1);
+    }
+
+
+
+//    public void registerMessenger(){
+//        Messenger.getDefault().register(this, CheckInteriorViewModel.TOKEN_CHECKBASEVIEWMODEL_SHOWSELECTCLASS, Integer.class, new BindingConsumer<Integer>() {
+//            @Override
+//            public void call(Integer integer) {
+//                uc.type.setValue(integer);
+////                uc.showSelectClassObservable.set(!uc.showSelectClassObservable.get());
+//            }
+//        });
+//    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Messenger.getDefault().unregister(this);
+//    }
 
     public void itemBinding(){
         entity.get().itemLeftBinding = ItemBinding.of(BR.viewModel, R.layout.item_left);
@@ -64,6 +114,7 @@ public class CheckBaseViewModel extends BaseViewModel {
         });
 
     }
+
 
     /**
      * 左边条目选中状态更改

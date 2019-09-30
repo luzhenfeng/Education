@@ -14,6 +14,7 @@ import com.nhsoft.check.entity.RightOneEntity;
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -35,6 +36,12 @@ public class CheckInteriorViewModel extends CheckBaseViewModel {
     public CheckInteriorViewModel(@NonNull Application application) {
         super(application);
     }
+
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//    }
+
 
     /**
      * 初始化左边条目
@@ -58,6 +65,12 @@ public class CheckInteriorViewModel extends CheckBaseViewModel {
             entity.get().observableLeftList.add(leftItemViewModel);
         }
     }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Messenger.getDefault().unregister(this);
+//    }
 
     /**
      * 初始化左边条目

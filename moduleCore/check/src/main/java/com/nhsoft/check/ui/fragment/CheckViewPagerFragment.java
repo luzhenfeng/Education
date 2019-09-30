@@ -19,11 +19,11 @@ public class CheckViewPagerFragment extends BasePagerFragment<FragmentBasePagerB
     protected List<Fragment> pagerFragment() {
         List<Fragment> list = new ArrayList<>();
         list.add(new CheckInteriorFragment());
-        list.add(new CheckInteriorFragment());
-        list.add(new CheckInteriorFragment());
-        list.add(new CheckInteriorFragment());
         list.add(new CheckRoutineFragment());
-        list.add(new CheckInteriorFragment());
+        list.add(new CheckRoutineFragment());
+        list.add(new CheckRoutineFragment());
+        list.add(new CheckRoutineFragment());
+        list.add(new CheckRoutineFragment());
         return list;
     }
 
@@ -43,5 +43,6 @@ public class CheckViewPagerFragment extends BasePagerFragment<FragmentBasePagerB
     public void initData() {
         super.initData();
         binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+//        binding.viewPager.setOffscreenPageLimit(0);
     }
 }

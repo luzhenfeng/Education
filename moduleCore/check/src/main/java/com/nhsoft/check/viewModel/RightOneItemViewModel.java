@@ -2,14 +2,12 @@ package com.nhsoft.check.viewModel;
 
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 
 import com.nhsoft.check.entity.RightOneEntity;
 
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
-import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -17,7 +15,12 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  */
 public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel> {
 
+
+    public final static int CheckInteriorViewModel=1;
+    public final static int CheckRoutineViewModel=2;
+
     public ObservableField<RightOneEntity> entity=new ObservableField<>();
+
 
     public RightOneItemViewModel(@NonNull CheckBaseViewModel viewModel,RightOneEntity entity) {
         super(viewModel);
@@ -26,10 +29,10 @@ public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel
     }
 
     public void bindingCommand(){
-        entity.get().onSelectClass=new BindingCommand<ImageView>(new BindingAction() {
+        entity.get().onSelectClass=new BindingCommand<>(new BindingAction() {
             @Override
             public void call() {
-                ToastUtils.showShort("选择班级");
+                viewModel.onSelectClassImage();
             }
         });
     }
