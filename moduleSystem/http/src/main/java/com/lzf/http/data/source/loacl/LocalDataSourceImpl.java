@@ -1,7 +1,12 @@
 package com.lzf.http.data.source.loacl;
 
 
+import com.lzf.greendao.entity.UserModel;
+import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.source.LocalDataSource;
+import com.lzf.http.entity.LoginModel;
+
+import priv.lzf.mvvmhabit.utils.SPUtils;
 
 /**
  * 作者：Created by 45703
@@ -27,5 +32,50 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     private LocalDataSourceImpl() {
         //数据库Helper构建
+    }
+
+    @Override
+    public void saveUserName(String userName) {
+        SPUtils.getInstance().put("username",userName);
+    }
+
+    @Override
+    public String getUserName() {
+        return SPUtils.getInstance().getString("username");
+    }
+
+    @Override
+    public void savePassword(String password) {
+        SPUtils.getInstance().put("password",password);
+    }
+
+    @Override
+    public String getPassword() {
+        return SPUtils.getInstance().getString("password");
+    }
+
+    @Override
+    public void saveToken(String token) {
+        SPUtils.getInstance().put("token",token);
+    }
+
+    @Override
+    public String getToken() {
+        return SPUtils.getInstance().getString("token");
+    }
+
+    @Override
+    public boolean insertUser(LoginModel loginModel) {
+        UserModel userModel=new UserModel();
+        userModel.setAccess_token(loginModel.getToken().getAccess_token());
+        userModel.setExpires_in(loginModel.getToken().getExpires_in());
+        userModel.setAvatar(loginModel.getUser().getAvatar());
+        userModel.setRealname(loginModel.getUser().getRealname());
+        userModel.setSubjectid(loginModel.getUser().getSubjectid());
+        userModel.setUserid(loginModel.getUser().getUserid());
+        userModel.setUsername(loginModel.getUser().getUsername());
+        userModel.setUsertype(loginModel.getUser().getUsertype());
+        userModel.setId(1l);
+        return UserService.getInstance().insert(userModel);
     }
 }
