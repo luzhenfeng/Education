@@ -163,9 +163,9 @@ public class UploadViewModel extends BaseViewModel {
 //                        showDialog("正在请求...");
 //                    }
 //                })
-//                .subscribe(new Consumer<BaseResponse<DemoEntity>>() {
+//                .subscribe(new Consumer<BaseSystemResponse<DemoEntity>>() {
 //                    @Override
-//                    public void accept(BaseResponse<DemoEntity> response) throws Exception {
+//                    public void accept(BaseSystemResponse<DemoEntity> response) throws Exception {
 //                        //清除列表
 //                        observableList.clear();
 //                        //请求成功

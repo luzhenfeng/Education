@@ -13,5 +13,8 @@ public class ModuleLifecycleReflexs {
     //检查模块
     private static final String CheckInit = "com.nhsoft.check.CheckModuleInit";
 
-    public static String[] initModuleNames = {BaseInit, UploadInit,CheckInit};
+    //检查模块
+    private static final String LoginInit = "com.lzf.login.LoginModuleInit";
+
+    public static String[] initModuleNames = {BaseInit, UploadInit,CheckInit,LoginInit};
 }

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.lzf.login.viewModel.LoginViewModel"></import>
+        <variable
+            name="viewModel"
+            type="LoginViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.LoginFragment"
+        android:paddingRight="140px"
+        android:paddingLeft="140px"
+        android:gravity="center">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="140px">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账号:"
+                android:textColor="@color/color_919191"
+                android:textSize="55px">
+
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:textColor="@color/color_919191"
+                android:textSize="55px"
+                android:hint="请输入账号"
+                android:background="@android:color/transparent"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:maxLines="1"
+                android:text="@={viewModel.entity.username}">
+
+            </EditText>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="140px">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码:"
+                android:textColor="@color/color_919191"
+                android:textSize="55px">
+
+            </TextView>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:textColor="@color/color_919191"
+                android:textSize="55px"
+                android:hint="请输入密码"
+                android:background="@android:color/transparent"
+                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:text="@={viewModel.entity.password}">
+
+            </EditText>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_EBEBEB">
+
+        </View>
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="140px"
+            android:layout_marginBottom="100px"
+            android:layout_marginTop="300px"
+            android:background="@drawable/bg_solid_6bb978_corner_20"
+            android:text="登录"
+            android:textColor="@color/white"
+            android:textSize="55px"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            binding:onClickCommand="@{viewModel.entity.login}"/>
+    </LinearLayout>
+</layout>

@@ -29,6 +29,8 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
     public ObservableInt rightTextVisibleObservable = new ObservableInt(View.GONE);
     //右边图标的观察者
     public ObservableInt rightIconVisibleObservable = new ObservableInt(View.GONE);
+    //左边图标的观察者
+    public ObservableInt leftIconVisibleObservable = new ObservableInt(View.VISIBLE);
     //兼容databinding，去泛型化
     public ToolbarViewModel toolbarViewModel;
 
@@ -75,6 +77,15 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
      */
     public void setRightIconVisible(int visibility) {
         rightIconVisibleObservable.set(visibility);
+    }
+
+    /**
+     * 设置左边图标的显示和隐藏
+     *
+     * @param visibility
+     */
+    public void setLeftIconVisible(int visibility) {
+        leftIconVisibleObservable.set(visibility);
     }
 
     /**

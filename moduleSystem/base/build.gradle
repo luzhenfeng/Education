@@ -40,12 +40,13 @@ dependencies {
     api rootProject.ext.support["appcompat-v7"]
     //公用资源在base中依赖
     api project(':modulePublic:res')
-    api project(':modulePublic:utils')
-    //核心基础库(由于这是例子, 所以这里采用远程依赖的方式, 可根据实际情况自行换成源码依赖，源码地址：https://github.com/goldze/MVVMHabit)
-//    api rootProject.ext.dependencies.MVVMHabit
-    api project(':moduleSystem:mvvmhabit')
+//    api project(':modulePublic:utils')
+//    //核心基础库(由于这是例子, 所以这里采用远程依赖的方式, 可根据实际情况自行换成源码依赖，源码地址：https://github.com/goldze/MVVMHabit)
+//    api project(':moduleSystem:mvvmhabit')
+    api project(':moduleSystem:http')
     //阿里路由框架
     api rootProject.ext.dependencies["arouter-api"]
+//    api (rootProject.ext.dependencies.multidex)
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
 }

@@ -51,4 +51,13 @@ public class RouterActivityPath {
         /*上传文件界面*/
         public static final String PAGER_CHECK = CHECK + "/check";
     }
+
+    /**
+     * 登录检查组件
+     */
+    public static class Login{
+        private static final String LOGIN = "/login";
+        /*登录界面*/
+        public static final String PAGER_LOGIN = LOGIN + "/login";
+    }
 }

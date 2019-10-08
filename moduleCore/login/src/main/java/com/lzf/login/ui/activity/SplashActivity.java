@@ -1,4 +1,4 @@
-package com.nhsoft.upload.ui.activity;
+package com.lzf.login.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,7 +27,7 @@ public class SplashActivity extends Activity {
      * 进入主页面
      */
     private void inMain() {
-        startActivity(new Intent(this, UploadActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 }

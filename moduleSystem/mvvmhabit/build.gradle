@@ -25,6 +25,10 @@ android {
         abortOnError false
     }
 
+//    dexOptions {
+//        incremental true
+//        javaMaxHeapSize "4g"
+//    }
 }
 
 dependencies {
@@ -85,4 +89,6 @@ dependencies {
     api rootProject.ext.dependencies["tkrefreshlayout"]
 
     api project(':moduleSystem:pxview')
+
+
 }

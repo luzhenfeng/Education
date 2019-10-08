@@ -14,6 +14,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import priv.lzf.mvvmhabit.http.BaseResponse;
+import priv.lzf.mvvmhabit.http.BaseSystemResponse;
 import priv.lzf.mvvmhabit.http.ExceptionHandle;
 
 /**
@@ -88,12 +89,21 @@ public class RxUtils {
         }
     }
 
-    private static class HandleFuc<T> implements Function<BaseResponse<T>, T> {
+    private static class HandleFuc<T> implements Function<BaseSystemResponse<T>, T> {
         @Override
-        public T apply(BaseResponse<T> response) {
+        public T apply(BaseSystemResponse<T> response) {
             if (!response.isOk())
                 throw new RuntimeException(!"".equals(response.getCode() + "" + response.getMessage()) ? response.getMessage() : "");
             return response.getResult();
+        }
+    }
+
+    private static class HandleFucs<T> implements Function<BaseResponse<T>, T> {
+        @Override
+        public T apply(BaseResponse<T> response) {
+            if (!response.isOk())
+                throw new RuntimeException(!"".equals(response.getResult() + "" + response.getMsg()) ? response.getMsg() : "");
+            return response.getData();
         }
     }
 

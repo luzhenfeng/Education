@@ -1,6 +1,10 @@
 package com.nhsoft.app1;
 
 
+
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.nhsoft.base.config.ModuleLifecycleConfig;
 
 import priv.lzf.mvvmhabit.base.BaseApplication;
@@ -10,6 +14,14 @@ import priv.lzf.mvvmhabit.base.BaseApplication;
  */
 
 public class AppApplication extends BaseApplication {
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

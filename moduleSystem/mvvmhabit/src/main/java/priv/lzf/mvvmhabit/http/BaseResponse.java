@@ -1,39 +1,48 @@
 package priv.lzf.mvvmhabit.http;
 
 /**
- * Created by goldze on 2017/5/10.
- * 该类仅供参考，实际业务返回的固定字段, 根据需求来定义，
+ * 作者：Created by 45703
+ * 时间：Created on 2019/10/5.
  */
 public class BaseResponse<T> {
-    private int code;
-    private String message;
-    private T result;
+    private int result;
+    private String msg;
+    private T data;
+    private boolean success;
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public T getResult() {
+    public int getResult() {
         return result;
     }
 
-    public void setResult(T result) {
+    public void setResult(int result) {
         this.result = result;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
     public boolean isOk() {
-        return code == 0;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+        return result == 0;
     }
 }

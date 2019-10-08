@@ -13,15 +13,9 @@ import com.nhsoft.check.entity.CheckBaseEntity;
 
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.OnItemBind;
-import priv.lzf.mvvmhabit.base.BaseModel;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
-import priv.lzf.mvvmhabit.binding.command.BindingAction;
-import priv.lzf.mvvmhabit.binding.command.BindingCommand;
-import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
-import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
-import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -69,27 +63,9 @@ public class CheckBaseViewModel extends BaseViewModel {
      * 选择班级
      */
     public void onSelectClassImage(){
-        uc.showSelectClassPopupWindow.set(!uc.showSelectClassPopupWindow.get());
+//        uc.showSelectClassPopupWindow.set(!uc.showSelectClassPopupWindow.get());
         uc.type.setValue(1);
     }
-
-
-
-//    public void registerMessenger(){
-//        Messenger.getDefault().register(this, CheckInteriorViewModel.TOKEN_CHECKBASEVIEWMODEL_SHOWSELECTCLASS, Integer.class, new BindingConsumer<Integer>() {
-//            @Override
-//            public void call(Integer integer) {
-//                uc.type.setValue(integer);
-////                uc.showSelectClassObservable.set(!uc.showSelectClassObservable.get());
-//            }
-//        });
-//    }
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        Messenger.getDefault().unregister(this);
-//    }
 
     public void itemBinding(){
         entity.get().itemLeftBinding = ItemBinding.of(BR.viewModel, R.layout.item_left);

@@ -64,5 +64,12 @@ ext{
             "arouter-api"                          : "com.alibaba:arouter-api:1.4.1",
             "arouter-compiler"                     : "com.alibaba:arouter-compiler:1.2.2",
             "tkrefreshlayout"                      : "com.lcodecorex:tkrefreshlayout:1.0.7",
+
+            //数据库处理
+            "greendao"                             : 'org.greenrobot:greendao:3.2.2',
+            "GreenDaoUpgradeHelper"                :'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1',
+            "greendao-generator"                   :'org.greenrobot:greendao-generator:3.2.2',
+            //分包
+            "multidex"                             :'com.android.support:multidex:1.0.3',
     ]
 }

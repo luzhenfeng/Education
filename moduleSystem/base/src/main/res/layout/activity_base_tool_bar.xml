@@ -35,7 +35,8 @@
                     android:paddingTop="68px"
                     android:paddingBottom="68px"
                     android:src="@drawable/back"
-                    binding:onClickCommand="@{viewModel.backOnClick}" />
+                    binding:onClickCommand="@{viewModel.backOnClick}"
+                    android:visibility="@{viewModel.leftIconVisibleObservable}"/>
 
                 <TextView
                     android:id="@+id/tv_title"
