@@ -1,7 +1,10 @@
 package com.lzf.http.data.source;
 
+import com.lzf.http.entity.AllCategoryModel;
+import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
+import com.lzf.http.entity.SycnListModel;
 
 import java.util.List;
 
@@ -18,4 +21,13 @@ public interface HttpDataSource{
 
     //模拟登录
     Observable<BaseResponse<List<CheckModel>>> checkObject(String token);
+
+    //模拟登录
+    Observable<BaseResponse<List<AppListModel>>> getAppList(String token);
+
+    //模拟登录
+    Observable<BaseResponse<List<AllCategoryModel>>> getAllCategoryList(String token);
+
+    //模拟登录
+    Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token);
 }

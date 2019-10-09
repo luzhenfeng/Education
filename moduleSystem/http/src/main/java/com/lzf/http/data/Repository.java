@@ -5,8 +5,11 @@ import android.support.annotation.VisibleForTesting;
 
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.LocalDataSource;
+import com.lzf.http.entity.AllCategoryModel;
+import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
+import com.lzf.http.entity.SycnListModel;
 
 import java.util.List;
 
@@ -58,6 +61,21 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
+    public Observable<BaseResponse<List<AppListModel>>> getAppList(String token) {
+        return mHttpDataSource.getAppList(token);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<AllCategoryModel>>> getAllCategoryList(String token) {
+        return mHttpDataSource.getAllCategoryList(token);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token) {
+        return mHttpDataSource.getSyncList(token);
+    }
+
+    @Override
     public void saveUserName(String userName) {
         mLocalDataSource.saveUserName(userName);
     }
@@ -90,5 +108,35 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     @Override
     public boolean insertUser(LoginModel loginModel) {
         return mLocalDataSource.insertUser(loginModel);
+    }
+
+    @Override
+    public void saveCheckObjectVersion(int version) {
+        mLocalDataSource.saveCheckObjectVersion(version);
+    }
+
+    @Override
+    public int getCheckObjectVersion() {
+        return mLocalDataSource.getCheckObjectVersion();
+    }
+
+    @Override
+    public void saveCheckCategoryVersion(int version) {
+        mLocalDataSource.saveCheckCategoryVersion(version);
+    }
+
+    @Override
+    public int getCheckCategoryVersion() {
+        return mLocalDataSource.getCheckCategoryVersion();
+    }
+
+    @Override
+    public void saveCodes(String codes) {
+        mLocalDataSource.saveCodes(codes);
+    }
+
+    @Override
+    public String getCodes() {
+        return mLocalDataSource.getCodes();
     }
 }

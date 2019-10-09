@@ -4,7 +4,7 @@ android {
     defaultConfig {
         //如果是独立模块，则使用当前组件的包名
         if (isBuildModule.toBoolean()) {
-            applicationId "com.goldze.main"
+            applicationId "com.lzf.login"
         }
     }
     compileOptions {

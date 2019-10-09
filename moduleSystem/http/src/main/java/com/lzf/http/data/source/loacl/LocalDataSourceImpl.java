@@ -78,4 +78,34 @@ public class LocalDataSourceImpl implements LocalDataSource {
         userModel.setId(1l);
         return UserService.getInstance().insert(userModel);
     }
+
+    @Override
+    public void saveCheckObjectVersion(int version) {
+        SPUtils.getInstance().put("checkObjectVersion",version);
+    }
+
+    @Override
+    public int getCheckObjectVersion() {
+        return SPUtils.getInstance().getInt("checkObjectVersion",0);
+    }
+
+    @Override
+    public void saveCheckCategoryVersion(int version) {
+        SPUtils.getInstance().put("checkCategoryVersion",version);
+    }
+
+    @Override
+    public int getCheckCategoryVersion() {
+        return SPUtils.getInstance().getInt("checkCategoryVersion",0);
+    }
+
+    @Override
+    public void saveCodes(String codes) {
+        SPUtils.getInstance().put("codes",codes);
+    }
+
+    @Override
+    public String getCodes() {
+        return SPUtils.getInstance().getString("checkCategoryVersion");
+    }
 }

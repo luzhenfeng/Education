@@ -11,8 +11,11 @@ import com.lzf.greendao.entity.UserModel;
 import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
+import com.lzf.http.entity.AllCategoryModel;
+import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
+import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
 import com.nhsoft.base.router.RouterActivityPath;
 
@@ -38,6 +41,12 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
 public class LoginViewModel extends BaseViewModel<Repository> {
 
     public ObservableField<LoginEntity> entity=new ObservableField<>();
+
+    //是否请求检查对象
+    public boolean isCheckObject=true;
+
+    //是否请求检查类别
+    public boolean isCheckCategory=true;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -91,14 +100,14 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 model.saveToken(response.getData().getToken().getAccess_token());
                                 model.saveUserName(entity.get().username.get());
                                 model.savePassword(entity.get().password.get());
-                                checkObject();
-//                                ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
-//                                finish();
+                                getAppList();
                             }else {
                                 ToastUtils.showShort("保存失败");
+                                dismissDialog();
                             }
                         }else {
                             ToastUtils.showShort(response.getMsg());
+                            dismissDialog();
                         }
 
                     }
@@ -119,6 +128,93 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                     }
                 }));
 
+    }
+
+
+    private void getAppList(){
+        addSubscribe(model.getAppList(model.getToken())
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .subscribe(new Consumer<BaseResponse<List<AppListModel>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<AppListModel>> response) throws Exception {
+                        KLog.e("getAppList"+new Gson().toJson(response.getData()));
+                        if (response.isOk()){
+                            List<AppListModel> appListModelList=response.getData();
+                            if (appListModelList!=null){
+                                String codes="";
+                                for (int i=0;i<appListModelList.get(0).getApps().size();i++){
+                                    if (i==appListModelList.get(0).getApps().size()-1){
+                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode();
+                                    }else {
+                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode()+",";
+                                    }
+                                }
+                                model.saveCodes(codes);
+                            }
+                            getSyncList();
+                        }else {
+                            dismissDialog();
+                            ToastUtils.showShort(response.getMsg());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                }));
+    }
+
+
+    private void getSyncList(){
+        addSubscribe(model.getSyncList(model.getToken())
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .subscribe(new Consumer<BaseResponse<List<SycnListModel>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<SycnListModel>> response) throws Exception {
+                        if (response.isOk()) {
+                            List<SycnListModel> sycnListModelList = response.getData();
+                            if (sycnListModelList.size() >= 2) {
+                                if (sycnListModelList.get(0).getVersion() > model.getCheckObjectVersion()) {
+                                    isCheckObject = true;
+                                    model.saveCheckObjectVersion(sycnListModelList.get(0).getVersion());
+                                }
+                                if (sycnListModelList.get(1).getVersion() > model.getCheckCategoryVersion()) {
+                                    isCheckCategory = true;
+                                    model.saveCheckCategoryVersion(sycnListModelList.get(1).getVersion());
+                                }
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        if (isCheckObject){
+                            checkObject();
+                        }else if (isCheckCategory){
+                            getAllCategoryList();
+                        }else {
+                           startCheck();
+                        }
+                    }
+                }));
     }
 
 
@@ -147,10 +243,51 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
-                        //关闭对话框
-                        dismissDialog();
+                        if (isCheckCategory){
+                            getAllCategoryList();
+                        }else {
+                            startCheck();
+                        }
                     }
                 }));
+    }
+
+
+    private void getAllCategoryList(){
+        addSubscribe(model.getAllCategoryList(model.getToken())
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .subscribe(new Consumer<BaseResponse<List<AllCategoryModel>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<AllCategoryModel>> response) throws Exception {
+                        KLog.e("getAllCategoryList"+new Gson().toJson(response.getData()));
+                        if (response.isOk()){
+                            List<AllCategoryModel> allCategoryModelList=response.getData();
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        //关闭对话框
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        startCheck();
+                    }
+                }));
+    }
+
+
+    private void startCheck(){
+        dismissDialog();
+        ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+        finish();
     }
 
 }
