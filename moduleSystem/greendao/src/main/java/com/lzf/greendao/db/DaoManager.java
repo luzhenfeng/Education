@@ -14,7 +14,7 @@ import org.greenrobot.greendao.database.Database;
  */
 public class DaoManager {
 
-    private static String              DB_NAME = "iwmpos-db";
+    private static String              DB_NAME = "education-db";
     private static DaoManager          mDaoManager;
     private static MySqlLiteOpenHelper mySqlLiteOpenHelper;
     private static DaoSession mDaoSession;

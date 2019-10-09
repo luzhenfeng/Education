@@ -1,6 +1,9 @@
 package com.lzf.http.data.source;
 
-import com.lzf.greendao.entity.LoginModel;
+import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.LoginModel;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import priv.lzf.mvvmhabit.http.BaseResponse;
@@ -12,4 +15,7 @@ import priv.lzf.mvvmhabit.http.BaseResponse;
 public interface HttpDataSource{
     //模拟登录
     Observable<BaseResponse<LoginModel>> login(String username, String password);
+
+    //模拟登录
+    Observable<BaseResponse<List<CheckModel>>> checkObject(String token);
 }

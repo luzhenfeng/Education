@@ -9,7 +9,7 @@ import org.greenrobot.greendao.annotation.Generated;
  * 时间：Created on 2019/10/5.
  */
 @Entity
-public class UserMdole {
+public class UserModel {
     @Id(autoincrement = true)
     private Long id;
     private String userid;
@@ -18,9 +18,12 @@ public class UserMdole {
     private int usertype;
     private String avatar;
     private int subjectid;
-    @Generated(hash = 5953601)
-    public UserMdole(Long id, String userid, String username, String realname,
-            int usertype, String avatar, int subjectid) {
+    private String access_token;
+    private int expires_in;
+    @Generated(hash = 1127209273)
+    public UserModel(Long id, String userid, String username, String realname,
+            int usertype, String avatar, int subjectid, String access_token,
+            int expires_in) {
         this.id = id;
         this.userid = userid;
         this.username = username;
@@ -28,9 +31,11 @@ public class UserMdole {
         this.usertype = usertype;
         this.avatar = avatar;
         this.subjectid = subjectid;
+        this.access_token = access_token;
+        this.expires_in = expires_in;
     }
-    @Generated(hash = 2027612949)
-    public UserMdole() {
+    @Generated(hash = 782181818)
+    public UserModel() {
     }
     public Long getId() {
         return this.id;
@@ -74,7 +79,16 @@ public class UserMdole {
     public void setSubjectid(int subjectid) {
         this.subjectid = subjectid;
     }
-
-    
-   
+    public String getAccess_token() {
+        return this.access_token;
+    }
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
+    }
+    public int getExpires_in() {
+        return this.expires_in;
+    }
+    public void setExpires_in(int expires_in) {
+        this.expires_in = expires_in;
+    }
 }

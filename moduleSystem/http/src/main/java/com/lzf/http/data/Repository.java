@@ -3,9 +3,12 @@ package com.lzf.http.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
-import com.lzf.greendao.entity.LoginModel;
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.LocalDataSource;
+import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.LoginModel;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import priv.lzf.mvvmhabit.base.BaseModel;
@@ -47,5 +50,45 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     @Override
     public Observable<BaseResponse<LoginModel>> login(String username, String password) {
         return mHttpDataSource.login(username,password);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<CheckModel>>> checkObject(String token) {
+        return mHttpDataSource.checkObject(token);
+    }
+
+    @Override
+    public void saveUserName(String userName) {
+        mLocalDataSource.saveUserName(userName);
+    }
+
+    @Override
+    public String getUserName() {
+        return mLocalDataSource.getUserName();
+    }
+
+    @Override
+    public void savePassword(String password) {
+        mLocalDataSource.savePassword(password);
+    }
+
+    @Override
+    public String getPassword() {
+        return mLocalDataSource.getPassword();
+    }
+
+    @Override
+    public void saveToken(String token) {
+        mLocalDataSource.saveToken(token);
+    }
+
+    @Override
+    public String getToken() {
+        return mLocalDataSource.getToken();
+    }
+
+    @Override
+    public boolean insertUser(LoginModel loginModel) {
+        return mLocalDataSource.insertUser(loginModel);
     }
 }

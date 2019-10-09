@@ -1,11 +1,14 @@
 package com.lzf.http.data.source.http;
 
 
-import com.lzf.greendao.entity.LoginModel;
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.http.service.ApiService;
+import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.LoginModel;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.EncryptionUtil;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import priv.lzf.mvvmhabit.http.BaseResponse;
@@ -42,5 +45,10 @@ public class HttpDataSourceImpl implements HttpDataSource {
         String nonce=EncryptionUtil.getNonce();
         String timestamp=EncryptionUtil.getTimestamp();
         return apiService.login(username, EncryptionUtil.MD5(password),EncryptionUtil.signatureString(Constant.APPSECRET,timestamp,nonce),timestamp,nonce,Constant.APPID);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<CheckModel>>> checkObject(String token) {
+        return apiService.checkObject(token);
     }
 }
