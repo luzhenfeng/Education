@@ -13,4 +13,8 @@ public class Constant {
     public final static String APPID="android001";
     //appSecret
     public final static String APPSECRET="e67f546e8fe043c5be65cb39593ed534";
+    //checkObject文件名
+    public final static String checkObjectFileName="checkObject.json";
+    //checkCategory文件名
+    public final static String checkCategoryFileName="checkCategory.json";
 }

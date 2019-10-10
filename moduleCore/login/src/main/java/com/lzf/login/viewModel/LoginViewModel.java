@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lzf.greendao.entity.UserModel;
 import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
@@ -18,6 +19,8 @@ import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
 import com.nhsoft.base.router.RouterActivityPath;
+import com.nhsoft.pxview.constant.Constant;
+import com.nhsoft.utils.utils.FileUtil;
 
 import java.util.List;
 
@@ -43,10 +46,10 @@ public class LoginViewModel extends BaseViewModel<Repository> {
     public ObservableField<LoginEntity> entity=new ObservableField<>();
 
     //是否请求检查对象
-    public boolean isCheckObject=true;
+    public boolean isCheckObject=false;
 
     //是否请求检查类别
-    public boolean isCheckCategory=true;
+    public boolean isCheckCategory=false;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -226,9 +229,10 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 .subscribe(new Consumer<BaseResponse<List<CheckModel>>>() {
                     @Override
                     public void accept(BaseResponse<List<CheckModel>> response) throws Exception {
-                        KLog.e(new Gson().toJson(response.getData()));
                         if (response.isOk()){
                             List<CheckModel> checkModelList=response.getData();
+                            String json=new Gson().toJson(checkModelList);
+                            FileUtil.save(getApplication(),json, Constant.checkObjectFileName);
                         }
                     }
                 }, new Consumer<Throwable>() {
@@ -264,6 +268,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                         KLog.e("getAllCategoryList"+new Gson().toJson(response.getData()));
                         if (response.isOk()){
                             List<AllCategoryModel> allCategoryModelList=response.getData();
+                            String json=new Gson().toJson(allCategoryModelList);
+                            FileUtil.save(getApplication(),json, Constant.checkCategoryFileName);
                         }
                     }
                 }, new Consumer<Throwable>() {

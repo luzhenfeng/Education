@@ -32,6 +32,6 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
     @Override
     public void initData() {
         super.initData();
-        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frame_check,new CheckViewPagerFragment()).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frame_check,new CheckListFragment()).commit();
     }
 }

@@ -5,17 +5,26 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
 import com.nhsoft.check.entity.CheckBaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import me.tatarka.bindingcollectionadapter2.OnItemBind;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
+import priv.lzf.mvvmhabit.binding.command.BindingAction;
+import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
+import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -36,12 +45,16 @@ public class CheckBaseViewModel extends BaseViewModel {
     public ObservableField<CheckBaseEntity> entity=new ObservableField<>();
 
 
+
+
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc=new UIChangeObservable();
 
     public class UIChangeObservable {
-        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
+//        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
         public SingleLiveEvent<Integer> type = new SingleLiveEvent<>();
+        //TabLayout切换
+        public SingleLiveEvent<Integer> onTabSelectedCommand = new SingleLiveEvent<>();
     }
 
 
@@ -49,15 +62,15 @@ public class CheckBaseViewModel extends BaseViewModel {
     public CheckBaseViewModel(@NonNull Application application) {
         super(application);
         entity.set(new CheckBaseEntity());
+        bindingCommand();
         itemBinding();
+        entity.get().tabs.set(getTabs());
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-//        registerMessenger();
+    public List<String> getTabs(){
+        List<String> tabs=new ArrayList<>();
+        return tabs;
     }
-
 
     /**
      * 选择班级
@@ -67,7 +80,25 @@ public class CheckBaseViewModel extends BaseViewModel {
         uc.type.setValue(1);
     }
 
+    @Override
+    public void bindingCommand() {
+        super.bindingCommand();
+        entity.get().onClickAdd=new BindingCommand<ImageView>(new BindingAction() {
+            @Override
+            public void call() {
+                ToastUtils.showShort("添加");
+            }
+        });
+        entity.get().onTabSelectedCommand=new BindingCommand<TabLayout.Tab>(new BindingConsumer<TabLayout.Tab>() {
+            @Override
+            public void call(TabLayout.Tab tab) {
+                uc.onTabSelectedCommand.setValue(Integer.valueOf(tab.getPosition()));
+            }
+        });
+    }
+
     public void itemBinding(){
+
         entity.get().itemLeftBinding = ItemBinding.of(BR.viewModel, R.layout.item_left);
         entity.get().itemRightBinding= ItemBinding.of(new OnItemBind<MultiItemViewModel>() {
             @Override
