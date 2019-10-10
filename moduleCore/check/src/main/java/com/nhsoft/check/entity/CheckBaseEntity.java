@@ -39,7 +39,7 @@ public class CheckBaseEntity {
     //grid是结束位置
     public ObservableInt gridEndPos=new ObservableInt();
     //是否显示学生
-    public ObservableInt isShowStudent=new ObservableInt(View.GONE);
+    public ObservableInt isShowStudent=new ObservableInt(View.VISIBLE);
     //tab列表
     public ObservableField<List<String>> tabs=new ObservableField<>();
     //tabLayout切换

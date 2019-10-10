@@ -29,22 +29,23 @@ public class CheckListViewModel extends CheckBaseViewModel {
     public CheckListViewModel(@NonNull Application application) {
         super(application);
     }
-    /**
-     * 初始化左边条目
-     */
-    public void initLeftItem(){
-        if (entity.get().observableLeftList.size()==0){
-            for (String s:mCheckTitleModels){
-                LeftEntity leftEntity=new LeftEntity();
-                leftEntity.title.set(s);
-                leftEntity.image= ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
-                if ( entity.get().observableLeftList.size()==0)
-                    leftEntity.mDrawable= ContextCompat.getDrawable(getApplication(),R.color.white);
-                LeftItemViewModel leftItemViewModel=new LeftItemViewModel(this,leftEntity);
-                entity.get().observableLeftList.add(leftItemViewModel);
-            }
-        }
-    }
+//    /**
+//     * 初始化左边条目
+//     */
+//    public void initLeftItem(){
+//
+//        if (entity.get().observableLeftList.size()==0){
+//            for (String s:mCheckTitleModels){
+//                LeftEntity leftEntity=new LeftEntity();
+//                leftEntity.title.set(s);
+//                leftEntity.image= ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
+//                if ( entity.get().observableLeftList.size()==0)
+//                    leftEntity.mDrawable= ContextCompat.getDrawable(getApplication(),R.color.white);
+//                LeftItemViewModel leftItemViewModel=new LeftItemViewModel(this,leftEntity);
+//                entity.get().observableLeftList.add(leftItemViewModel);
+//            }
+//        }
+//    }
 
     /**
      * 初始化左边条目

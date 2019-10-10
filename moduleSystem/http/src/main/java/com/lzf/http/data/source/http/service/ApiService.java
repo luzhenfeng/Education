@@ -2,7 +2,7 @@ package com.lzf.http.data.source.http.service;
 
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
-import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -31,7 +31,7 @@ public interface ApiService {
                                                @Field("appid") String appid);
 
     @GET("mq/GetCheckObjects")
-    Observable<BaseResponse<List<CheckModel>>> checkObject(@Query("token") String token);
+    Observable<BaseResponse<List<FloorModel>>> checkObject(@Query("token") String token);
 
 
     @GET("Auth/GetAppList")

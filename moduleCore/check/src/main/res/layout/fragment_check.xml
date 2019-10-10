@@ -32,12 +32,20 @@
             </ImageView>
             <TextView
                 android:id="@+id/tv_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="48px"
+                android:textColor="@color/black"
+                android:layout_marginRight="22px"
+                android:text="@{viewModel.entity.floor}">
+            </TextView>
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="48px"
                 android:textColor="@color/black"
-                android:text="@{viewModel.entity.floor}">
+                android:text="@{viewModel.entity.room}">
 
             </TextView>
             <TextView

@@ -14,7 +14,8 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
  * 时间：Created on 2019/9/27.
  */
 public class CheckEntity {
-    public ObservableField<String> floor=new ObservableField<>("1号楼 101");
+    public ObservableField<String> floor=new ObservableField<>("1号楼");
+    public ObservableField<String> room=new ObservableField<>("001");
     public ObservableField<String> date=new ObservableField<>(DateUtil.getCurrentTime());
     public ObservableField<String> fractionNum=new ObservableField<>("0");
     public ObservableField<String> uploadNum=new ObservableField<>("0");

@@ -106,6 +106,6 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getCodes() {
-        return SPUtils.getInstance().getString("checkCategoryVersion");
+        return SPUtils.getInstance().getString("codes");
     }
 }

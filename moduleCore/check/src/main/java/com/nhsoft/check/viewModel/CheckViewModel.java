@@ -5,12 +5,22 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
+import com.lzf.http.data.Injection;
+import com.lzf.http.data.Repository;
+import com.lzf.http.entity.AllCategoryModel;
+import com.lzf.http.entity.FloorModel;
+import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.check.entity.CheckEntity;
+import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.utils.utils.DateUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -18,14 +28,49 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * Describe:
  */
 
-public class CheckViewModel extends BaseViewModel {
+public class CheckViewModel extends BaseViewModel<Repository> {
+
+    public static final String TOKEN_CHECKVIEWMODEL_INFORMATION = "token_check_view_model_information";
+//    public static final String TOKEN_CHECKVIEWMODEL_USERCATEGORY = "token_check_view_model_user_category";
 
     public ObservableField<CheckEntity> entity=new ObservableField<>();
 
+    //所有分类
+    public List<AllCategoryModel> mAllCategoryModelList=new ArrayList<>();
+
+    //所有楼
+    public List<FloorModel> mFloorModelList=new ArrayList<>();
+
+    //用户所对应的分类
+    public List<AllCategoryModel> userCategoryList=new ArrayList<>();
+
+    //当前分类下的所有楼名
+    public List<String> mFloorNameList=new ArrayList<>();
+
+    //当前楼所有房间
+    public List<FloorModel.RoomModel> mRoomModelList=new ArrayList<>();
+
+    //当前楼所有房间名
+    public List<String> mRoomNameList=new ArrayList<>();
+
+    //当前楼
+    public FloorModel mFloorModel;
+
+    //当前房间
+    public FloorModel.RoomModel mRoomModel;
+
     public CheckViewModel(@NonNull Application application) {
         super(application);
+        model= Injection.provideDemoRepository();
+        mAllCategoryModelList= HttpDataUtil.getAllCategoryList(application);
+        mFloorModelList=HttpDataUtil.getFloorList(application);
+        userCategoryList= HttpDataUtil.getUserCategoryList(model.getCodes(),mAllCategoryModelList);
         entity.set(new CheckEntity());
         bindingCommand();
+        if (userCategoryList.size()!=0){
+            setFloorNameList(userCategoryList.get(0).getCategory());
+        }
+//        sentInformationMessage();
     }
 
     @Override
@@ -77,6 +122,38 @@ public class CheckViewModel extends BaseViewModel {
                 ToastUtils.showShort("提交");
             }
         });
+    }
+
+
+    public void sentInformationMessage(){
+        CheckInformation checkInformation=new CheckInformation();
+        checkInformation.mFloorModelList=mFloorModelList;
+        checkInformation.userCategoryList=userCategoryList;
+        Messenger.getDefault().send(checkInformation,TOKEN_CHECKVIEWMODEL_INFORMATION);
+    }
+
+    /**
+     * 设置楼名列表
+     * @param category
+     */
+    public void setFloorNameList(int category){
+        mFloorNameList=HttpDataUtil.getFloorNameList(category,mFloorModelList);
+        if (mFloorNameList.size()!=0){
+            entity.get().floor.set(mFloorNameList.get(0));
+            mFloorModel=HttpDataUtil.getFloor(mFloorNameList.get(0),mFloorModelList);
+            setRoomNameList();
+        }
+    }
+
+    /**
+     * 设置房间名列表
+     */
+    public void setRoomNameList(){
+        mRoomNameList=HttpDataUtil.getRoomNameList(mFloorModel);
+        if (mRoomNameList.size()!=0){
+            entity.get().room.set(mRoomNameList.get(0));
+            mRoomModel=HttpDataUtil.getRoom(mRoomNameList.get(0),mFloorModel);
+        }
     }
 
 

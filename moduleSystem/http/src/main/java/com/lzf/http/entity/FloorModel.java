@@ -6,7 +6,7 @@ import java.util.List;
  * 作者：Created by 45703
  * 时间：Created on 2019/10/9.
  */
-public class CheckModel {
+public class FloorModel {
 
     /**
      * category : 1
@@ -21,7 +21,7 @@ public class CheckModel {
     private int sort;
     private String id;
     private String name;
-    private List<ChildrensBeanX> childrens;
+    private List<RoomModel> childrens;
     private List<StudentsBean> students;
 
     public int getCategory() {
@@ -56,11 +56,11 @@ public class CheckModel {
         this.name = name;
     }
 
-    public List<ChildrensBeanX> getChildrens() {
+    public List<RoomModel> getChildrens() {
         return childrens;
     }
 
-    public void setChildrens(List<ChildrensBeanX> childrens) {
+    public void setChildrens(List<RoomModel> childrens) {
         this.childrens = childrens;
     }
 
@@ -72,7 +72,7 @@ public class CheckModel {
         this.students = students;
     }
 
-    public static class ChildrensBeanX {
+    public static class RoomModel {
         /**
          * childrens : [{"id":"edfa0d8d-8780-4434-9295-5e13c6a1101c","name":"18商务助理1"}]
          * sort : 1

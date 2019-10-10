@@ -5,7 +5,7 @@ import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.http.service.ApiService;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
-import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.nhsoft.pxview.constant.Constant;
@@ -51,7 +51,7 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<BaseResponse<List<CheckModel>>> checkObject(String token) {
+    public Observable<BaseResponse<List<FloorModel>>> checkObject(String token) {
         return apiService.checkObject(token);
     }
 

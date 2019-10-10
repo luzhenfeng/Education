@@ -7,14 +7,11 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.lzf.greendao.entity.UserModel;
-import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
-import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
@@ -24,7 +21,6 @@ import com.nhsoft.utils.utils.FileUtil;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -53,9 +49,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        this.entity.set(new LoginEntity());
-        //RaJava模拟登录
         model=Injection.provideDemoRepository();
+        this.entity.set(new LoginEntity());
         entity.get().username.set(model.getUserName());
         entity.get().password.set(model.getPassword());
         bindingCommand();
@@ -226,12 +221,12 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
-                .subscribe(new Consumer<BaseResponse<List<CheckModel>>>() {
+                .subscribe(new Consumer<BaseResponse<List<FloorModel>>>() {
                     @Override
-                    public void accept(BaseResponse<List<CheckModel>> response) throws Exception {
+                    public void accept(BaseResponse<List<FloorModel>> response) throws Exception {
                         if (response.isOk()){
-                            List<CheckModel> checkModelList=response.getData();
-                            String json=new Gson().toJson(checkModelList);
+                            List<FloorModel> floorModelList =response.getData();
+                            String json=new Gson().toJson(floorModelList);
                             FileUtil.save(getApplication(),json, Constant.checkObjectFileName);
                         }
                     }
@@ -265,7 +260,6 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 .subscribe(new Consumer<BaseResponse<List<AllCategoryModel>>>() {
                     @Override
                     public void accept(BaseResponse<List<AllCategoryModel>> response) throws Exception {
-                        KLog.e("getAllCategoryList"+new Gson().toJson(response.getData()));
                         if (response.isOk()){
                             List<AllCategoryModel> allCategoryModelList=response.getData();
                             String json=new Gson().toJson(allCategoryModelList);

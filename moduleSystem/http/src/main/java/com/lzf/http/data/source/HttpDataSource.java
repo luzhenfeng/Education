@@ -2,7 +2,7 @@ package com.lzf.http.data.source;
 
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
-import com.lzf.http.entity.CheckModel;
+import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -20,7 +20,7 @@ public interface HttpDataSource{
     Observable<BaseResponse<LoginModel>> login(String username, String password);
 
     //模拟登录
-    Observable<BaseResponse<List<CheckModel>>> checkObject(String token);
+    Observable<BaseResponse<List<FloorModel>>> checkObject(String token);
 
     //模拟登录
     Observable<BaseResponse<List<AppListModel>>> getAppList(String token);

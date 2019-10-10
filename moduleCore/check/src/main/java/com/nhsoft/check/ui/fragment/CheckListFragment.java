@@ -38,10 +38,16 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
     @Override
     public void initViewObservable() {
         super.initViewObservable();
-        viewModel.uc.onTabSelectedCommand.observe(this, new Observer<Integer>() {
+        viewModel.uc.onTabSelectedCommand.observe(this, new Observer<String>() {
             @Override
-            public void onChanged(@Nullable Integer integer) {
-                ToastUtils.showShort(integer.intValue()+"");
+            public void onChanged(@Nullable String string) {
+                ToastUtils.showShort(string);
+            }
+        });
+        viewModel.uc.setTabs.observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object o) {
+                setTabs();
             }
         });
     }
@@ -49,9 +55,8 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
     @Override
     public void initData() {
         super.initData();
-        setTabs();
         binding.setAdapter(new RecyclerViewBindingAdapter());
-        viewModel.initLeftItem();
+
         binding.setRightAdapter(new RecyclerViewBindingAdapter());
         viewModel.initRightItem();
     }
