@@ -137,6 +137,8 @@ public class AllCategoryModel {
         private int deducttype;
         private int ruletype;
         private double score;
+        private int showbed;//1显示0不显示
+
 
         public String getId() {
             return id;
@@ -192,6 +194,14 @@ public class AllCategoryModel {
 
         public void setScore(double score) {
             this.score = score;
+        }
+
+        public int getShowbed() {
+            return showbed;
+        }
+
+        public void setShowbed(int showbed) {
+            this.showbed = showbed;
         }
     }
 }

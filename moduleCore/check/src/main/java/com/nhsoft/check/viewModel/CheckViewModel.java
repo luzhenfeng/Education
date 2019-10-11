@@ -12,6 +12,7 @@ import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.check.entity.CheckEntity;
 import com.nhsoft.check.message.CheckInformation;
+import com.nhsoft.check.message.ConstantMessage;
 import com.nhsoft.utils.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
@@ -30,8 +32,6 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 public class CheckViewModel extends BaseViewModel<Repository> {
 
-    public static final String TOKEN_CHECKVIEWMODEL_INFORMATION = "token_check_view_model_information";
-//    public static final String TOKEN_CHECKVIEWMODEL_USERCATEGORY = "token_check_view_model_user_category";
 
     public ObservableField<CheckEntity> entity=new ObservableField<>();
 
@@ -59,6 +59,9 @@ public class CheckViewModel extends BaseViewModel<Repository> {
     //当前房间
     public FloorModel.RoomModel mRoomModel;
 
+    //当前分类
+    public AllCategoryModel mAllCategoryModel;
+
     public CheckViewModel(@NonNull Application application) {
         super(application);
         model= Injection.provideDemoRepository();
@@ -67,6 +70,7 @@ public class CheckViewModel extends BaseViewModel<Repository> {
         userCategoryList= HttpDataUtil.getUserCategoryList(model.getCodes(),mAllCategoryModelList);
         entity.set(new CheckEntity());
         bindingCommand();
+        initMessenger();
         if (userCategoryList.size()!=0){
             setFloorNameList(userCategoryList.get(0).getCategory());
         }
@@ -125,11 +129,22 @@ public class CheckViewModel extends BaseViewModel<Repository> {
     }
 
 
+    public void initMessenger(){
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND, AllCategoryModel.class, new BindingConsumer<AllCategoryModel>() {
+            @Override
+            public void call(AllCategoryModel allCategoryModel) {
+               mAllCategoryModel=allCategoryModel;
+               setFloorNameList(mAllCategoryModel.getCategory());
+            }
+        });
+    }
+
+
     public void sentInformationMessage(){
         CheckInformation checkInformation=new CheckInformation();
         checkInformation.mFloorModelList=mFloorModelList;
         checkInformation.userCategoryList=userCategoryList;
-        Messenger.getDefault().send(checkInformation,TOKEN_CHECKVIEWMODEL_INFORMATION);
+        Messenger.getDefault().send(checkInformation, ConstantMessage.TOKEN_CHECKVIEWMODEL_INFORMATION);
     }
 
     /**

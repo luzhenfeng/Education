@@ -32,7 +32,7 @@ public class CheckBaseEntity {
     public ObservableList<MultiItemViewModel> observableRightList = new ObservableArrayList<>();
     //右边RecyclerView多布局添加ItemBinding
     public ItemBinding<MultiItemViewModel> itemRightBinding ;
-    //grid分成几份
+    //grid分成几份 默认10张床（value值比床数大一）
     public ObservableInt gridCount=new ObservableInt(11);
     //grid是开始位置
     public ObservableInt gridStartPos=new ObservableInt();

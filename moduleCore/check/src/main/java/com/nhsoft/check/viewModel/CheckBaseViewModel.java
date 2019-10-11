@@ -18,8 +18,14 @@ import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
 import com.nhsoft.check.entity.CheckBaseEntity;
+import com.nhsoft.check.entity.HeadEntity;
 import com.nhsoft.check.entity.LeftEntity;
+import com.nhsoft.check.entity.RightFourEntity;
+import com.nhsoft.check.entity.RightOneEntity;
+import com.nhsoft.check.entity.RightThreeEntity;
+import com.nhsoft.check.entity.RightTwoEntity;
 import com.nhsoft.check.message.CheckInformation;
+import com.nhsoft.check.message.ConstantMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +48,11 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  */
 public class CheckBaseViewModel extends BaseViewModel<Repository> {
 
-    protected static final String MultiRecycleType_Head = "head";
-    protected static final String MultiRecycleType_Right1 = "right1";
-    protected static final String MultiRecycleType_Right2 = "right2";
-    protected static final String MultiRecycleType_Right3 = "right3";
-    protected static final String MultiRecycleType_Right4 = "right4";
+    public static final String MultiRecycleType_Head = "head";
+    public static final String MultiRecycleType_Right1 = "right1";
+    public static final String MultiRecycleType_Right2 = "right2";
+    public static final String MultiRecycleType_Right3 = "right3";
+    public static final String MultiRecycleType_Right4 = "right4";
 
     public ObservableInt selectPos=new ObservableInt(0);
 
@@ -60,6 +66,15 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
 
     //当前分类
     public AllCategoryModel mAllCategoryModel;
+
+    //当前分类的所有子分类
+    public List<AllCategoryModel.ChidrensBean> mChidrensBeanList=new ArrayList<>();
+
+    //当前子分类
+    public AllCategoryModel.ChidrensBean mChidrensBean;
+
+    //当前分类下的全部检查条目
+    public List<AllCategoryModel.ItemsBean> mAllItemsList=new ArrayList<>();
 
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc=new UIChangeObservable();
@@ -94,14 +109,15 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
         entity.get().onTabSelectedCommand=new BindingCommand<TabLayout.Tab>(new BindingConsumer<TabLayout.Tab>() {
             @Override
             public void call(TabLayout.Tab tab) {
-                uc.onTabSelectedCommand.setValue(tab.getText().toString());
+//                uc.onTabSelectedCommand.setValue(tab.getText().toString());
                 getCurrentCategory(tab.getText().toString());
+                Messenger.getDefault().send(mAllCategoryModel,ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND);
             }
         });
     }
 
     public void initMessenger(){
-        Messenger.getDefault().register(this, CheckViewModel.TOKEN_CHECKVIEWMODEL_INFORMATION, CheckInformation.class, new BindingConsumer<CheckInformation>() {
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKVIEWMODEL_INFORMATION, CheckInformation.class, new BindingConsumer<CheckInformation>() {
             @Override
             public void call(CheckInformation checkInformation) {
                 mFloorModelList=checkInformation.mFloorModelList;
@@ -149,41 +165,18 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
      */
     public void getCurrentCategory(String categoryName){
         mAllCategoryModel=HttpDataUtil.getCurrentCategory(categoryName,userCategoryList);
+        mChidrensBeanList=HttpDataUtil.getChidrenCategoryList(mAllCategoryModel);
         setLeftItem();
         isShowStudent();
+        getAllItemsList();
+        setRightItem();
     }
 
     /**
-     * 初始化左边条目
+     * 获取当前分类的全部子分类
      */
-    public void setLeftItem(){
-        entity.get().observableLeftList.clear();
-        selectPos.set(0);
-        if (entity.get().observableLeftList.size()==0){
-            for (String s:HttpDataUtil.getChidrenCategoryNameList(mAllCategoryModel)){
-                LeftEntity leftEntity=new LeftEntity();
-                leftEntity.title.set(s);
-                leftEntity.image= ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
-                if ( entity.get().observableLeftList.size()==0)
-                    leftEntity.mDrawable= ContextCompat.getDrawable(getApplication(),R.color.white);
-                LeftItemViewModel leftItemViewModel=new LeftItemViewModel(this,leftEntity);
-                entity.get().observableLeftList.add(leftItemViewModel);
-            }
-            addLeftCustom();
-        }
-    }
-
-    /**
-     * 左边栏目加一个自定义
-     */
-    public void addLeftCustom(){
-        LeftEntity leftEntity=new LeftEntity();
-        leftEntity.title.set("自定义");
-        leftEntity.image= ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
-        if ( entity.get().observableLeftList.size()==0)
-            leftEntity.mDrawable= ContextCompat.getDrawable(getApplication(),R.color.white);
-        LeftItemViewModel leftItemViewModel=new LeftItemViewModel(this,leftEntity);
-        entity.get().observableLeftList.add(leftItemViewModel);
+    public void getAllItemsList(){
+        mAllItemsList=HttpDataUtil.getAllChiledrenItemsBeanList(mAllCategoryModel);
     }
 
     /**
@@ -193,18 +186,28 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
         entity.get().isShowStudent.set(mAllCategoryModel.isShowperson()? View.VISIBLE:View.GONE);
     }
 
-
-
     /**
-     * 选择班级
+     * 初始化左边条目
      */
-    public void onSelectClassImage(){
-        uc.type.setValue(1);
+    public void setLeftItem(){
+        entity.get().observableLeftList.clear();
+        selectPos.set(0);
+        if (entity.get().observableLeftList.size()==0){
+            for (String s:HttpDataUtil.getChidrenCategoryNameList(mChidrensBeanList)){
+                LeftEntity leftEntity=new LeftEntity();
+                leftEntity.title.set(s);
+                leftEntity.image= ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
+                if ( entity.get().observableLeftList.size()==0)
+                    leftEntity.mDrawable= ContextCompat.getDrawable(getApplication(),R.color.white);
+                LeftItemViewModel leftItemViewModel=new LeftItemViewModel(this,leftEntity);
+                entity.get().observableLeftList.add(leftItemViewModel);
+            }
+            mChidrensBean=mChidrensBeanList.get(0);
+        }
     }
 
-
     /**
-     * 左边条目选中状态更改
+     * 左边条目选中
      * @param pos
      */
     public void setSelectPos(int pos){
@@ -217,8 +220,100 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
             newLeftItemViewModel.entity.get().mDrawable=ContextCompat.getDrawable(getApplication(),R.color.white);
             entity.get().observableLeftList.set(pos,newLeftItemViewModel);
             selectPos.set(pos);
+            mChidrensBean=mChidrensBeanList.get(pos);
         }
     }
+
+    /**
+     * 设置右边条目
+     */
+    public void setRightItem() {
+        entity.get().observableRightList.clear();
+        for (AllCategoryModel.ChidrensBean chidrensBean:mChidrensBeanList){
+            setHeadItem(chidrensBean);
+            List<AllCategoryModel.ItemsBean> itemsBeanList=HttpDataUtil.getItemsBeanList(chidrensBean,mAllItemsList);
+            for (int i=0;i<itemsBeanList.size();i++){
+                AllCategoryModel.ItemsBean itemsBean=itemsBeanList.get(i);
+                setRight1Item(i,itemsBean);
+                if (itemsBean.getShowbed()==1){
+                    for (int j=0;j<entity.get().gridCount.get()-1;j++){
+                        setRight2Item(j);
+                    }
+                }
+            }
+        }
+        setRight4Item();
+    }
+
+    /**
+     * 右侧列表添加头部类型item
+     * @param chidrensBean 全部条目
+     */
+    public void setHeadItem(AllCategoryModel.ChidrensBean chidrensBean){
+        List<AllCategoryModel.ItemsBean> itemsBeanList=HttpDataUtil.getItemsBeanList(chidrensBean,mAllItemsList);
+        HeadEntity headEntity = new HeadEntity();
+        headEntity.title.set(chidrensBean.getName()+"("+itemsBeanList.size()+")");
+        headEntity.image = ContextCompat.getDrawable(getApplication(), R.drawable.inspect7);
+        MultiItemViewModel item = new HeadViewModel(this, headEntity);
+        //条目类型为头布局
+        item.multiItemType(MultiRecycleType_Head);
+        entity.get().observableRightList.add(item);
+    }
+
+    /**
+     * 右侧列表添加条目类型1
+     * @param pos 序号
+     * @param itemsBean 条目
+     */
+    public void setRight1Item(int pos,AllCategoryModel.ItemsBean itemsBean){
+        RightOneEntity rightOneEntity = new RightOneEntity();
+        rightOneEntity.index.set(pos + 1);
+        rightOneEntity.content.set(itemsBean.getName());
+        rightOneEntity.classes.set("");
+        MultiItemViewModel rightOneItem = new RightOneItemViewModel(this, rightOneEntity);
+        rightOneItem.multiItemType(MultiRecycleType_Right1);
+        entity.get().observableRightList.add(rightOneItem);
+    }
+
+
+    /**
+     * 右侧列表条目类型2
+     * @param pos
+     */
+    public void setRight2Item(int pos){
+        RightTwoEntity rightTwoEntity = new RightTwoEntity();
+        rightTwoEntity.leftText.set("床上:");
+        rightTwoEntity.rightText.set("#" + (pos + 1));
+        rightTwoEntity.rightTextSelect.set(false);
+        if (pos == 0) {
+            rightTwoEntity.leftTextShow.set(View.VISIBLE);
+        } else {
+            rightTwoEntity.leftTextShow.set(View.GONE);
+        }
+        MultiItemViewModel rightTwoItem = new RightTwoItemViewModel(this, rightTwoEntity);
+        rightTwoItem.multiItemType(MultiRecycleType_Right2);
+        entity.get().observableRightList.add(rightTwoItem);
+    }
+
+    /**
+     * 右侧列表条目类型4
+     */
+    public void setRight4Item(){
+        RightFourEntity rightFourEntity = new RightFourEntity();
+        MultiItemViewModel rightFourItem = new RightFourItemViewModel(this, rightFourEntity);
+        rightFourItem.multiItemType(MultiRecycleType_Right4);
+        entity.get().observableRightList.add(rightFourItem);
+    }
+
+    /**
+     * 选择班级
+     */
+    public void onSelectClassImage(){
+        uc.type.setValue(1);
+    }
+
+
+
 
     /**
      * 获取左边条目下标

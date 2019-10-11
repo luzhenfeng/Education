@@ -71,9 +71,9 @@ public class HttpDataUtil {
 
 
     /**
-     * 获取用户大分类所有名字
+     * 获取用户分类所有名字
      * @param userCategoryList 该用户所对应的所有分类
-     * @return 用户大分类所有名字
+     * @return 用户分类所有名字
      */
     public static List<String> getUserCategoryNameList(List<AllCategoryModel> userCategoryList){
         List<String> names=new ArrayList<>();
@@ -185,10 +185,10 @@ public class HttpDataUtil {
 
 
     /**
-     * 获取当前大分类
-     * @param categoryName 大分类名
+     * 获取当前分类
+     * @param categoryName 分类名
      * @param userCategoryList 用户所有分类
-     * @return 当前大分类
+     * @return 当前分类
      */
     public static AllCategoryModel getCurrentCategory(String categoryName,List<AllCategoryModel> userCategoryList){
         AllCategoryModel bean=new AllCategoryModel();
@@ -201,20 +201,65 @@ public class HttpDataUtil {
     }
 
     /**
-     * 获取当前大分类的全部子分类
+     * 获取当前分类的全部子分类
      * @param allCategoryModel 当前分类
-     * @return 当前大分类的全部子分类
+     * @return 当前分类的全部子分类
      */
     public static List<AllCategoryModel.ChidrensBean> getChidrenCategoryList(AllCategoryModel allCategoryModel){
-        return allCategoryModel.getChidrens();
+        List<AllCategoryModel.ChidrensBean> chidrensBeanList=new ArrayList<>();
+        chidrensBeanList.addAll(allCategoryModel.getChidrens());
+        chidrensBeanList.add(getDefaultChildren());
+        return chidrensBeanList;
     }
 
-    public static List<String> getChidrenCategoryNameList(AllCategoryModel allCategoryModel){
+    /**
+     * 自定义子分类
+     * @return 自定义子分类
+     */
+    public static AllCategoryModel.ChidrensBean getDefaultChildren(){
+        AllCategoryModel.ChidrensBean chidrensBean=new AllCategoryModel.ChidrensBean();
+        chidrensBean.setId("0");
+        chidrensBean.setName("自定义");
+        return chidrensBean;
+    }
+
+    /**
+     * 获取当前分类下的全部子分类名
+     * @param chidrensBeanList 当前分类下的所有子分类（包括自定义）
+     * @return 当前分类下的全部子分类名
+     */
+    public static List<String> getChidrenCategoryNameList(List<AllCategoryModel.ChidrensBean> chidrensBeanList){
         List<String> names=new ArrayList<>();
-        for (AllCategoryModel.ChidrensBean bean:allCategoryModel.getChidrens()){
+        for (AllCategoryModel.ChidrensBean bean:chidrensBeanList){
             names.add(bean.getName());
         }
         return names;
+    }
+
+
+    /**
+     * 获取当前分类的全部的检查条目
+     * @param allCategoryModel 当前分类
+     * @return 当前分类的全部的检查条目
+     */
+    public static List<AllCategoryModel.ItemsBean> getAllChiledrenItemsBeanList(AllCategoryModel allCategoryModel){
+        return allCategoryModel.getItems();
+    }
+
+    /**
+     * 获取当前子分类下的所有检查条目
+     * @param chidrensBean 当前子分类
+     * @param allChiledrenItemsBeanList 当前分类的全部的检查条目
+     * @return 当前子分类下的所有检查条目
+     */
+    public static List<AllCategoryModel.ItemsBean> getItemsBeanList(AllCategoryModel.ChidrensBean chidrensBean,List<AllCategoryModel.ItemsBean> allChiledrenItemsBeanList){
+        List<AllCategoryModel.ItemsBean> itemsBeanList=new ArrayList<>();
+        for (AllCategoryModel.ItemsBean itemsBean:allChiledrenItemsBeanList){
+            if (chidrensBean.getId().equals(itemsBean.getCategoryId())){
+                itemsBeanList.add(itemsBean);
+            }
+        }
+        return itemsBeanList;
     }
 
 }

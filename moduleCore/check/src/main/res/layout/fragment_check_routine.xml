@@ -50,7 +50,7 @@
                 android:paddingRight="60px"
                 binding:adapter="@{rightAdapter}"
                 binding:itemBinding="@{viewModel.entity.itemRightBinding}"
-                binding:layoutManager="@{GridLayoutManagers.grids(viewModel.entity.gridCount,viewModel.entity.gridStartPos,viewModel.entity.gridEndPos)}"
+                binding:layoutManager="@{GridLayoutManagers.grids(viewModel.entity.gridCount,viewModel.entity.observableRightList)}"
                 binding:items="@{viewModel.entity.observableRightList}"
                 binding:itemAnimator="@{null}">
 

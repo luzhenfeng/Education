@@ -41,7 +41,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getUserName() {
-        return SPUtils.getInstance().getString("username");
+        return SPUtils.getInstance().getString("username","");
     }
 
     @Override
@@ -51,7 +51,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getPassword() {
-        return SPUtils.getInstance().getString("password");
+        return SPUtils.getInstance().getString("password","");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getToken() {
-        return SPUtils.getInstance().getString("token");
+        return SPUtils.getInstance().getString("token","");
     }
 
     @Override
@@ -106,6 +106,6 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getCodes() {
-        return SPUtils.getInstance().getString("codes");
+        return SPUtils.getInstance().getString("codes","");
     }
 }
