@@ -71,5 +71,7 @@ ext{
             "greendao-generator"                   :'org.greenrobot:greendao-generator:3.2.2',
             //分包
             "multidex"                             :'com.android.support:multidex:1.0.3',
+
+            "constraint-layout"                    : "com.android.support.constraint:constraint-layout:1.1.3",
     ]
 }

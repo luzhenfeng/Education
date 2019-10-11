@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+<layout>
     <data>
         <import type="com.nhsoft.check.viewModel.CheckListViewModel"></import>
         <import type="com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter"></import>
@@ -19,6 +19,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/tools"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

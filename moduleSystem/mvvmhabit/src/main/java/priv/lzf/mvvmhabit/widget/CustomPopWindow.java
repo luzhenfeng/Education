@@ -146,7 +146,6 @@ public class CustomPopWindow implements PopupWindow.OnDismissListener{
         if(mContentView == null){
             mContentView = LayoutInflater.from(mContext).inflate(mResLayoutId,null);
         }
-        RelayoutViewTool.relayoutViewWithScale(mContentView, Constant.mScreenWidthScale);
         // 2017.3.17 add
         // 获取当前Activity的window
         Activity activity = (Activity) mContentView.getContext();

@@ -30,4 +30,6 @@ public class CheckEntity {
     public BindingCommand ivCamera;
     public BindingCommand ivHome;
     public BindingCommand tvSubmit;
+    public BindingCommand tvFloor;
+    public BindingCommand tvRoom;
 }

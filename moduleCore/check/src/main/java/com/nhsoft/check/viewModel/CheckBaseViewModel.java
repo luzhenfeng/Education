@@ -46,7 +46,7 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * 作者：Created by 45703
  * 时间：Created on 2019/9/27.
  */
-public class CheckBaseViewModel extends BaseViewModel<Repository> {
+public class CheckBaseViewModel extends BasePopupViewModel {
 
     public static final String MultiRecycleType_Head = "head";
     public static final String MultiRecycleType_Right1 = "right1";
@@ -82,8 +82,6 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
     public class UIChangeObservable {
 //        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
         public SingleLiveEvent<Integer> type = new SingleLiveEvent<>();
-        //TabLayout切换
-        public SingleLiveEvent<String> onTabSelectedCommand = new SingleLiveEvent<>();
         //TabLayout设置
         public SingleLiveEvent setTabs = new SingleLiveEvent<>();
     }
@@ -91,7 +89,6 @@ public class CheckBaseViewModel extends BaseViewModel<Repository> {
 
     public CheckBaseViewModel(@NonNull Application application) {
         super(application);
-        model= Injection.provideDemoRepository();
         initMessenger();
         entity.set(new CheckBaseEntity());
         bindingCommand();

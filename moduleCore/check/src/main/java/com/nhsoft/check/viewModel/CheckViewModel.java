@@ -10,9 +10,11 @@ import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
+import com.nhsoft.check.databinding.PopupSelectClassBinding;
 import com.nhsoft.check.entity.CheckEntity;
 import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.check.message.ConstantMessage;
+import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.utils.utils.DateUtil;
 
 import java.util.ArrayList;
@@ -23,14 +25,16 @@ import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
+import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
+import priv.lzf.mvvmhabit.widget.CustomPopWindow;
 
 /**
  * Created by lzf on 2019/9/27.
  * Describe:
  */
 
-public class CheckViewModel extends BaseViewModel<Repository> {
+public class CheckViewModel extends BasePopupViewModel<Repository> {
 
 
     public ObservableField<CheckEntity> entity=new ObservableField<>();
@@ -62,6 +66,15 @@ public class CheckViewModel extends BaseViewModel<Repository> {
     //当前分类
     public AllCategoryModel mAllCategoryModel;
 
+    //封装一个界面发生改变的观察者
+    public UIChangeObservable uc=new UIChangeObservable();
+
+    public class UIChangeObservable {
+        //        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
+        public SingleLiveEvent<Integer> selectType = new SingleLiveEvent<>();
+
+    }
+
     public CheckViewModel(@NonNull Application application) {
         super(application);
         model= Injection.provideDemoRepository();
@@ -79,6 +92,7 @@ public class CheckViewModel extends BaseViewModel<Repository> {
 
     @Override
     public void bindingCommand(){
+        super.bindingCommand();
         //扣
         entity.get().ivFraction=new BindingCommand(new BindingAction() {
             @Override
@@ -124,6 +138,20 @@ public class CheckViewModel extends BaseViewModel<Repository> {
             @Override
             public void call() {
                 ToastUtils.showShort("提交");
+            }
+        });
+        //选择楼号
+        entity.get().tvFloor=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                uc.selectType.setValue(1);
+            }
+        });
+        //选择房间
+        entity.get().tvRoom=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                uc.selectType.setValue(2);
             }
         });
     }
