@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,15 @@ import android.widget.PopupWindow;
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.R;
 import com.nhsoft.check.databinding.PopupSelectClassBinding;
+import com.nhsoft.check.entity.PopupItemViewEntity;
+import com.nhsoft.check.viewModel.PopupItemViewModel;
 import com.nhsoft.check.viewModel.PopupViewModel;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.pxview.utils.RelayoutViewTool;
 
+import java.util.List;
+
+import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.widget.CustomPopWindow;
 
 /**
@@ -80,6 +86,23 @@ public class CustomPopWindowUtil {
     public void setAdapter(){
         if (binding!=null)
             binding.setAdapter(new RecyclerViewBindingAdapter());
+    }
+
+    public void setData(String name,List<String> stringList){
+        if (binding!=null){
+            binding.getViewModel().observableList.clear();
+            for (String s:stringList){
+                PopupItemViewEntity entity=new PopupItemViewEntity();
+                entity.text.set(s);
+                if (name.equals(s)){
+                    entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_select);
+                }else {
+                    entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_aaaaaa);
+                }
+                PopupItemViewModel popupItemViewModel=new PopupItemViewModel(binding.getViewModel(),entity);
+                binding.getViewModel().observableList.add(popupItemViewModel);
+            }
+        }
     }
 
 }

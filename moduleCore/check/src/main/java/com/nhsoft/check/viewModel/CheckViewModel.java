@@ -2,7 +2,6 @@ package com.nhsoft.check.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
 import com.lzf.http.data.Injection;
@@ -10,24 +9,20 @@ import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
-import com.nhsoft.check.databinding.PopupSelectClassBinding;
 import com.nhsoft.check.entity.CheckEntity;
 import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.check.message.ConstantMessage;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
-import com.nhsoft.utils.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
-import priv.lzf.mvvmhabit.widget.CustomPopWindow;
 
 /**
  * Created by lzf on 2019/9/27.
@@ -65,6 +60,12 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
     //当前分类
     public AllCategoryModel mAllCategoryModel;
+
+    //当前楼的所有学生
+    public List<FloorModel.StudentsBean> mAllStudentList=new ArrayList<>();
+
+    //当前房间的 所有学生
+    public List<FloorModel.StudentsBean> mStudentList=new ArrayList<>();
 
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc=new UIChangeObservable();
@@ -158,6 +159,25 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
 
     public void initMessenger(){
+        //选择弹出框选中条目
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_POPUPVIEWMODEL_SELECTITEM, Integer.class, new BindingConsumer<Integer>() {
+            @Override
+            public void call(Integer i) {
+                if (uc.selectType.getValue().intValue()==1){
+                    String name=mFloorNameList.get(i.intValue());
+                    entity.get().floor.set(name);
+                    getFloorModel(name);
+                    setRoomNameList();
+                }else if (uc.selectType.getValue().intValue()==2){
+                    String name=mRoomNameList.get(i.intValue());
+                    entity.get().room.set(name);
+                    getRoom(name);
+                }
+                CustomPopWindowUtil.getInstance().dismiss();
+            }
+        });
+
+        //点击TabLayout
         Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND, AllCategoryModel.class, new BindingConsumer<AllCategoryModel>() {
             @Override
             public void call(AllCategoryModel allCategoryModel) {
@@ -183,7 +203,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         mFloorNameList=HttpDataUtil.getFloorNameList(category,mFloorModelList);
         if (mFloorNameList.size()!=0){
             entity.get().floor.set(mFloorNameList.get(0));
-            mFloorModel=HttpDataUtil.getFloor(mFloorNameList.get(0),mFloorModelList);
+            getFloorModel(mFloorNameList.get(0));
             setRoomNameList();
         }
     }
@@ -195,8 +215,40 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         mRoomNameList=HttpDataUtil.getRoomNameList(mFloorModel);
         if (mRoomNameList.size()!=0){
             entity.get().room.set(mRoomNameList.get(0));
-            mRoomModel=HttpDataUtil.getRoom(mRoomNameList.get(0),mFloorModel);
+            getRoom(mRoomNameList.get(0));
         }
+    }
+
+    /**
+     * 获取楼名对应的楼
+     * @param name 楼名
+     */
+    public void getFloorModel(String name){
+        mFloorModel=HttpDataUtil.getFloor(name,mFloorModelList);
+        getAllStudent();
+    }
+
+    /**
+     * 获取当前房间
+     * @param name 房间名
+     */
+    public void getRoom(String name){
+        mRoomModel=HttpDataUtil.getRoom(name,mFloorModel);
+        getStudent();
+    }
+
+    /**
+     * 获取当前楼所有的学生
+     */
+    public void getAllStudent(){
+        mAllStudentList=HttpDataUtil.getAllStudentList(mFloorModel);
+    }
+
+    /**
+     * 获取当前房间的所有学生
+     */
+    public void getStudent(){
+        mStudentList=HttpDataUtil.getStudent(mFloorModel.getCategory(),mRoomModel.getId(),mAllStudentList);
     }
 
 

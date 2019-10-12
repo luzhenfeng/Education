@@ -179,8 +179,33 @@ public class HttpDataUtil {
      * @param mFloorModel
      * @return
      */
-    public static List<FloorModel.StudentsBean> getStudentList(FloorModel mFloorModel){
+    public static List<FloorModel.StudentsBean> getAllStudentList(FloorModel mFloorModel){
         return mFloorModel.getStudents();
+    }
+
+    /**
+     * 获取对应房间里面的学生列表
+     * @param category 总检查权限分类
+     * @param id category=0 班级id category=1 寝室id
+     * @param studentsBeanList 当前楼的全部学生
+     * @return 对应房间里面的学生列表
+     */
+    public static List<FloorModel.StudentsBean> getStudent(int category,String id,List<FloorModel.StudentsBean> studentsBeanList){
+        List<FloorModel.StudentsBean> studentsBeans=new ArrayList<>();
+        if (category==0){
+            for (FloorModel.StudentsBean studentsBean:studentsBeanList){
+                if (studentsBean.getClassid().equals(id)){
+                    studentsBeans.add(studentsBean);
+                }
+            }
+        }else if (category==1){
+            for (FloorModel.StudentsBean studentsBean:studentsBeanList){
+                if (studentsBean.getDormid().equals(id)){
+                    studentsBeans.add(studentsBean);
+                }
+            }
+        }
+        return studentsBeans;
     }
 
 

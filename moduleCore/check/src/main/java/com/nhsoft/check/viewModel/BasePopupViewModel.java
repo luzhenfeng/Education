@@ -3,17 +3,23 @@ package com.nhsoft.check.viewModel;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 
+import com.nhsoft.check.R;
 import com.nhsoft.check.databinding.PopupSelectClassBinding;
 import com.nhsoft.check.entity.PopupItemViewEntity;
+import com.nhsoft.check.message.ConstantMessage;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import priv.lzf.mvvmhabit.base.BaseModel;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
+import priv.lzf.mvvmhabit.bus.Messenger;
 
 /**
  * 作者：Created by 45703
@@ -55,14 +61,4 @@ public class BasePopupViewModel<M extends BaseModel> extends BaseViewModel<M> {
         mSelectClassBinding.setViewModel(mPopupViewModel);
     }
 
-    public void setData(){
-        mPopupViewModel.observableList.clear();
-        for (int i=0;i<10;i++){
-            PopupItemViewEntity entity=new PopupItemViewEntity();
-            entity.text.set(i+"");
-            PopupItemViewModel popupItemViewModel=new PopupItemViewModel(mPopupViewModel,entity);
-            mPopupViewModel.observableList.add(popupItemViewModel);
-        }
-        mSelectClassBinding.setViewModel(mPopupViewModel);
-    }
 }

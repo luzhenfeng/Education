@@ -114,6 +114,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     }
 
     public void initMessenger(){
+        //传递信息
         Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKVIEWMODEL_INFORMATION, CheckInformation.class, new BindingConsumer<CheckInformation>() {
             @Override
             public void call(CheckInformation checkInformation) {
