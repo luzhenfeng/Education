@@ -1,5 +1,7 @@
 package com.lzf.http.data.source;
 
+import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
 
 /**
@@ -75,4 +77,10 @@ public interface LocalDataSource {
      * @return
      */
     String getCodes();
+
+    /**
+     * 插入
+     * @param checkModel
+     */
+    boolean insertCheckModel(CheckModel checkModel);
 }

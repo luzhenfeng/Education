@@ -5,6 +5,7 @@ import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
@@ -21,6 +22,9 @@ import priv.lzf.mvvmhabit.bus.Messenger;
  */
 public class PopupViewModel {
     public ObservableField<String> title=new ObservableField<>("选择班级");
+
+    public ObservableInt isShowButton=new ObservableInt(View.GONE);
+
     public BindingCommand onClick;
     //给左边RecyclerView添加ObservableList
     public ObservableList<PopupItemViewModel> observableList = new ObservableArrayList<>();
@@ -31,7 +35,7 @@ public class PopupViewModel {
     public ObservableInt selectPos=new ObservableInt(-1);
 
     /**
-     * 左边条目选中
+     * 单选条目选中
      * @param pos
      */
     public void setSelectPos(int pos){
@@ -47,12 +51,23 @@ public class PopupViewModel {
             selectPos.set(pos);
             Messenger.getDefault().send(pos, ConstantMessage.TOKEN_POPUPVIEWMODEL_SELECTITEM);
         }
-//        else {
-//            selectPos.set(-1);
-//            PopupItemViewModel oldItemViewModel=observableList.get(selectPos.get());
-//            oldItemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(),R.drawable.check_box_aaaaaa);
-//            observableList.set(selectPos.get(),oldItemViewModel);
-//        }
+    }
+
+    /**
+     * 多选条目选中
+     * @param pos
+     */
+    public void setMoreSelectPos(int pos){
+        PopupItemViewModel itemViewModel=observableList.get(pos);
+        if (itemViewModel.entity.get().isSelect.get()){
+            itemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(),R.drawable.check_box_aaaaaa);
+            itemViewModel.entity.get().isSelect.set(false);
+            observableList.set(pos,itemViewModel);
+        }else {
+            itemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(),R.drawable.check_box_select);
+            itemViewModel.entity.get().isSelect.set(true);
+            observableList.set(pos,itemViewModel);
+        }
     }
 
     /**

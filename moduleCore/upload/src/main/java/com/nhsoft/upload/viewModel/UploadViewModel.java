@@ -2,23 +2,44 @@ package com.nhsoft.upload.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableArrayList;
+import android.databinding.ObservableInt;
 import android.databinding.ObservableList;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.http.data.Injection;
+import com.lzf.http.data.Repository;
+import com.lzf.http.entity.CheckModel;
+import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
 import com.nhsoft.upload.entity.UploadEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
+import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
+import priv.lzf.mvvmhabit.http.BaseResponse;
+import priv.lzf.mvvmhabit.http.ResponseThrowable;
+import priv.lzf.mvvmhabit.utils.KLog;
+import priv.lzf.mvvmhabit.utils.RxUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -26,16 +47,23 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * Describe:
  */
 
-public class UploadViewModel extends BaseViewModel {
-
-    public SingleLiveEvent<FileItemViewModel> deleteItemLiveData = new SingleLiveEvent<>();
+public class UploadViewModel extends BaseViewModel<Repository> {
 
     //封装一个界面发生改变的观察者
     public UploadViewModel.UIChangeObservable uc = new UploadViewModel.UIChangeObservable();
 
     public String[] tabs={"未上传","已上传","全部"};
 
+    public ObservableInt isShowButton=new ObservableInt(View.VISIBLE);
+
+    //上传到第几条
+    public ObservableInt upLodePos=new ObservableInt(0);
+
 //    public ObservableList<String> tabList=new ObservableArrayList<>();
+
+    public List<CheckModel> checkModelList=new ArrayList<>();
+    //选中的条目id列表
+    public List<Long> ids=new ArrayList<>();
 
     public class UIChangeObservable {
         //下拉刷新完成
@@ -48,6 +76,7 @@ public class UploadViewModel extends BaseViewModel {
 
     public UploadViewModel(@NonNull Application application) {
         super(application);
+        model = Injection.provideDemoRepository();
     }
 
 
@@ -55,15 +84,26 @@ public class UploadViewModel extends BaseViewModel {
     public BindingCommand<TabLayout.Tab> onTabSelectedCommand = new BindingCommand<>(new BindingConsumer<TabLayout.Tab>() {
         @Override
         public void call(TabLayout.Tab tab) {
+            if (tab.getPosition()==0){
+                isShowButton.set(View.VISIBLE);
+            }else {
+                isShowButton.set(View.GONE);
+            }
             uc.onTabSelectedCommand.setValue(Integer.valueOf(tab.getPosition()));
         }
     });
 
 
+    //一件上传
     public BindingCommand<Button> onClickBtn=new BindingCommand<>(new BindingAction() {
         @Override
         public void call() {
-            ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+           checkModelList=getCheckModel();
+           if (checkModelList.size()>0){
+               upload(upLodePos.get(),checkModelList.get(upLodePos.get()));
+           }else {
+               ToastUtils.showShort("请选择要上传的条目");
+           }
         }
     });
 
@@ -80,58 +120,133 @@ public class UploadViewModel extends BaseViewModel {
         }
     });
 
-//    /**
-//     * 删除条目
-//     *
-//     * @param uploadModel
-//     */
-//    public void notifyItem(UploadEntity uploadModel) {
-//        //点击确定，在 observableList 绑定中删除，界面立即刷新
-//        getItemPosition()
-//
-//    }
-
 
     //下拉刷新
     public BindingCommand onTwinklingRefreshCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             ToastUtils.showShort("下拉刷新");
-//            requestNetWork();
+
         }
     });
     //上拉加载
     public BindingCommand onTwinklingLoadMoreCommand = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-//            if (observableList.size() > 50) {
-//                ToastUtils.showLong("兄dei，你太无聊啦~崩是不可能的~");
-//                uc.finishLoadmore.call();
-//                return;
-//            }
-//            //模拟网络上拉加载更多
-//            viewModel.addSubscribe(viewModel.model.loadMore()
-//                    .compose(RxUtils.schedulersTransformer()) //线程调度
-//                    .doOnSubscribe(new Consumer<Disposable>() {
-//                        @Override
-//                        public void accept(Disposable disposable) throws Exception {
-//                            ToastUtils.showShort("上拉加载");
-//                        }
-//                    })
-//                    .subscribe(new Consumer<DemoEntity>() {
-//                        @Override
-//                        public void accept(DemoEntity entity) throws Exception {
-//                            for (DemoEntity.ItemsEntity itemsEntity : entity.getItems()) {
-//                                NetWorkItemViewModel itemViewModel = new NetWorkItemViewModel(NetWorkViewModel.this, itemsEntity);
-//                                //双向绑定动态添加Item
-//                                observableList.add(itemViewModel);
-//                            }
-//                            //刷新完成收回
-//                            uc.finishLoadmore.call();
-//                        }
-//                    }));
+
         }
     });
+
+    public void setData(List<ChecksModel> checksModels){
+        observableList.clear();
+        for (ChecksModel checksModel:checksModels){
+            List<CheckModel.RecordsBean> recordsBeanList=new Gson().fromJson(checksModel.getRecords(),new TypeToken<List<CheckModel.RecordsBean>>(){}.getType());
+            UploadEntity uploadEntity =new UploadEntity();
+            uploadEntity.setId(checksModel.getId());
+            uploadEntity.setText1((checksModel.getObjectName()==null?"":checksModel.getObjectName()+"-")+(checksModel.getClassName().equals("")?"":"("+checksModel.getClassName()+")"));
+            uploadEntity.setText2(checksModel.getCateName()+"("+checksModel.getCheckDate()+"-"+"扣"+score(recordsBeanList)+"分"+")");
+            uploadEntity.setText3(getCheckItem(recordsBeanList));
+            uploadEntity.setText4("类型:"+(checksModel.getCategory()==0?"班级检查":checksModel.getCategory()==1?"寝室检查":"公共场地"));
+            uploadEntity.setChecksModel(checksModel);
+            FileItemViewModel itemViewModel = new FileItemViewModel(this, uploadEntity);
+            //双向绑定动态添加Item
+            observableList.add(itemViewModel);
+        }
+    }
+
+    /**
+     * 选中条目的总分数的分数
+     * @return
+     */
+    public double score(List<CheckModel.RecordsBean> recordsBeanList){
+        double score=0d;
+        for (CheckModel.RecordsBean recordsBean:recordsBeanList){
+            score+=recordsBean.getScore();
+        }
+        return score;
+    }
+
+
+    /**
+     * 选中条目
+     * @return
+     */
+    public String getCheckItem(List<CheckModel.RecordsBean> recordsBeanList){
+        String items="";
+        for (CheckModel.RecordsBean recordsBean:recordsBeanList){
+            if (recordsBeanList.indexOf(recordsBean)==recordsBeanList.size()-1){
+                items+=recordsBean.getName();
+            }else {
+                items+=recordsBean.getName()+",";
+            }
+        }
+        return items;
+    }
+
+    /**
+     * 获取选中的条目并转换成 CheckModel
+     */
+    public List<CheckModel> getCheckModel(){
+        List<CheckModel> checkModelList=new ArrayList<>();
+        for (FileItemViewModel fileItemViewModel:observableList){
+            if (fileItemViewModel.entity.get().isSelect()){
+                checkModelList.add(HttpDataUtil.getCheckModel(fileItemViewModel.entity.get().getChecksModel()));
+                ids.add(fileItemViewModel.entity.get().getId());
+            }
+        }
+        return checkModelList;
+    }
+
+    public void upload(int pos,CheckModel checkModel){
+        addSubscribe(model.createCheck(model.getToken(),new Gson().toJson(checkModel))
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle);
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        if (pos==0){
+                            showDialog();
+                        }
+                    }
+                })
+                .subscribe(new Consumer<BaseResponse>() {
+                    @Override
+                    public void accept(BaseResponse response) throws Exception {
+                        if (response.isOk()){//更新数据库
+                            boolean isUpdate=ChecksModelService.getInstance().updateChecksModel(ChecksModelService.getInstance().getChecksModel(ids.get(upLodePos.get())));
+                            KLog.e(isUpdate);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        if (upLodePos.get()<checkModelList.size()-1){
+                            KLog.e(upLodePos.get());
+                            upLodePos.set(upLodePos.get()+1);
+                            upload(upLodePos.get(),checkModelList.get(upLodePos.get()));
+                        }else {
+                            //关闭对话框
+                            dismissDialog();
+                        }
+//                        if (throwable instanceof ResponseThrowable) {
+//                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+//                        }
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        if (upLodePos.get()<checkModelList.size()-1){
+                            KLog.e(upLodePos.get());
+                            upLodePos.set(upLodePos.get()+1);
+                            upload(upLodePos.get(),checkModelList.get(upLodePos.get()));
+                        }else {
+                            //关闭对话框
+                            dismissDialog();
+                        }
+                    }
+                }));
+    }
 
     /**
      * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求

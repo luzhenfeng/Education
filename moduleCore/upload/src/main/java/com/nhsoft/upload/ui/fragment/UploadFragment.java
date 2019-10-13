@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.lzf.greendao.service.ChecksModelService;
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
@@ -38,7 +39,17 @@ public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadVi
         viewModel.uc.onTabSelectedCommand.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-
+                switch (integer.intValue()){
+                    case 0:
+                        viewModel.setData(ChecksModelService.getInstance().getNoUpdateChecksModelList());
+                        break;
+                    case 1:
+                        viewModel.setData(ChecksModelService.getInstance().getUpdateChecksModelList());
+                        break;
+                    case 2:
+                        viewModel.setData(ChecksModelService.getInstance().getChecksModelList());
+                        break;
+                }
             }
         });
     }
@@ -47,7 +58,7 @@ public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadVi
     public void initData() {
         super.initData();
         binding.setAdapter(new RecyclerViewBindingAdapter());
-        viewModel.requestNetWork();
+        viewModel.setData(ChecksModelService.getInstance().getNoUpdateChecksModelList());
         setTabs();
     }
 

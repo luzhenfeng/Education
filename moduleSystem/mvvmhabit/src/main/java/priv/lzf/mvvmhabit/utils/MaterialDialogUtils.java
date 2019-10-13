@@ -392,4 +392,27 @@ public class MaterialDialogUtils {
         return builder;
     }
 
+
+    /***
+     * 获取LIST对话框
+     *
+     * @param
+     * @return MaterialDialog.Builder
+     */
+    public static MaterialDialog.Builder showListDialog(final Context context, List
+            content) {
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+                .items(content)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
+
+                    }
+                })
+                .negativeText("取消");
+
+        return builder;
+    }
+
 }

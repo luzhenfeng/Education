@@ -4,9 +4,12 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.http.entity.AllCategoryModel;
+import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.FloorModel;
 import com.nhsoft.pxview.constant.Constant;
+import com.nhsoft.utils.utils.DateUtil;
 import com.nhsoft.utils.utils.FileUtil;
 
 import java.util.ArrayList;
@@ -285,6 +288,130 @@ public class HttpDataUtil {
             }
         }
         return itemsBeanList;
+    }
+
+
+    /**
+     * 当前房间中所有的班级id组合(除category=0班级外)
+     * @param roomModel 当前房间
+     * @return
+     */
+    public static String getclassIds(FloorModel.RoomModel roomModel){
+        String ids="";
+        for (FloorModel.RoomModel.ChildrensBean childrensBean:roomModel.getChildrens()){
+            if (roomModel.getChildrens().indexOf(childrensBean)==roomModel.getChildrens().size()-1){
+                ids+=childrensBean.getId();
+            }else {
+                ids+=childrensBean.getId()+",";
+            }
+        }
+        return ids;
+    }
+
+    /**
+     * 当前房间中所有的班级id组合(除category=0班级外)
+     * @param roomModel 当前房间
+     * @return
+     */
+    public static String getclassNames(FloorModel.RoomModel roomModel){
+        String names="";
+        for (FloorModel.RoomModel.ChildrensBean childrensBean:roomModel.getChildrens()){
+            if (roomModel.getChildrens().indexOf(childrensBean)==roomModel.getChildrens().size()-1){
+                names+=childrensBean.getName();
+            }else {
+                names+=childrensBean.getName()+",";
+            }
+        }
+        return names;
+    }
+
+    /**
+     * 组成上传所需的数据
+     * @param mAllCategoryModel 当前总分类
+     * @param mRoomModel 当前房间
+     * @param mSelectStudentList 选中的学生
+     * @param mSelectItemList 选中的条目
+     * @param photos 照片
+     * @return
+     */
+    public static CheckModel getCheckModel(AllCategoryModel mAllCategoryModel,FloorModel.RoomModel mRoomModel,List<FloorModel.StudentsBean> mSelectStudentList,List<AllCategoryModel.ItemsBean> mSelectItemList,List<String> photos){
+        CheckModel checkModel=new CheckModel();
+        List<CheckModel.StudentsBean> studentsBeanList=new ArrayList<>();
+        List<CheckModel.RecordsBean> recordsBeanList=new ArrayList<>();
+        for (FloorModel.StudentsBean studentsBean:mSelectStudentList){
+            CheckModel.StudentsBean bean=new CheckModel.StudentsBean();
+            bean.setUserid(studentsBean.getUserid());
+            bean.setStudentid(studentsBean.getStudentid());
+            bean.setStudentno(studentsBean.getStudentno());
+            bean.setStudentname(studentsBean.getStudentname());
+            bean.setClassid(studentsBean.getClassid());
+            bean.setClassname(studentsBean.getClassname());
+            bean.setBedno(studentsBean.getBedno());
+            bean.setScore(0);
+            studentsBeanList.add(bean);
+        }
+
+        for (AllCategoryModel.ItemsBean itemsBean:mSelectItemList){
+            CheckModel.RecordsBean recordsBean=new CheckModel.RecordsBean();
+            recordsBean.setId(itemsBean.getId());
+            recordsBean.setCode(itemsBean.getCode());
+            recordsBean.setName(itemsBean.getName());
+            recordsBean.setCategoryId(itemsBean.getCategoryId());
+            recordsBean.setDeducttype(itemsBean.getDeducttype());
+            recordsBean.setRuletype(itemsBean.getRuletype());
+            recordsBean.setScore(itemsBean.getScore());
+            recordsBean.setBednos(itemsBean.getBednos());
+            recordsBeanList.add(recordsBean);
+        }
+
+        checkModel.setMcode(mAllCategoryModel.getMcode());
+        checkModel.setCategory(mAllCategoryModel.getCategory());
+        checkModel.setCateId(mAllCategoryModel.getId());
+        checkModel.setCateName(mAllCategoryModel.getName());
+        checkModel.setCheckDate(DateUtil.getCurrentTime());
+        if (mAllCategoryModel.getCategory()==0){
+            checkModel.setClassId(mRoomModel.getId());
+            checkModel.setClassName(mRoomModel.getName());
+        }else {
+            checkModel.setClassId(HttpDataUtil.getclassIds(mRoomModel));
+            checkModel.setClassName(HttpDataUtil.getclassNames(mRoomModel));
+        }
+        if (mAllCategoryModel.getCategory()!=0){
+            checkModel.setObjectId(mRoomModel.getId());
+            checkModel.setObjectName(mRoomModel.getName());
+        }
+        checkModel.setStudents(studentsBeanList);
+        checkModel.setRecords(recordsBeanList);
+        checkModel.setPhotos(photos);
+        return checkModel;
+    }
+
+    public static CheckModel getCheckModel(ChecksModel checksModel){
+        CheckModel checkModel=new CheckModel();
+        if (checksModel.getStudents()!=null){
+            List<CheckModel.StudentsBean> studentsBeanList=new Gson().fromJson(checksModel.getStudents(),new TypeToken<List<CheckModel.StudentsBean>>(){}.getType());
+            checkModel.setStudents(studentsBeanList);
+        }
+        if (checksModel.getRecords()!=null){
+            List<CheckModel.RecordsBean> recordsBeanList=new Gson().fromJson(checksModel.getRecords(),new TypeToken<List<CheckModel.RecordsBean>>(){}.getType());
+            checkModel.setRecords(recordsBeanList);
+        }
+        if (checksModel.getPhotos()!=null){
+            List<String> photos=new Gson().fromJson(checksModel.getPhotos(),new TypeToken<List<String>>(){}.getType());
+            checkModel.setPhotos(photos);
+        }
+        checkModel.setMcode(checksModel.getMcode());
+        checkModel.setCategory(checksModel.getCategory());
+        checkModel.setCateId(checksModel.getCateId());
+        checkModel.setCateName(checksModel.getCateName());
+        checkModel.setCheckDate(checksModel.getCheckDate());
+        checkModel.setClassId(checksModel.getClassId());
+        checkModel.setClassName(checksModel.getClassName());
+        if (checksModel.getObjectId()!=null){
+            checkModel.setObjectId(checksModel.getObjectId());
+            checkModel.setObjectName(checksModel.getObjectName());
+        }
+        return checkModel;
     }
 
 }

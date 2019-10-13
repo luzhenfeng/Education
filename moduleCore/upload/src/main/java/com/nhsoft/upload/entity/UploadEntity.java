@@ -1,16 +1,19 @@
 package com.nhsoft.upload.entity;
 
+import com.lzf.greendao.entity.ChecksModel;
+
 /**
  * 作者：Created by 45703
  * 时间：Created on 2019/9/20.
  */
 public class UploadEntity {
-    private int id;
+    private long id;
     private String text1;
     private String text2;
     private String text3;
     private String text4;
     private boolean isSelect;
+    private ChecksModel mChecksModel;
 
     public String getText4() {
         return text4;
@@ -20,11 +23,11 @@ public class UploadEntity {
         this.text4 = text4;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,5 +61,13 @@ public class UploadEntity {
 
     public void setSelect(boolean select) {
         isSelect = select;
+    }
+
+    public ChecksModel getChecksModel() {
+        return mChecksModel;
+    }
+
+    public void setChecksModel(ChecksModel checksModel) {
+        mChecksModel = checksModel;
     }
 }

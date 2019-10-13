@@ -5,28 +5,17 @@ import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
 import com.nhsoft.check.databinding.FragmentCheckBinding;
-import com.nhsoft.check.databinding.PopupSelectClassBinding;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.check.viewModel.CheckViewModel;
-import com.nhsoft.check.viewModel.PopupViewModel;
-import com.nhsoft.pxview.constant.Constant;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
-import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
-import priv.lzf.mvvmhabit.widget.CustomPopWindow;
 
 /**
  * A simple {@link Fragment} subclass.

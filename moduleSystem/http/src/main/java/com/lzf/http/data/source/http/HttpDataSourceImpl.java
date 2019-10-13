@@ -69,4 +69,9 @@ public class HttpDataSourceImpl implements HttpDataSource {
     public Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token) {
         return apiService.getSyncList(token);
     }
+
+    @Override
+    public Observable<BaseResponse> createCheck(String token, String model) {
+        return apiService.createCheck(token,model);
+    }
 }

@@ -42,7 +42,7 @@
             android:layout_marginRight="64px"
             android:text="确定"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="@{viewModel.isShowButton}"
             binding:onClickCommand="@{viewModel.onClick}"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_class"

@@ -43,4 +43,8 @@ public interface ApiService {
     @GET("mq/GetSyncList")
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(@Query("token") String token);
 
+    @FormUrlEncoded
+    @POST("mq/CreateCheck")
+    Observable<BaseResponse> createCheck(@Field("token") String token,@Field("model") String model);
+
 }

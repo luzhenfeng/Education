@@ -28,7 +28,11 @@ public class PopupItemViewModel{
         entity.get().onItemClick =new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                viewModel.setSelectPos(viewModel.getItemPosition(PopupItemViewModel.this));
+                if (viewModel.title.get().equals("选择学生")){
+                    viewModel.setMoreSelectPos(viewModel.getItemPosition(PopupItemViewModel.this));
+                }else {
+                    viewModel.setSelectPos(viewModel.getItemPosition(PopupItemViewModel.this));
+                }
             }
         });
     }

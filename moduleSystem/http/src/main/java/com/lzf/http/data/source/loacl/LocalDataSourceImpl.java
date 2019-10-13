@@ -1,9 +1,13 @@
 package com.lzf.http.data.source.loacl;
 
 
+import com.google.gson.Gson;
+import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.entity.UserModel;
+import com.lzf.greendao.service.ChecksModelService;
 import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.source.LocalDataSource;
+import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
 
 import priv.lzf.mvvmhabit.utils.SPUtils;
@@ -107,5 +111,24 @@ public class LocalDataSourceImpl implements LocalDataSource {
     @Override
     public String getCodes() {
         return SPUtils.getInstance().getString("codes","");
+    }
+
+    @Override
+    public boolean insertCheckModel(CheckModel checkModel) {
+        ChecksModel model=new ChecksModel();
+        model.setMcode(checkModel.getMcode());
+        model.setCategory(checkModel.getCategory());
+        model.setCateId(checkModel.getCateId());
+        model.setCateName(checkModel.getCateName());
+        model.setCheckDate(checkModel.getCheckDate());
+        model.setClassId(checkModel.getClassId());
+        model.setClassName(checkModel.getClassName());
+        model.setObjectId(checkModel.getObjectId());
+        model.setObjectName(checkModel.getObjectName());
+        model.setRecords(checkModel.getRecords()==null?"":new Gson().toJson(checkModel.getRecords()));
+        model.setStudents(checkModel.getStudents()==null?"":new Gson().toJson(checkModel.getStudents()));
+        model.setPhotos(checkModel.getPhotos()==null?"":new Gson().toJson(checkModel.getPhotos()));
+        model.setIsUpdate(false);
+        return ChecksModelService.getInstance().insert(model);
     }
 }

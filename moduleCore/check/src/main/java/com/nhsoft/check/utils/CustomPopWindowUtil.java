@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.lzf.http.entity.FloorModel;
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.R;
 import com.nhsoft.check.databinding.PopupSelectClassBinding;
@@ -104,5 +105,40 @@ public class CustomPopWindowUtil {
             }
         }
     }
+
+    /**
+     * 选择学生
+     * @param selectStudentList 选中的学生
+     * @param studentsBeanList 当前房间全部的学生
+     */
+    public void setData(List<FloorModel.StudentsBean> selectStudentList, List<FloorModel.StudentsBean> studentsBeanList){
+        if (binding!=null){
+            binding.getViewModel().observableList.clear();
+            for (FloorModel.StudentsBean studentsBean:studentsBeanList){
+                PopupItemViewEntity entity=new PopupItemViewEntity();
+                entity.text.set(studentsBean.getStudentname());
+                if (selectStudentList.contains(studentsBean)){
+                    entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_select);
+                    entity.isSelect.set(true);
+                }else {
+                    entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_aaaaaa);
+                }
+                entity.id.set(studentsBean.getUserid());
+                PopupItemViewModel popupItemViewModel=new PopupItemViewModel(binding.getViewModel(),entity);
+                binding.getViewModel().observableList.add(popupItemViewModel);
+            }
+        }
+    }
+
+//    public boolean isSelectStudent(List<FloorModel.StudentsBean> selectStudentList, List<FloorModel.StudentsBean> studentsBeanList){
+//        for (FloorModel.StudentsBean studentsBean:studentsBeanList){
+//            for (FloorModel.StudentsBean student:selectStudentList){
+//                if (student.getUserid().equals(studentsBean.getUserid())){
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+//    }
 
 }

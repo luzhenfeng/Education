@@ -3,7 +3,7 @@
   <component name="SQLAndroidSettings">
     <option name="packageNameByDirectory">
       <map>
-        <entry key="D:\wokespace\git\Education\AndroidSqlEditorDatabases\" value="com.lzf.education" />
+        <entry key="D:\wokespace\git\Education\AndroidSqlEditorDatabases\" value="com.nhsoft.utils" />
       </map>
     </option>
     <option name="storageVersion" value="2" />

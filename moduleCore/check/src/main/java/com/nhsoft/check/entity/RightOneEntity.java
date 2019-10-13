@@ -1,9 +1,12 @@
 package com.nhsoft.check.entity;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+
+import com.lzf.http.entity.AllCategoryModel;
 
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 
@@ -20,5 +23,14 @@ public class RightOneEntity {
     public ObservableInt index=new ObservableInt();
     //右侧点击选择班级
     public BindingCommand<ImageView> onSelectClass;
-
+    //后面选择框图片
+    public Drawable image;
+    //是否选中
+    public ObservableBoolean isSelect=new ObservableBoolean(false);
+    //右侧点击选择班级
+    public BindingCommand onItemClick;
+    //焦点
+    public ObservableBoolean hasFou=new ObservableBoolean(false);
+    //条目
+    public ObservableField<AllCategoryModel.ItemsBean> items=new ObservableField<>();
 }

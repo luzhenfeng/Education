@@ -15,5 +15,4 @@ public class CheckInformation {
     public List<FloorModel> mFloorModelList=new ArrayList<>();
     //用户所对应的分类
     public List<AllCategoryModel> userCategoryList=new ArrayList<>();
-
 }

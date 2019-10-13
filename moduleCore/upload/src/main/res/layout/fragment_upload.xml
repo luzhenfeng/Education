@@ -13,7 +13,7 @@
             name="adapter"
             type="RecyclerViewBindingAdapter" />
     </data>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         xmlns:app="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -30,6 +30,17 @@
             app:tabTextColor="@color/color_666666"
             android:background="@color/white"
             binding:onTabSelectedCommand="@{viewModel.onTabSelectedCommand}"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_file"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewModel.itemBinding}"
+            binding:items="@{viewModel.observableList}"
+            binding:layoutManager="@{LayoutManagers.linear()}"
+            binding:lineManager="@{LineManagers.horizontal()}"
+            binding:itemAnimator="@{null}"/>
         <Button
             android:id="@+id/btn_upload"
             android:layout_width="match_parent"
@@ -44,30 +55,22 @@
             android:textSize="55px"
             android:textStyle="bold"
             android:layout_alignParentBottom="true"
-            binding:onClickCommand="@{viewModel.onClickBtn}"/>
-        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-            android:id="@+id/twinklingRefreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_below="@id/tabs"
-            android:layout_above="@id/btn_upload"
-            binding:onTwinklingLoadMoreCommand="@{viewModel.onTwinklingLoadMoreCommand}"
-            binding:onTwinklingRefreshCommand="@{viewModel.onTwinklingRefreshCommand}"
-            binding:tr_head_height="80dp"
-            binding:tr_wave_height="80dp">
+            binding:onClickCommand="@{viewModel.onClickBtn}"
+            android:visibility="@{viewModel.isShowButton}"/>
+<!--        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
+<!--            android:id="@+id/twinklingRefreshLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0px"-->
+<!--            android:layout_below="@id/tabs"-->
+<!--            android:layout_above="@id/btn_upload"-->
+<!--            binding:onTwinklingLoadMoreCommand="@{viewModel.onTwinklingLoadMoreCommand}"-->
+<!--            binding:onTwinklingRefreshCommand="@{viewModel.onTwinklingRefreshCommand}"-->
+<!--            binding:tr_head_height="80dp"-->
+<!--            binding:tr_wave_height="80dp">-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_file"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                binding:adapter="@{adapter}"
-                binding:itemBinding="@{viewModel.itemBinding}"
-                binding:items="@{viewModel.observableList}"
-                binding:layoutManager="@{LayoutManagers.linear()}"
-                binding:lineManager="@{LineManagers.horizontal()}"
-                binding:itemAnimator="@{null}"/>
 
-        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
-    </RelativeLayout>
+<!--        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>-->
+
+    </LinearLayout>
 </layout>

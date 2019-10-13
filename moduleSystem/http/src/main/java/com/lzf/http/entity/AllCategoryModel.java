@@ -138,6 +138,7 @@ public class AllCategoryModel {
         private int ruletype;
         private double score;
         private int showbed;//1显示0不显示
+        private String bednos;
 
 
         public String getId() {
@@ -202,6 +203,14 @@ public class AllCategoryModel {
 
         public void setShowbed(int showbed) {
             this.showbed = showbed;
+        }
+
+        public String getBednos() {
+            return bednos;
+        }
+
+        public void setBednos(String bednos) {
+            this.bednos = bednos;
         }
     }
 }

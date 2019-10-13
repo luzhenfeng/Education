@@ -1,5 +1,6 @@
 package com.nhsoft.check.entity;
 
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 
@@ -11,9 +12,13 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
  * 时间：Created on 2019/10/11.
  */
 public class PopupItemViewEntity {
-    public ObservableField<String> text=new ObservableField<>("机电2");
+    public ObservableField<String> text=new ObservableField<>("");
     //右侧图片
     public Drawable selectState;
     //条目点击
     public BindingCommand onItemClick;
+    //是否选中
+    public ObservableBoolean isSelect=new ObservableBoolean(false);
+    //id
+    public ObservableField<String> id=new ObservableField<>("");
 }

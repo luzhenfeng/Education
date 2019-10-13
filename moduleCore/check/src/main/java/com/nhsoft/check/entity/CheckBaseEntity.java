@@ -44,6 +44,8 @@ public class CheckBaseEntity {
     public ObservableField<List<String>> tabs=new ObservableField<>();
     //tabLayout切换
     public BindingCommand<TabLayout.Tab> onTabSelectedCommand;
+    //违规学生姓名
+    public ObservableField<String> students=new ObservableField<>("");
     //添加学生
     public BindingCommand<ImageView> onClickAdd;
 }

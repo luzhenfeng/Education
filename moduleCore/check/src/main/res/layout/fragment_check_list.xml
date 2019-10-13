@@ -54,15 +54,27 @@
 
             </ImageView>
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="违规学生"
+                android:textSize="48px"
+                android:textColor="@color/black"
+                android:layout_marginRight="22px">
+
+            </TextView>
+
+            <TextView
                 android:id="@+id/tv_student_name"
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="违规学生"
+                android:text="@{viewModel.entity.students}"
                 android:textSize="48px"
-                android:textColor="@color/black">
+                android:textColor="@color/black"
+                android:maxLines="1">
 
             </TextView>
+
             <ImageView
                 android:id="@+id/iv_add_student"
                 android:layout_width="76px"
@@ -89,6 +101,8 @@
                 binding:itemAnimator="@{null}">
 
             </android.support.v7.widget.RecyclerView>
+            <!-- 用Grid自动滑动解决不了-->
+            <!--                binding:layoutManager="@{GridLayoutManagers.grids(viewModel.entity.gridCount,viewModel.entity.observableRightList)}"-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_right"
                 android:layout_width="match_parent"
@@ -98,7 +112,7 @@
                 android:paddingRight="60px"
                 binding:adapter="@{rightAdapter}"
                 binding:itemBinding="@{viewModel.entity.itemRightBinding}"
-                binding:layoutManager="@{GridLayoutManagers.grids(viewModel.entity.gridCount,viewModel.entity.observableRightList)}"
+                binding:layoutManager="@{LayoutManagers.linear()}"
                 binding:items="@{viewModel.entity.observableRightList}"
                 binding:itemAnimator="@{null}">
 
