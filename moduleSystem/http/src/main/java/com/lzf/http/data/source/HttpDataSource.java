@@ -9,6 +9,7 @@ import com.lzf.http.entity.SycnListModel;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 
 /**
@@ -32,5 +33,5 @@ public interface HttpDataSource{
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token);
 
     //创建检查记录
-    Observable<BaseResponse> createCheck(String token,String model);
+    Observable<BaseResponse> createCheck(String token, RequestBody model);
 }

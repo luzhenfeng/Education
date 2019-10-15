@@ -14,6 +14,7 @@ import com.nhsoft.utils.utils.EncryptionUtil;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 
 /**
@@ -71,7 +72,7 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
-    public Observable<BaseResponse> createCheck(String token, String model) {
+    public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return apiService.createCheck(token,model);
     }
 }

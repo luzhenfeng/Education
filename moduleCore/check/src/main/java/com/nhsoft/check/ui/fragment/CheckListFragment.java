@@ -56,7 +56,9 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
         viewModel.uc.setTabs.observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object o) {
-                setTabs();
+                if (binding.tabs.getTabCount()==0){
+                    setTabs();
+                }
             }
         });
         viewModel.uc.selectTab.observe(this, new Observer<Integer>() {
