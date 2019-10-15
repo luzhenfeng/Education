@@ -257,8 +257,8 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,new ArrayList<String>());
                 boolean isSave=model.insertCheckModel(checkModel);
                 if (isSave){
-//                    KLog.e(model.getToken());
-//                    KLog.e(new Gson().toJson(checkModel));
+                    KLog.e(model.getToken());
+                    KLog.e(new Gson().toJson(checkModel));
                     upload(checkModel);
 
                 }else {
