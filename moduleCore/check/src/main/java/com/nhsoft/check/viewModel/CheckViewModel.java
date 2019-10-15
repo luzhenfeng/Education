@@ -12,6 +12,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
+import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.service.ChecksModelService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
@@ -403,6 +405,12 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                             clearData();
                             Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                             ToastUtils.showShort("上传成功");
+                            ChecksModel checksModel= ChecksModelService.getInstance().getMaxChecksModel();
+                            checksModel.setIsUpdate(true);
+                            boolean isUpdate=ChecksModelService.getInstance().updateChecksModel(checksModel);
+//                            if (isUpdate){
+//
+//                            }
                         }else {
                             ToastUtils.showShort(response.getMsg());
                         }

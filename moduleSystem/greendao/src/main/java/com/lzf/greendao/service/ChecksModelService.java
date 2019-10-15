@@ -83,10 +83,15 @@ public class ChecksModelService {
         });
     }
 
-    public ChecksModel getChecksModel(long id){
+    public ChecksModel getChecksModel(Long id){
         return mDaoSession.getChecksModelDao().queryBuilder()
                 .where(ChecksModelDao.Properties.Id.eq(id))
                 .unique();
+    }
+
+    public ChecksModel getMaxChecksModel(){
+        List<ChecksModel> checksModelList=mDaoSession.getChecksModelDao().loadAll();
+        return checksModelList.get(checksModelList.size()-1);
     }
 
 }

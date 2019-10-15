@@ -216,7 +216,12 @@ public class UploadViewModel extends BaseViewModel<Repository> {
                     @Override
                     public void accept(BaseResponse response) throws Exception {
                         if (response.isOk()){//更新数据库
-                            boolean isUpdate=ChecksModelService.getInstance().updateChecksModel(ChecksModelService.getInstance().getChecksModel(ids.get(upLodePos.get())));
+                            ChecksModel checksModel=ChecksModelService.getInstance().getChecksModel(ids.get(upLodePos.get()));
+                            checksModel.setIsUpdate(true);
+                            boolean isUpdate=ChecksModelService.getInstance().updateChecksModel(checksModel);
+                            if (isUpdate){
+                                uc.onTabSelectedCommand.setValue(0);
+                            }
                             KLog.e(isUpdate);
                         }
                     }
