@@ -9,10 +9,13 @@ import com.lzf.http.entity.SycnListModel;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.http.BaseResponse;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -43,8 +46,8 @@ public interface ApiService {
     @GET("mq/GetSyncList")
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(@Query("token") String token);
 
-    @FormUrlEncoded
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("mq/CreateCheck")
-    Observable<BaseResponse> createCheck(@Field("token") String token,@Field("model") String model);
+    Observable<BaseResponse> createCheck(@Query("token") String token, @Body RequestBody model);
 
 }

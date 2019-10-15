@@ -15,6 +15,7 @@ import com.lzf.http.entity.SycnListModel;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.base.BaseModel;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 
@@ -77,7 +78,7 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
-    public Observable<BaseResponse> createCheck(String token, String model) {
+    public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return mHttpDataSource.createCheck(token,model);
     }
 
