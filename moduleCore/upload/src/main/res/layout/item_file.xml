@@ -27,7 +27,7 @@
                 android:background="@drawable/bg_solid_a6a6a6_corner_6"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                android:src="@drawable/off_line"
+                android:src="@{viewModel.entity.isUpload()?@drawable/upload:@drawable/noupload}"
                 android:paddingRight="42px"
                 android:paddingLeft="42px"
                 android:paddingBottom="60px"

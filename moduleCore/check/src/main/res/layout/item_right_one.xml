@@ -10,7 +10,7 @@
         xmlns:binding="http://schemas.android.com/apk/res-auto"
         android:id="@+id/lll"
         android:layout_width="match_parent"
-        android:layout_height="120px"
+        android:layout_height="160px"
         android:gravity="center_vertical"
         binding:onClickCommand="@{viewModel.entity.onItemClick}"
         android:focusable="@{viewModel.entity.hasFou}"
@@ -25,7 +25,7 @@
             android:gravity="center"
             android:text="@{String.valueOf(viewModel.entity.index)}"
             android:textColor="@color/white"
-            android:textSize="39px"
+            android:textSize="46px"
             android:textStyle="bold">
 
         </TextView>
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:text="@{viewModel.entity.content}"
             android:textColor="@color/color_919191"
-            android:textSize="38px"
+            android:textSize="46px"
             android:maxLines="1">
 
         </TextView>
@@ -47,9 +47,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.entity.classes}"
+            binding:onClickCommand="@{viewModel.entity.onSelectClass}"
             android:textColor="@color/color_666666"
             android:layout_marginRight="58px"
-            android:textSize="38px"
+            android:textSize="46px"
             android:maxLines="1">
 
         </TextView>
@@ -58,8 +59,7 @@
             android:id="@+id/iv_item_image"
             android:layout_width="55px"
             android:layout_height="55px"
-            android:src="@{viewModel.entity.image}"
-            binding:onClickCommand="@{viewModel.entity.onSelectClass}">
+            android:src="@{viewModel.entity.image}">
 
         </ImageView>
 

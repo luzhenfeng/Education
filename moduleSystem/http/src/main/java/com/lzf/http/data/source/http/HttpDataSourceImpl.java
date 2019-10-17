@@ -1,6 +1,9 @@
 package com.lzf.http.data.source.http;
 
 
+import android.annotation.SuppressLint;
+import android.os.Build;
+
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.http.service.ApiService;
 import com.lzf.http.entity.AllCategoryModel;
@@ -44,11 +47,13 @@ public class HttpDataSourceImpl implements HttpDataSource {
         this.apiService = apiService;
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public Observable<BaseResponse<LoginModel>> login(String username, String password) {
         String nonce=EncryptionUtil.getNonce();
         String timestamp=EncryptionUtil.getTimestamp();
-        return apiService.login(username, EncryptionUtil.MD5(password),EncryptionUtil.signatureString(Constant.APPSECRET,timestamp,nonce),timestamp,nonce,Constant.APPID);
+        String serial=Build.SERIAL;
+        return apiService.login(username, EncryptionUtil.MD5(password),EncryptionUtil.signatureString(Constant.APPSECRET,timestamp,nonce),timestamp,nonce,Constant.APPID,serial);
     }
 
     @Override

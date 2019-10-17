@@ -33,4 +33,6 @@ public class RightOneEntity {
     public ObservableBoolean hasFou=new ObservableBoolean(false);
     //条目
     public ObservableField<AllCategoryModel.ItemsBean> items=new ObservableField<>();
+    //是否显示床号
+    public ObservableInt showbed=new ObservableInt(0);
 }

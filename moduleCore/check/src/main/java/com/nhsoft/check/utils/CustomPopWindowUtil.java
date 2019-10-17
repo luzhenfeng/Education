@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.FloorModel;
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.R;
@@ -18,6 +19,7 @@ import com.nhsoft.check.databinding.PopupSelectClassBinding;
 import com.nhsoft.check.entity.PopupItemViewEntity;
 import com.nhsoft.check.viewModel.PopupItemViewModel;
 import com.nhsoft.check.viewModel.PopupViewModel;
+import com.nhsoft.check.viewModel.RightOneItemViewModel;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.pxview.utils.RelayoutViewTool;
 
@@ -126,6 +128,36 @@ public class CustomPopWindowUtil {
                 entity.id.set(studentsBean.getUserid());
                 PopupItemViewModel popupItemViewModel=new PopupItemViewModel(binding.getViewModel(),entity);
                 binding.getViewModel().observableList.add(popupItemViewModel);
+            }
+        }
+    }
+
+
+    /**
+     * 选择班级
+     * @param itemsBean 当前检查项
+     */
+    public void setData(AllCategoryModel.ItemsBean itemsBean,FloorModel.RoomModel mRoomModel){
+        if (binding!=null){
+            binding.getViewModel().observableList.clear();
+            for (FloorModel.RoomModel.ChildrensBean childrensBean:mRoomModel.getChildrens()){
+                PopupItemViewEntity entity=new PopupItemViewEntity();
+                entity.text.set(childrensBean.getName());
+                entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_aaaaaa);
+                entity.id.set(childrensBean.getId());
+                PopupItemViewModel popupItemViewModel=new PopupItemViewModel(binding.getViewModel(),entity);
+                binding.getViewModel().observableList.add(popupItemViewModel);
+            }
+            if (itemsBean.getClassId()!=null){
+                String ids[] =itemsBean.getClassId().split(",");
+                for (String s:ids){
+                    for (PopupItemViewModel popupItemViewModel:binding.getViewModel().observableList){
+                        if (popupItemViewModel.entity.get().id.get().equals(s)){
+                            popupItemViewModel.entity.get().isSelect.set(true);
+                            popupItemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_select);
+                        }
+                    }
+                }
             }
         }
     }

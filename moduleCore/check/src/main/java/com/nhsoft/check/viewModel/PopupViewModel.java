@@ -11,6 +11,8 @@ import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
 import com.nhsoft.check.message.ConstantMessage;
 
+import java.util.List;
+
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
@@ -33,6 +35,7 @@ public class PopupViewModel {
 
     //选中的条目
     public ObservableInt selectPos=new ObservableInt(-1);
+
 
     /**
      * 单选条目选中

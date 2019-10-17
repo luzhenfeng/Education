@@ -61,6 +61,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
 
     public ObservableInt selectPos = new ObservableInt(0);
 
+    //选条目班级的position
+    public ObservableInt selectRightPos=new ObservableInt(-1);
+
     public ObservableField<CheckBaseEntity> entity = new ObservableField<>();
 
     //所有楼
@@ -80,6 +83,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
 
     //当前分类的所有子分类
     public List<AllCategoryModel.ChidrensBean> mChildrenBeanList = new ArrayList<>();
+
+    //当前房间
+    public FloorModel.RoomModel mRoomModel;
 
     //当前房间的 所有学生
     public List<FloorModel.StudentsBean> mStudentList = new ArrayList<>();
@@ -148,12 +154,47 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         mPopupViewModel.onClick=new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                setSelectSudentList(mPopupViewModel.observableList);
-                entity.get().students.set(getStudents());
-                CustomPopWindowUtil.getInstance().dismiss();
+                if (mPopupViewModel.title.get().equals("选择学生")){
+                    setSelectSudentList(mPopupViewModel.observableList);
+                    entity.get().students.set(getStudents());
+                    CustomPopWindowUtil.getInstance().dismiss();
+                }else if (mPopupViewModel.title.get().equals("选择检查项班级")){
+                    RightOneItemViewModel rightOneItemViewModel= (RightOneItemViewModel) entity.get().observableRightList.get(selectRightPos.get());
+                    rightOneItemViewModel.entity.get().classes.set(setSelectCheckClass(rightOneItemViewModel));
+                    CustomPopWindowUtil.getInstance().dismiss();
+                }
             }
         });
     }
+
+    /**
+     * 获取当前选择条目班级的条目
+     * @return
+     */
+    public AllCategoryModel.ItemsBean  getCurrenItem(){
+        RightOneItemViewModel rightOneItemViewModel= (RightOneItemViewModel) entity.get().observableRightList.get(selectRightPos.get());
+        return rightOneItemViewModel.entity.get().items.get();
+    }
+
+    /**
+     * 选择条目的班级
+     */
+    public String setSelectCheckClass(RightOneItemViewModel rightOneItemViewModel){
+        String text="";
+        String ids="";
+        List<PopupItemViewModel> popupItemViewModelList=mPopupViewModel.observableList;
+        AllCategoryModel.ItemsBean itemsBean=rightOneItemViewModel.entity.get().items.get();
+        for (PopupItemViewModel popupItemViewModel:popupItemViewModelList){
+            if (popupItemViewModel.entity.get().isSelect.get()){
+                text+=popupItemViewModel.entity.get().text.get()+",";
+                ids+=popupItemViewModel.entity.get().id.get()+",";
+            }
+        }
+        itemsBean.setClassId(ids.equals("")?null:ids);
+        itemsBean.setClassName(text.equals("")?null:text);
+        return text.equals("")?"选择班级":text.substring(0,text.length()-1);
+    }
+
 
     public void initMessenger() {
         //传递信息
@@ -162,6 +203,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             public void call(CheckInformation checkInformation) {
                 mFloorModelList = checkInformation.mFloorModelList;
                 userCategoryList = checkInformation.userCategoryList;
+                mRoomModel=checkInformation.mRoomModel;
                 entity.get().tabs.set(getTabs());
                 getCurrentCategory(entity.get().tabs.get().get(0));
                 uc.setTabs.call();
@@ -171,6 +213,8 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             @Override
             public void call(CheckStudent checkStudent) {
                 mStudentList=checkStudent.mStudentList;
+                mRoomModel=checkStudent.mRoomModel;
+                setRightItem();
             }
         });
         //清除数据
@@ -310,12 +354,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             List<AllCategoryModel.ItemsBean> itemsBeanList = HttpDataUtil.getItemsBeanList(chidrensBean, mAllItemsList);
             for (int i = 0; i < itemsBeanList.size(); i++) {
                 AllCategoryModel.ItemsBean itemsBean = itemsBeanList.get(i);
-                setRight1Item(i, itemsBean);
-                if (itemsBean.getShowbed() == 1) {
+                setRight1Item(i, itemsBean,chidrensBean.getShowbed());
+                if (chidrensBean.getShowbed() == 1) {
                     setRight5Item(itemsBean.getId());
-//                    for (int j = 0; j < entity.get().gridCount.get() - 1; j++) {
-//                        setRight2Item(j);
-//                    }
                 }
             }
         }
@@ -332,9 +373,8 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             index++;
             List<AllCategoryModel.ItemsBean> itemsBeanList = HttpDataUtil.getItemsBeanList(chidrensBean, mAllItemsList);
             for (int i = 0; i < itemsBeanList.size(); i++) {
-                AllCategoryModel.ItemsBean itemsBean = itemsBeanList.get(i);
                 index++;
-                if (itemsBean.getShowbed() == 1) {
+                if (chidrensBean.getShowbed() == 1) {
                     index++;
                 }
             }
@@ -364,13 +404,16 @@ public class CheckBaseViewModel extends BasePopupViewModel {
      * @param pos       序号
      * @param itemsBean 条目
      */
-    public void setRight1Item(int pos, AllCategoryModel.ItemsBean itemsBean) {
+    public void setRight1Item(int pos, AllCategoryModel.ItemsBean itemsBean,int showbed) {
         RightOneEntity rightOneEntity = new RightOneEntity();
         rightOneEntity.index.set(pos + 1);
         rightOneEntity.content.set(itemsBean.getName());
-        rightOneEntity.classes.set("");
         rightOneEntity.image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_aaaaaa);
         rightOneEntity.items.set(itemsBean);
+        rightOneEntity.showbed.set(showbed);
+        if (mRoomModel.getChildrens().size()>1&&showbed==0){
+            rightOneEntity.classes.set("选择班级");
+        }
         MultiItemViewModel rightOneItem = new RightOneItemViewModel(this, rightOneEntity);
         rightOneItem.multiItemType(MultiRecycleType_Right1);
         entity.get().observableRightList.add(rightOneItem);
@@ -479,6 +522,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_aaaaaa);
             rightOneItemViewModel.entity.get().isSelect.set(false);
             removeRightItemSelect(rightOneItemViewModel.entity.get());
+            if (rightOneItemViewModel.entity.get().showbed.get()==1){
+                clearBed(pos);
+            }
         }else {
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_select);
             rightOneItemViewModel.entity.get().isSelect.set(true);
@@ -487,6 +533,11 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         rightOneItemViewModel.entity.get().hasFou.set(true);
         entity.get().observableRightList.set(pos,rightOneItemViewModel);
         sentCheckItemMessager();
+    }
+
+    public void onSelectClass(int pos){
+        selectRightPos.set(pos);
+        uc.type.setValue(4);
     }
 
     /**
@@ -593,6 +644,30 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         updateSelectItemsBeanList(rightFiveItemViewModel.entity.get());
     }
 
+    public boolean isSelectStep(int pos){
+        RightOneItemViewModel rightOneItemViewModel= (RightOneItemViewModel) entity.get().observableRightList.get(pos-1);
+        if (rightOneItemViewModel.entity.get().isSelect.get()){
+            return true;
+        }else {
+            ToastUtils.showShort("请先选择对应检查项，再选择床号！");
+            return false;
+        }
+    }
+
+    public void clearBed(int pos){
+        RightFiveItemViewModel rightFiveItemViewModel= (RightFiveItemViewModel) entity.get().observableRightList.get(pos+1);
+        rightFiveItemViewModel.entity.get().text1Select.set(false);
+        rightFiveItemViewModel.entity.get().text2Select.set(false);
+        rightFiveItemViewModel.entity.get().text3Select.set(false);
+        rightFiveItemViewModel.entity.get().text4Select.set(false);
+        rightFiveItemViewModel.entity.get().text5Select.set(false);
+        rightFiveItemViewModel.entity.get().text6Select.set(false);
+        rightFiveItemViewModel.entity.get().text7Select.set(false);
+        rightFiveItemViewModel.entity.get().text8Select.set(false);
+        rightFiveItemViewModel.entity.get().text9Select.set(false);
+        rightFiveItemViewModel.entity.get().text10Select.set(false);
+    }
+
     /**
      * 更新选中条目中的床位
      * @param entity
@@ -614,25 +689,34 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     public String getBedNos(RightFiveEntity entity){
         String bedNos="";
         if (entity.text1Select.get()){
-            bedNos=entity.text1.get()+bedNos+",";
-        }else if (entity.text2Select.get()){
-            bedNos=entity.text2.get()+bedNos+",";
-        }else if (entity.text3Select.get()){
-            bedNos=entity.text3.get()+bedNos+",";
-        }else if (entity.text4Select.get()){
-            bedNos=entity.text4.get()+bedNos+",";
-        }else if (entity.text5Select.get()){
-            bedNos=entity.text5.get()+bedNos+",";
-        }else if (entity.text6Select.get()){
-            bedNos=entity.text6.get()+bedNos+",";
-        }else if (entity.text7Select.get()){
-            bedNos=entity.text7.get()+bedNos+",";
-        }else if (entity.text8Select.get()){
-            bedNos=entity.text8.get()+bedNos+",";
-        }else if (entity.text9Select.get()){
-            bedNos=entity.text9.get()+bedNos+",";
-        }else if (entity.text10Select.get()){
-            bedNos=entity.text10.get()+bedNos+",";
+            bedNos+=entity.text1.get()+",";
+        }
+        if (entity.text2Select.get()){
+            bedNos+=entity.text2.get()+",";
+        }
+        if (entity.text3Select.get()){
+            bedNos+=entity.text3.get()+",";
+        }
+        if (entity.text4Select.get()){
+            bedNos+=entity.text4.get()+",";
+        }
+        if (entity.text5Select.get()){
+            bedNos+=entity.text5.get()+",";
+        }
+        if (entity.text6Select.get()){
+            bedNos+=entity.text6.get()+",";
+        }
+        if (entity.text7Select.get()){
+            bedNos+=entity.text7.get()+",";
+        }
+        if (entity.text8Select.get()){
+            bedNos+=entity.text8.get()+",";
+        }
+        if (entity.text9Select.get()){
+            bedNos+=entity.text9.get()+",";
+        }
+        if (entity.text10Select.get()){
+            bedNos+=entity.text10.get()+",";
         }
         return bedNos;
     }

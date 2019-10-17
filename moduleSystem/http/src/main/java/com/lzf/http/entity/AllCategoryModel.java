@@ -101,6 +101,7 @@ public class AllCategoryModel {
 
         private String id;
         private String name;
+        private int showbed;//1显示0不显示
 
         public String getId() {
             return id;
@@ -116,6 +117,14 @@ public class AllCategoryModel {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public int getShowbed() {
+            return showbed;
+        }
+
+        public void setShowbed(int showbed) {
+            this.showbed = showbed;
         }
     }
 
@@ -137,9 +146,34 @@ public class AllCategoryModel {
         private int deducttype;
         private int ruletype;
         private double score;
-        private int showbed;//1显示0不显示
+        private double pscore;
         private String bednos;
+        private String classId;
+        private String className;
 
+        public double getPscore() {
+            return pscore;
+        }
+
+        public void setPscore(double pscore) {
+            this.pscore = pscore;
+        }
+
+        public String getClassId() {
+            return classId;
+        }
+
+        public void setClassId(String classId) {
+            this.classId = classId;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
+        }
 
         public String getId() {
             return id;
@@ -195,14 +229,6 @@ public class AllCategoryModel {
 
         public void setScore(double score) {
             this.score = score;
-        }
-
-        public int getShowbed() {
-            return showbed;
-        }
-
-        public void setShowbed(int showbed) {
-            this.showbed = showbed;
         }
 
         public String getBednos() {

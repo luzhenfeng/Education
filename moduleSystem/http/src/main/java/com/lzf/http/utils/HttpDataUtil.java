@@ -1,6 +1,9 @@
 package com.lzf.http.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,8 +15,11 @@ import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.DateUtil;
 import com.nhsoft.utils.utils.FileUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import priv.lzf.mvvmhabit.utils.SPUtils;
 
 /**
  * 作者：Created by 45703
@@ -296,7 +302,7 @@ public class HttpDataUtil {
      * @param roomModel 当前房间
      * @return
      */
-    public static String getclassIds(FloorModel.RoomModel roomModel){
+    public static String getClassIds(FloorModel.RoomModel roomModel){
         String ids="";
         for (FloorModel.RoomModel.ChildrensBean childrensBean:roomModel.getChildrens()){
             if (roomModel.getChildrens().indexOf(childrensBean)==roomModel.getChildrens().size()-1){
@@ -313,7 +319,7 @@ public class HttpDataUtil {
      * @param roomModel 当前房间
      * @return
      */
-    public static String getclassNames(FloorModel.RoomModel roomModel){
+    public static String getClassNames(FloorModel.RoomModel roomModel){
         String names="";
         for (FloorModel.RoomModel.ChildrensBean childrensBean:roomModel.getChildrens()){
             if (roomModel.getChildrens().indexOf(childrensBean)==roomModel.getChildrens().size()-1){
@@ -361,6 +367,8 @@ public class HttpDataUtil {
             recordsBean.setRuletype(itemsBean.getRuletype());
             recordsBean.setScore(itemsBean.getScore());
             recordsBean.setBednos(itemsBean.getBednos());
+            recordsBean.setClassId(itemsBean.getClassId());
+            recordsBean.setClassName(itemsBean.getClassName());
             recordsBeanList.add(recordsBean);
         }
 
@@ -373,8 +381,8 @@ public class HttpDataUtil {
             checkModel.setClassId(mRoomModel.getId());
             checkModel.setClassName(mRoomModel.getName());
         }else {
-            checkModel.setClassId(HttpDataUtil.getclassIds(mRoomModel));
-            checkModel.setClassName(HttpDataUtil.getclassNames(mRoomModel));
+            checkModel.setClassId(HttpDataUtil.getClassIds(mRoomModel));
+            checkModel.setClassName(HttpDataUtil.getClassNames(mRoomModel));
         }
         if (mAllCategoryModel.getCategory()!=0){
             checkModel.setObjectId(mRoomModel.getId());
@@ -382,7 +390,13 @@ public class HttpDataUtil {
         }
         checkModel.setStudents(studentsBeanList);
         checkModel.setRecords(recordsBeanList);
-        checkModel.setPhotos(photos);
+        String[] photoes= SPUtils.getInstance().getString("photos").split(",");
+        List<String> p=new ArrayList<>();
+        for (String s:photoes){
+            Bitmap bitmap= BitmapFactory.decodeFile(s);
+            p.add(Bitmap2StrByBase64(bitmap));
+        }
+        checkModel.setPhotos(p);
         return checkModel;
     }
 
@@ -413,5 +427,14 @@ public class HttpDataUtil {
         }
         return checkModel;
     }
+
+
+    public static String Bitmap2StrByBase64(Bitmap bit){
+        ByteArrayOutputStream bos=new ByteArrayOutputStream();
+        bit.compress(Bitmap.CompressFormat.PNG, 90, bos);//第二个入参表示图片压缩率，如果是100就表示不压缩
+        byte[] bytes=bos.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
 
 }

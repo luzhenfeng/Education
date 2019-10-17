@@ -125,6 +125,7 @@ public class FloorModel {
 
             private String id;
             private String name;
+            private boolean isSelect;
 
             public String getId() {
                 return id;
@@ -140,6 +141,14 @@ public class FloorModel {
 
             public void setName(String name) {
                 this.name = name;
+            }
+
+            public boolean isSelect() {
+                return isSelect;
+            }
+
+            public void setSelect(boolean select) {
+                isSelect = select;
             }
         }
     }

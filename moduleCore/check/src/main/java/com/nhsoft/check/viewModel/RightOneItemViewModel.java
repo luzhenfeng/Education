@@ -21,9 +21,6 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel> {
 
 
-    public final static int CheckInteriorViewModel=1;
-    public final static int CheckRoutineViewModel=2;
-
     public ObservableField<RightOneEntity> entity=new ObservableField<>();
 
     public RightOneItemViewModel(@NonNull CheckBaseViewModel viewModel,RightOneEntity entity) {
@@ -36,8 +33,7 @@ public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel
         entity.get().onSelectClass=new BindingCommand<>(new BindingAction() {
             @Override
             public void call() {
-//                viewModel.onSelectClassImage();
-                viewModel.onRight1ItemClick(viewModel.getRightItemPosition(RightOneItemViewModel.this));
+                viewModel.onSelectClass(viewModel.getRightItemPosition(RightOneItemViewModel.this));
             }
         });
         entity.get().onItemClick=new BindingCommand(new BindingAction() {

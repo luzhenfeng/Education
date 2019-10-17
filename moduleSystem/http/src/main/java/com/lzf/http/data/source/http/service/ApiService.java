@@ -31,7 +31,8 @@ public interface ApiService {
                                                @Field("signature") String signature,
                                                @Field("timestamp") String timestamp,
                                                @Field("nonce") String nonce,
-                                               @Field("appid") String appid);
+                                               @Field("appid") String appid,
+                                               @Field("deviceno") String deviceno);
 
     @GET("mq/GetCheckObjects")
     Observable<BaseResponse<List<FloorModel>>> checkObject(@Query("token") String token);

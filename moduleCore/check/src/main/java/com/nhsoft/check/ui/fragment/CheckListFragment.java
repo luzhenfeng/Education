@@ -45,10 +45,15 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
         viewModel.uc.type.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                viewModel.setTitle("选择学生");
-                viewModel.isShowButton(View.VISIBLE);
-                CustomPopWindowUtil.getInstance().setData(viewModel.mSelectSudentList, viewModel.mStudentList);
-//                viewModel.mPopupViewModel.selectPos.set(viewModel.mFloorNameList.indexOf(binding.tvFloor.getText().toString()));
+                if (integer.intValue()==3){
+                    viewModel.setTitle("选择学生");
+                    viewModel.isShowButton(View.VISIBLE);
+                    CustomPopWindowUtil.getInstance().setData(viewModel.mSelectSudentList, viewModel.mStudentList);
+                }else if (integer.intValue()==4){
+                    viewModel.setTitle("选择检查项班级");
+                    viewModel.isShowButton(View.VISIBLE);
+                    CustomPopWindowUtil.getInstance().setData(viewModel.getCurrenItem(),viewModel.mRoomModel);
+                }
                 CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(), getView());
                 CustomPopWindowUtil.getInstance().setAdapter();
             }

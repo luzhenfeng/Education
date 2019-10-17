@@ -13,7 +13,16 @@ public class UploadEntity {
     private String text3;
     private String text4;
     private boolean isSelect;
+    private boolean isUpload;
     private ChecksModel mChecksModel;
+
+    public boolean isUpload() {
+        return isUpload;
+    }
+
+    public void setUpload(boolean upload) {
+        isUpload = upload;
+    }
 
     public String getText4() {
         return text4;

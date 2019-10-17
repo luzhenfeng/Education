@@ -12,4 +12,6 @@ import java.util.List;
 public class CheckStudent {
     //当前房间的所有学生
     public List<FloorModel.StudentsBean> mStudentList = new ArrayList<>();
+    //当前房间
+    public FloorModel.RoomModel mRoomModel;
 }

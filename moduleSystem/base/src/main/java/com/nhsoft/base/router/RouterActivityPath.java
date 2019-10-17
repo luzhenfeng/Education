@@ -50,6 +50,8 @@ public class RouterActivityPath {
         private static final String CHECK = "/check";
         /*上传文件界面*/
         public static final String PAGER_CHECK = CHECK + "/check";
+        /*上传文件界面*/
+        public static final String PAGER_PHOTO = CHECK + "/photo";
     }
 
     /**

@@ -89,7 +89,8 @@ dependencies {
     //Recyclerview上拉加载和下拉刷新
     api rootProject.ext.dependencies["tkrefreshlayout"]
 
+//    api rootProject.ext.dependencies["takephoto_library"]
     api project(':moduleSystem:pxview')
 
-
+    api project(':moduleSystem:takephoto_library')
 }

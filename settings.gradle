@@ -1,2 +1,2 @@
-include ':app', ':moduleSystem:mvvmhabit', ':moduleSystem:base', ':modulePublic:res', ':moduleCore:upload', ':moduleCore:check', ':app1', ':modulePublic:utils', ':moduleSystem:pxview', ':moduleCore:login', ':moduleSystem:http', ':moduleSystem:greendao'
+include ':app', ':moduleSystem:mvvmhabit', ':moduleSystem:base', ':modulePublic:res', ':moduleCore:upload', ':moduleCore:check', ':app1', ':modulePublic:utils', ':moduleSystem:pxview', ':moduleCore:login', ':moduleSystem:http', ':moduleSystem:greendao', ':moduleSystem:takephoto_library'
 rootProject.name='Education'

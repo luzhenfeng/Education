@@ -148,6 +148,7 @@ public class UploadViewModel extends BaseViewModel<Repository> {
             uploadEntity.setText2(checksModel.getCateName()+"("+checksModel.getCheckDate()+"-"+"扣"+score(recordsBeanList)+"分"+")");
             uploadEntity.setText3(getCheckItem(recordsBeanList));
             uploadEntity.setText4("类型:"+(checksModel.getCategory()==0?"班级检查":checksModel.getCategory()==1?"寝室检查":"公共场地"));
+            uploadEntity.setUpload(checksModel.getIsUpdate());
             uploadEntity.setChecksModel(checksModel);
             FileItemViewModel itemViewModel = new FileItemViewModel(this, uploadEntity);
             //双向绑定动态添加Item

@@ -153,6 +153,8 @@ public class CheckModel {
         private int ruletype;
         private double score;
         private String bednos;
+        private String classId;
+        private String className;
 
         public String getId() {
             return id;
@@ -216,6 +218,22 @@ public class CheckModel {
 
         public void setBednos(String bednos) {
             this.bednos = bednos;
+        }
+
+        public String getClassId() {
+            return classId;
+        }
+
+        public void setClassId(String classId) {
+            this.classId = classId;
+        }
+
+        public String getClassName() {
+            return className;
+        }
+
+        public void setClassName(String className) {
+            this.className = className;
         }
     }
 

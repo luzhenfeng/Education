@@ -27,6 +27,7 @@ import com.nhsoft.check.message.CheckStudent;
 import com.nhsoft.check.message.ConstantMessage;
 import com.nhsoft.check.message.SelectChange;
 import com.nhsoft.check.message.Subject;
+import com.nhsoft.check.ui.activity.PhotoActivity;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.utils.utils.DateUtil;
 
@@ -49,6 +50,7 @@ import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.RxUtils;
+import priv.lzf.mvvmhabit.utils.SPUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -106,6 +108,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
     public class UIChangeObservable {
         public SingleLiveEvent<Integer> selectType = new SingleLiveEvent<>();
+        public SingleLiveEvent takePhoto=new SingleLiveEvent();
     }
 
     public CheckViewModel(@NonNull Application application) {
@@ -147,7 +150,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().ivUpload = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                ToastUtils.showShort("此功能暂未开放");
+                ARouter.getInstance().build(RouterActivityPath.Upload.PAGER_UPLOAD).navigation();
             }
         });
 
@@ -155,7 +158,9 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().ivCamera = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                ToastUtils.showShort("此功能暂未开放");
+//                ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+                startActivity(PhotoActivity.class);
+//                ToastUtils.showShort("此功能暂未开放");
             }
         });
 
@@ -163,7 +168,8 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().ivHome = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                ARouter.getInstance().build(RouterActivityPath.Upload.PAGER_UPLOAD).navigation();
+                ToastUtils.showShort("此功能暂未开放");
+
             }
         });
 
@@ -284,6 +290,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         CheckInformation checkInformation = new CheckInformation();
         checkInformation.mFloorModelList = mFloorModelList;
         checkInformation.userCategoryList = userCategoryList;
+        checkInformation.mRoomModel=mRoomModel;
         Messenger.getDefault().send(checkInformation, ConstantMessage.TOKEN_CHECKVIEWMODEL_INFORMATION);
         setStudentMeseenger();
     }
@@ -354,6 +361,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
     public void setStudentMeseenger(){
         CheckStudent checkStudent=new CheckStudent();
         checkStudent.mStudentList=mStudentList;
+        checkStudent.mRoomModel=mRoomModel;
         Messenger.getDefault().send(checkStudent,ConstantMessage.TOKEN_CHECKVIEWMODEL_STUDENT);
     }
 
@@ -383,6 +391,11 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().fractionNum.set(String.valueOf(0));
         entity.get().showFractionNum.set(View.GONE);
         entity.get().fraction.set("");
+        entity.get().date.set(DateUtil.getCurrentTime());
+        SPUtils.getInstance().put("photos","");
+        SPUtils.getInstance().put("realityNum",0);
+        entity.get().cameraNum.set("0");
+        entity.get().showCameraNum.set(View.GONE);
     }
 
 
