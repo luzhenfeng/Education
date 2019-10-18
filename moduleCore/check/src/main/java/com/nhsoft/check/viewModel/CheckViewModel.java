@@ -2,8 +2,13 @@ package com.nhsoft.check.viewModel;
 
 import android.app.Application;
 import android.content.DialogInterface;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -22,15 +27,18 @@ import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.check.entity.CheckEntity;
+import com.nhsoft.check.entity.PhotoItemEntity;
 import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.check.message.CheckStudent;
 import com.nhsoft.check.message.ConstantMessage;
+import com.nhsoft.check.message.PhotoPaths;
 import com.nhsoft.check.message.SelectChange;
 import com.nhsoft.check.message.Subject;
 import com.nhsoft.check.ui.activity.PhotoActivity;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.utils.utils.DateUtil;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +58,6 @@ import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.RxUtils;
-import priv.lzf.mvvmhabit.utils.SPUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -102,6 +109,9 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
     public ObservableBoolean isSelect=new ObservableBoolean(false);
 
     public ObservableField<CheckEntity> entity = new ObservableField<>();
+
+    //选中的图片
+    public List<PhotoItemEntity> mPhotoItemEntities=new ArrayList<>();
 
     //封装一个界面发生改变的观察者
     public UIChangeObservable uc = new UIChangeObservable();
@@ -160,7 +170,6 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
             public void call() {
 //                ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
                 startActivity(PhotoActivity.class);
-//                ToastUtils.showShort("此功能暂未开放");
             }
         });
 
@@ -188,7 +197,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().tvFloor = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                if (!isSelect.get()){
+                if (!isSelect.get()&&!entity.get().cameraNum.get().equals("0")){
                     uc.selectType.setValue(1);
                     Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
                 }else {
@@ -200,7 +209,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().tvRoom = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                if (!isSelect.get()){
+                if (!isSelect.get()&&!entity.get().cameraNum.get().equals("0")){
                     uc.selectType.setValue(2);
                     Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
                 }else {
@@ -263,11 +272,9 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 mSelectSudentList=subject.mSelectSudentList;
                 mSelectItemsBeanList=subject.mSelectItemsBeanList;
                 // TODO: 2019/10/13
-                CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,new ArrayList<String>());
+                CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,setPhotoes());
                 boolean isSave=model.insertCheckModel(checkModel);
                 if (isSave){
-                    KLog.e(model.getToken());
-                    KLog.e(new Gson().toJson(checkModel));
                     upload(checkModel);
 
                 }else {
@@ -283,6 +290,37 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 clearData();
             }
         });
+
+        //接收图片
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_PHOTOVIEWMODEL_PHOTOPATHS, Integer.class, new BindingConsumer<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                if (integer.intValue()>0){
+                    entity.get().cameraNum.set(integer.toString());
+                    entity.get().showCameraNum.set(View.VISIBLE);
+                }else {
+                    entity.get().cameraNum.set("0");
+                    entity.get().showCameraNum.set(View.GONE);
+                }
+            }
+        });
+    }
+
+    /**
+     * 获取图片路径
+     * @return
+     */
+    public List<String> setPhotoes(){
+        List<String> photoList=new ArrayList<>();
+        String photoes=model.getPhotos();
+        if (photoes.equals("")){
+            return photoList;
+        }
+        String[] photo=photoes.split(",");
+        for (String s:photo){
+            photoList.add(s);
+        }
+        return photoList;
     }
 
 
@@ -392,14 +430,14 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().showFractionNum.set(View.GONE);
         entity.get().fraction.set("");
         entity.get().date.set(DateUtil.getCurrentTime());
-        SPUtils.getInstance().put("photos","");
-        SPUtils.getInstance().put("realityNum",0);
+        model.savePhotos("");
         entity.get().cameraNum.set("0");
         entity.get().showCameraNum.set(View.GONE);
     }
 
 
     public void upload(CheckModel checkModel){
+        checkModel.setPhotos(HttpDataUtil.getPhotoBase64(checkModel.getPhotos()));
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(checkModel));
         addSubscribe(model.createCheck(model.getToken(),body)
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）

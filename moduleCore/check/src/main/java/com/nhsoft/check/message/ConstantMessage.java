@@ -29,5 +29,7 @@ public class ConstantMessage {
     //PopupViewModel中的条目选中
     public final static String TOKEN_POPUPVIEWMODEL_SELECTITEM="token_popup_view_model_select_item";
 
+    //PhotoViewModel传递路径给check界面
+    public final static String TOKEN_PHOTOVIEWMODEL_PHOTOPATHS="token_photo_view_model_photo_paths";
 
 }

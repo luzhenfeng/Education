@@ -11,6 +11,8 @@ import com.nhsoft.base.databinding.ActivityBaseToolBarBinding;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.check.ui.fragment.PhotoFragment;
 
+import priv.lzf.mvvmhabit.utils.SPUtils;
+
 /**
  * 作者：Created by 45703
  * 时间：Created on 2019/10/18.
@@ -19,6 +21,7 @@ import com.nhsoft.check.ui.fragment.PhotoFragment;
 public class PhotoActivity extends BaseToolBarActivity<ActivityBaseToolBarBinding, ToolbarViewModel> {
 
     private PhotoFragment mPhotoFragment;
+
     @Override
     protected void initToolBar() {
         viewModel.setTitleText("查看图片");
@@ -26,14 +29,23 @@ public class PhotoActivity extends BaseToolBarActivity<ActivityBaseToolBarBindin
 
     @Override
     protected Fragment initFragment() {
-        mPhotoFragment=new PhotoFragment();
+        mPhotoFragment = new PhotoFragment();
         return mPhotoFragment;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mPhotoFragment.onActivityResult(requestCode,resultCode,data);
+        mPhotoFragment.onActivityResult(requestCode, resultCode, data);
 //        KLog.e("data",resultCode);
     }
+
+//    /**
+//     * 返回清空照片
+//     */
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        SPUtils.getInstance().put("photos","");
+//    }
 }

@@ -200,6 +200,7 @@ public class UploadViewModel extends BaseViewModel<Repository> {
     }
 
     public void upload(int pos,CheckModel checkModel){
+        checkModel.setPhotos(HttpDataUtil.getPhotoBase64(checkModel.getPhotos()));
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(checkModel));
         addSubscribe(model.createCheck(model.getToken(),body)
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）

@@ -30,7 +30,7 @@ import priv.lzf.mvvmhabit.utils.PhotoHelper;
  * 作者：Created by 45703
  * 时间：Created on 2019/10/15.
  */
-public abstract class BaseTokePhotoFragment extends Fragment implements TakePhoto.TakeResultListener {
+public abstract class BaseTokePhotoFragment<V extends ViewDataBinding, VM extends BaseViewModel> extends BaseFragment<V,VM> implements TakePhoto.TakeResultListener {
     protected boolean isCamera;
 
     private final static int MAXSIZE=102400;
@@ -54,7 +54,6 @@ public abstract class BaseTokePhotoFragment extends Fragment implements TakePhot
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        KLog.e("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         PhotoHelper.getInstance().getTakePhoto().onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }

@@ -44,8 +44,6 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
         super.initData();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.frame_check,new CheckListFragment()).commit();
         viewModel.setPopupBinding(getContext());
-        SPUtils.getInstance().put("photos","");
-        SPUtils.getInstance().put("realityNum",0);
     }
 
     @Override
@@ -82,12 +80,4 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
         viewModel.sentInformationMessage();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (SPUtils.getInstance().getInt("realityNum")>0){
-            viewModel.entity.get().showCameraNum.set(View.VISIBLE);
-            viewModel.entity.get().cameraNum.set(String.valueOf(SPUtils.getInstance().getInt("realityNum")));
-        }
-    }
 }
