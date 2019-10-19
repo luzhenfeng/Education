@@ -83,4 +83,16 @@ public interface LocalDataSource {
      * @param checkModel
      */
     boolean insertCheckModel(CheckModel checkModel);
+
+    /**
+     * 保存图片路径
+     */
+    void savePhotos(String photos);
+
+    /**
+     * 获取图片路径
+     */
+    String getPhotos();
+
+
 }

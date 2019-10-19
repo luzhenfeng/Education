@@ -390,13 +390,7 @@ public class HttpDataUtil {
         }
         checkModel.setStudents(studentsBeanList);
         checkModel.setRecords(recordsBeanList);
-        String[] photoes= SPUtils.getInstance().getString("photos").split(",");
-        List<String> p=new ArrayList<>();
-        for (String s:photoes){
-            Bitmap bitmap= BitmapFactory.decodeFile(s);
-            p.add(Bitmap2StrByBase64(bitmap));
-        }
-        checkModel.setPhotos(p);
+        checkModel.setPhotos(photos);
         return checkModel;
     }
 
@@ -429,11 +423,30 @@ public class HttpDataUtil {
     }
 
 
+    /**
+     * 图片转换成Base64
+     * @param bit
+     * @return
+     */
     public static String Bitmap2StrByBase64(Bitmap bit){
         ByteArrayOutputStream bos=new ByteArrayOutputStream();
         bit.compress(Bitmap.CompressFormat.PNG, 90, bos);//第二个入参表示图片压缩率，如果是100就表示不压缩
         byte[] bytes=bos.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+
+    /**
+     * 获取全部图片的base64
+     * @param photoPathes
+     * @return
+     */
+    public static List<String> getPhotoBase64(List<String> photoPathes){
+        List<String> photoBase64Str=new ArrayList<>();
+        for (String s:photoPathes){
+            Bitmap bitmap= BitmapFactory.decodeFile(s);
+            photoBase64Str.add(Bitmap2StrByBase64(bitmap));
+        }
+        return photoBase64Str;
     }
 
 

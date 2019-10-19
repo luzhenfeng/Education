@@ -131,4 +131,14 @@ public class LocalDataSourceImpl implements LocalDataSource {
         model.setIsUpdate(false);
         return ChecksModelService.getInstance().insert(model);
     }
+
+    @Override
+    public void savePhotos(String photos) {
+        SPUtils.getInstance().put("photos",photos);
+    }
+
+    @Override
+    public String getPhotos() {
+        return SPUtils.getInstance().getString("photos","");
+    }
 }

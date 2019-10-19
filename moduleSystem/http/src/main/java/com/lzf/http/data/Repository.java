@@ -151,4 +151,14 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     public boolean insertCheckModel(CheckModel checkModel) {
         return mLocalDataSource.insertCheckModel(checkModel);
     }
+
+    @Override
+    public void savePhotos(String photos) {
+        mLocalDataSource.savePhotos(photos);
+    }
+
+    @Override
+    public String getPhotos() {
+        return mLocalDataSource.getPhotos();
+    }
 }
