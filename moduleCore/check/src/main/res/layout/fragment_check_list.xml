@@ -77,8 +77,9 @@
 
             <ImageView
                 android:id="@+id/iv_add_student"
-                android:layout_width="76px"
+                android:layout_width="126px"
                 android:layout_height="match_parent"
+                android:paddingLeft="50px"
                 android:src="@drawable/inspect9"
                 binding:onClickCommand="@{viewModel.entity.onClickAdd}">
 

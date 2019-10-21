@@ -20,6 +20,7 @@ import com.nhsoft.check.databinding.FragmentCheckListBinding;
 import com.nhsoft.check.databinding.ItemRightOneBinding;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.check.viewModel.CheckListViewModel;
+import com.nhsoft.pxview.constant.Constant;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
 import priv.lzf.mvvmhabit.utils.KLog;
@@ -50,12 +51,13 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
                     viewModel.setTitle("选择学生");
                     viewModel.isShowButton(View.VISIBLE);
                     CustomPopWindowUtil.getInstance().setData(viewModel.mSelectSudentList, viewModel.mStudentList);
+                    CustomPopWindowUtil.getInstance().showAtBottomPopupWindow(getContext(), binding.tabs, (int) (172* Constant.mScreenWidthScale));
                 }else if (integer.intValue()==4){
                     viewModel.setTitle("选择检查项班级");
                     viewModel.isShowButton(View.VISIBLE);
                     CustomPopWindowUtil.getInstance().setData(viewModel.getCurrenItem(),viewModel.mRoomModel);
+                    CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(), getView());
                 }
-                CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(), getView());
                 CustomPopWindowUtil.getInstance().setAdapter();
             }
         });

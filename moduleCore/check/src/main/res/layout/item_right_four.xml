@@ -39,7 +39,7 @@
                 android:textSize="38px"
                 android:background="@android:color/transparent"
                 android:hint="请输入自定义内容"
-                android:text="@{viewModel.entity.editText}"
+                android:text="@={viewModel.entity.editText}"
                 android:inputType="text"
                 android:imeOptions="actionDone">
 

@@ -411,6 +411,8 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         rightOneEntity.index.set(pos + 1);
         rightOneEntity.content.set(itemsBean.getName());
         rightOneEntity.image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_aaaaaa);
+        itemsBean.setClassId(null);
+        itemsBean.setClassName(null);
         rightOneEntity.items.set(itemsBean);
         rightOneEntity.showbed.set(showbed);
         if (mRoomModel.getChildrens().size()>1&&showbed==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
@@ -533,6 +535,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             if (rightOneItemViewModel.entity.get().showbed.get()==1){
                 clearBed(pos);
             }
+            rightOneItemViewModel.entity.get().items.get().setClassName(null);
+            rightOneItemViewModel.entity.get().items.get().setClassId(null);
+            rightOneItemViewModel.entity.get().classes.set("班级选择");
         }else {
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_select);
             rightOneItemViewModel.entity.get().isSelect.set(true);
@@ -796,8 +801,77 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         Subject subject=new Subject();
         subject.mSelectItemsBeanList=mSelectItemsBeanList;
         subject.mSelectSudentList=mSelectSudentList;
+        if (mAllCategoryModel.isShowperson()&&mSelectSudentList.size()==0){
+            ToastUtils.showShort("请选择学生");
+            return;
+        }
+        if (!hasBed()){
+            ToastUtils.showShort("选中的检查项未选择床位");
+            return;
+        }
+        if (!isSelectClass()){
+            ToastUtils.showShort("选中的检查项未选择班级");
+            return;
+        }
+        if (!isCustomHasText()){
+            ToastUtils.showShort("选中的自定义条目请输入内容");
+            return;
+        }
         Messenger.getDefault().send(subject,ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_SUBJECT);
     }
+
+
+    /**
+     * 选中的检查项有床位的至少选一个
+     * @return
+     */
+    public boolean hasBed(){
+        for (AllCategoryModel.ItemsBean itemsBean:mSelectItemsBeanList){
+            if (itemsBean.getShowbed()==1){
+                if (itemsBean.getBednos()==null||itemsBean.getBednos().equals("")){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 自定义条目选中需要输入内容
+     * @return
+     */
+    public boolean isCustomHasText(){
+        for (AllCategoryModel.ItemsBean itemsBean:mSelectItemsBeanList){
+            if (itemsBean.getId()==null){
+                RightFourItemViewModel rightFourItemViewModel= (RightFourItemViewModel) entity.get().observableRightList.get(entity.get().observableRightList.size()-1);
+                if (rightFourItemViewModel.entity.get().editText.get()==null||rightFourItemViewModel.entity.get().editText.get().equals("")){
+                    return false;
+                }else {
+                    itemsBean.setName(rightFourItemViewModel.entity.get().editText.get());
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * 选中带有班级的要选班级
+     * @return
+     */
+    public boolean isSelectClass(){
+        for (AllCategoryModel.ItemsBean itemsBean:mSelectItemsBeanList){
+            if (mRoomModel.getChildrens().size()>1&&itemsBean.getShowbed()==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
+                if (itemsBean.getClassId()==null){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 
 
 

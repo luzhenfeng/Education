@@ -279,18 +279,14 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
             public void call(Subject subject) {
                 mSelectSudentList=subject.mSelectSudentList;
                 mSelectItemsBeanList=subject.mSelectItemsBeanList;
-                if (mAllCategoryModel.isShowperson()&&mSelectSudentList.size()==0){
-                    ToastUtils.showShort("请选择学生");
-                }else {
-                    // TODO: 2019/10/13
-                    CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,setPhotoes());
-                    boolean isSave=model.insertCheckModel(checkModel);
-                    if (isSave){
-                        upload(checkModel);
+                // TODO: 2019/10/13
+                CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,setPhotoes());
+                boolean isSave=model.insertCheckModel(checkModel);
+                if (isSave){
+                    upload(checkModel);
 
-                    }else {
-                        ToastUtils.showShort("保存失败，请重新保存");
-                    }
+                }else {
+                    ToastUtils.showShort("保存失败，请重新保存");
                 }
             }
         });

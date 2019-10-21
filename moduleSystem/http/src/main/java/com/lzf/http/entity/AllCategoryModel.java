@@ -151,6 +151,15 @@ public class AllCategoryModel {
         private String classId;
         private String className;
         private int itemcount;
+        private int showbed;//1显示0不显示
+
+        public int getShowbed() {
+            return showbed;
+        }
+
+        public void setShowbed(int showbed) {
+            this.showbed = showbed;
+        }
 
         public double getPscore() {
             return pscore;

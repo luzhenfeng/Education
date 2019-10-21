@@ -4,6 +4,7 @@ package com.nhsoft.check.ui.fragment;
 import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,6 +29,11 @@ import priv.lzf.mvvmhabit.utils.SPUtils;
  * A simple {@link Fragment} subclass.
  */
 public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewModel> {
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

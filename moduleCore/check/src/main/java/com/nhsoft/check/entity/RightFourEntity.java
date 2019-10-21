@@ -29,4 +29,6 @@ public class RightFourEntity {
     //后面选择框图片
     public Drawable image;
 
+
+
 }

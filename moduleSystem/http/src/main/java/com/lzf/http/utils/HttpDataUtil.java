@@ -302,6 +302,7 @@ public class HttpDataUtil {
         List<AllCategoryModel.ItemsBean> itemsBeanList=new ArrayList<>();
         for (AllCategoryModel.ItemsBean itemsBean:allChiledrenItemsBeanList){
             if (chidrensBean.getId().equals(itemsBean.getCategoryId())){
+                itemsBean.setShowbed(chidrensBean.getShowbed());
                 itemsBeanList.add(itemsBean);
             }
         }

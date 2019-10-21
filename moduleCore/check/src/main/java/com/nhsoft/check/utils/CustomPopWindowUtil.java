@@ -80,6 +80,26 @@ public class CustomPopWindowUtil {
                 .showAtLocation(parent, Gravity.BOTTOM, 0,0);
     }
 
+    public void showAtBottomPopupWindow(Context context, View parent,int y){
+        if (Constant.isScale&&mCustomPopWindow==null){
+            RelayoutViewTool.relayoutViewWithScale(binding.getRoot(), Constant.mScreenWidthScale);
+        }
+        mCustomPopWindow=new CustomPopWindow.PopupWindowBuilder(context)
+                .setView(binding.getRoot())
+                .size(ConstraintLayout.LayoutParams.MATCH_PARENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+                .enableBackgroundDark(true) //弹出popWindow时，背景是否变暗
+                .setBgDarkAlpha(0.7f) // 控制亮度
+                .setOnDissmissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        binding.unbind();
+                    }
+                })
+                .create()
+                .showAsDropDown(parent,0,y);
+    }
+
+
     public void dismiss(){
         if (mCustomPopWindow!=null){
             mCustomPopWindow.dissmiss();
