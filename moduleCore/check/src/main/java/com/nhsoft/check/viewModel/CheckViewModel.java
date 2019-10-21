@@ -279,7 +279,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
             public void call(Subject subject) {
                 mSelectSudentList=subject.mSelectSudentList;
                 mSelectItemsBeanList=subject.mSelectItemsBeanList;
-                if (mSelectSudentList.size()==0){
+                if (mAllCategoryModel.isShowperson()&&mSelectSudentList.size()==0){
                     ToastUtils.showShort("请选择学生");
                 }else {
                     // TODO: 2019/10/13
