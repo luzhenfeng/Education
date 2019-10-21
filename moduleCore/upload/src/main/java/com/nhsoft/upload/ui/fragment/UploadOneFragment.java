@@ -34,7 +34,7 @@ public class UploadOneFragment extends BaseFragment<FragmentUploadOneBinding, Up
     public void initData() {
         super.initData();
         binding.setAdapter(new RecyclerViewBindingAdapter());
-        viewModel.requestNetWork();
+//        viewModel.requestNetWork();
     }
 
 }

@@ -113,5 +113,96 @@ public class RightFiveItemViewModel extends MultiItemViewModel<CheckBaseViewMode
                 }
             }
         });
+
+        entity.get().onClick11=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text11Select.set(!entity.get().text11Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick12=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text12Select.set(!entity.get().text12Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick13=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text13Select.set(!entity.get().text13Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick14=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text14Select.set(!entity.get().text14Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick15=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text15Select.set(!entity.get().text15Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick16=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text16Select.set(!entity.get().text16Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick17=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text17Select.set(!entity.get().text17Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick18=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text18Select.set(!entity.get().text18Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick19=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text19Select.set(!entity.get().text19Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
+        entity.get().onClick20=new BindingCommand<>(new BindingAction() {
+            @Override
+            public void call() {
+                if (viewModel.isSelectStep(viewModel.getRightItemPosition(RightFiveItemViewModel.this))){
+                    entity.get().text20Select.set(!entity.get().text20Select.get());
+                    viewModel.onRight5SelectBed(viewModel.getRightItemPosition(RightFiveItemViewModel.this));
+                }
+            }
+        });
     }
 }

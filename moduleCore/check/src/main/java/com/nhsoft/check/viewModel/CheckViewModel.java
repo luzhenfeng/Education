@@ -110,6 +110,8 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
     public ObservableField<CheckEntity> entity = new ObservableField<>();
 
+    public ObservableBoolean isFirst=new ObservableBoolean(true);
+
     //选中的图片
     public List<PhotoItemEntity> mPhotoItemEntities=new ArrayList<>();
 
@@ -124,9 +126,10 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
     public CheckViewModel(@NonNull Application application) {
         super(application);
         model = Injection.provideDemoRepository();
+        model.savePhotos("");
         mAllCategoryModelList = HttpDataUtil.getAllCategoryList(application);
         mFloorModelList = HttpDataUtil.getFloorList(application);
-        userCategoryList = HttpDataUtil.getUserCategoryList(model.getCodes(), mAllCategoryModelList);
+        userCategoryList = HttpDataUtil.getUserCategoryList(model.getCode(), mAllCategoryModelList);
         entity.set(new CheckEntity());
         bindingCommand();
         initMessenger();
@@ -197,11 +200,11 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().tvFloor = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                if (!isSelect.get()&&!entity.get().cameraNum.get().equals("0")){
+                if (isSelect.get()||!entity.get().cameraNum.get().equals("0")){
+                    showClearDialog(1);
+                }else {
                     uc.selectType.setValue(1);
                     Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
-                }else {
-                    showClearDialog(1);
                 }
             }
         });
@@ -209,11 +212,11 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().tvRoom = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                if (!isSelect.get()&&!entity.get().cameraNum.get().equals("0")){
+                if (isSelect.get()||!entity.get().cameraNum.get().equals("0")){
+                    showClearDialog(2);
+                }else {
                     uc.selectType.setValue(2);
                     Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
-                }else {
-                    showClearDialog(2);
                 }
             }
         });
@@ -271,14 +274,18 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
             public void call(Subject subject) {
                 mSelectSudentList=subject.mSelectSudentList;
                 mSelectItemsBeanList=subject.mSelectItemsBeanList;
-                // TODO: 2019/10/13
-                CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,setPhotoes());
-                boolean isSave=model.insertCheckModel(checkModel);
-                if (isSave){
-                    upload(checkModel);
-
+                if (mSelectSudentList.size()==0){
+                    ToastUtils.showShort("请选择学生");
                 }else {
-                    ToastUtils.showShort("保存失败，请重新保存");
+                    // TODO: 2019/10/13
+                    CheckModel checkModel=HttpDataUtil.getCheckModel(mAllCategoryModel,mRoomModel,mSelectSudentList,mSelectItemsBeanList,setPhotoes());
+                    boolean isSave=model.insertCheckModel(checkModel);
+                    if (isSave){
+                        upload(checkModel);
+
+                    }else {
+                        ToastUtils.showShort("保存失败，请重新保存");
+                    }
                 }
             }
         });
@@ -453,8 +460,6 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                     @Override
                     public void accept(BaseResponse response) throws Exception {
                         if (response.isOk()){
-                            clearData();
-                            Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                             ToastUtils.showShort("上传成功");
                             ChecksModel checksModel= ChecksModelService.getInstance().getMaxChecksModel();
                             checksModel.setIsUpdate(true);
@@ -472,12 +477,16 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                         //关闭对话框
                         dismissDialog();
                         if (throwable instanceof ResponseThrowable) {
-                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+//                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
+                        clearData();
+                        Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                     }
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
+                        clearData();
+                        Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                         //关闭对话框
                         dismissDialog();
                     }

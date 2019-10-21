@@ -35,4 +35,12 @@ public class RightOneEntity {
     public ObservableField<AllCategoryModel.ItemsBean> items=new ObservableField<>();
     //是否显示床号
     public ObservableInt showbed=new ObservableInt(0);
+    //是否显示次数
+    public ObservableBoolean showCount=new ObservableBoolean(false);
+    //次数 加号
+    public BindingCommand onItemAddClick;
+    //次数 减号
+    public BindingCommand onItemMinusClick;
+    //次数
+    public ObservableInt count=new ObservableInt(1);
 }

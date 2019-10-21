@@ -10,28 +10,26 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:binding="http://schemas.android.com/apk/res-auto"
-        android:layout_width="100dp"
-        android:layout_height="100dp">
+        android:layout_width="520px"
+        android:layout_height="520px">
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/add_photo2"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:paddingRight="30px"
+            android:paddingTop="30px"
             binding:onClickCommand="@{viewModel.entity.onClickImage}"
             binding:url="@{viewModel.entity.imagePath}"/>
         <ImageView
             android:id="@+id/iv_error"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:src="@drawable/error"
             android:scaleType="centerCrop"
             android:layout_alignRight="@id/image"
             android:layout_alignTop="@id/image"
-            android:layout_marginRight="-10dp"
-            android:layout_marginTop="-10dp"
             binding:onClickCommand="@{viewModel.entity.onClickClear}"
             android:visibility="@{viewModel.entity.showError ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>

@@ -36,7 +36,7 @@ public class ChecksModelService {
         return  MatterUtils.doMatter(mDaoSession.getChecksModelDao(), new Runnable() {
             @Override
             public void run() {
-                KLog.e(getChecksModelList().size());
+//                KLog.e(getChecksModelList(UserService.getInstance().getUserId()).size());
                 mDaoSession.getChecksModelDao().insertOrReplaceInTx(checksModel);
             }
         });
@@ -47,7 +47,9 @@ public class ChecksModelService {
      * @return
      */
     public List<ChecksModel> getChecksModelList(){
-        return mDaoSession.getChecksModelDao().loadAll();
+        return mDaoSession.getChecksModelDao().queryBuilder()
+                .where(ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
+                .list();
     }
 
     /**
@@ -56,7 +58,7 @@ public class ChecksModelService {
      */
     public List<ChecksModel> getNoUpdateChecksModelList(){
         return mDaoSession.getChecksModelDao().queryBuilder()
-                .where(ChecksModelDao.Properties.IsUpdate.eq(false))
+                .where(ChecksModelDao.Properties.IsUpdate.eq(false),ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
     }
 
@@ -66,7 +68,7 @@ public class ChecksModelService {
      */
     public List<ChecksModel> getUpdateChecksModelList(){
         return mDaoSession.getChecksModelDao().queryBuilder()
-                .where(ChecksModelDao.Properties.IsUpdate.eq(true))
+                .where(ChecksModelDao.Properties.IsUpdate.eq(true),ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
     }
 

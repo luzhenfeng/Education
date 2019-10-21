@@ -68,15 +68,27 @@ public interface LocalDataSource {
     int getCheckCategoryVersion();
 
     /**
-     * 保存权限模块
+     * 保存全部权限模块 保存例(m3-3:卫生,m3-4:纪律) ,把多个模块隔开  ：把模块和模块名隔开 -取-后面的数字取对应本地图片
      */
     void saveCodes(String codes);
 
     /**
-     * 获取权限模块
+     * 获取全部权限模块
      * @return
      */
     String getCodes();
+
+    /**
+     * 保存当前模块
+     * @param code
+     */
+    void saveCode(String code);
+
+    /**
+     * 获取当前权限模块
+     * @return
+     */
+    String getCode();
 
     /**
      * 插入

@@ -32,6 +32,11 @@ public interface HttpDataSource{
     //模拟登录
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token);
 
+    //模拟登录
+    Observable<BaseResponse> getStudentAvatars(String token);
+
     //创建检查记录
     Observable<BaseResponse> createCheck(String token, RequestBody model);
+
+
 }

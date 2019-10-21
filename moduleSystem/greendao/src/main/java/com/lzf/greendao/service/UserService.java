@@ -36,4 +36,12 @@ public class UserService {
         });
     }
 
+    public String getUserId(){
+        return mDaoSession.getUserModelDao().load(1l).getUserid();
+    }
+
+    public String getRealname(){
+        return mDaoSession.getUserModelDao().load(1l).getRealname();
+    }
+
 }

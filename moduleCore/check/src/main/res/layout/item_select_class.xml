@@ -15,6 +15,7 @@
         android:background="@color/color_e0e0e0"
         android:gravity="center_vertical"
         android:layout_marginBottom="34px"
+        android:layout_marginRight="20px"
         binding:onClickCommand="@{viewModel.entity.onItemClick}">
         <TextView
             android:id="@+id/tv_class_name"

@@ -114,8 +114,19 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
+    public void saveCode(String code) {
+        SPUtils.getInstance().put("code",code);
+    }
+
+    @Override
+    public String getCode() {
+        return SPUtils.getInstance().getString("code","");
+    }
+
+    @Override
     public boolean insertCheckModel(CheckModel checkModel) {
         ChecksModel model=new ChecksModel();
+        model.setUserid(UserService.getInstance().getUserId());
         model.setMcode(checkModel.getMcode());
         model.setCategory(checkModel.getCategory());
         model.setCateId(checkModel.getCateId());

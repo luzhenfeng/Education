@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.greendao.service.UserService;
+import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
@@ -16,6 +18,7 @@ import com.nhsoft.upload.databinding.FragmentUploadBinding;
 import com.nhsoft.upload.viewModel.UploadViewModel;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
+import priv.lzf.mvvmhabit.bus.Messenger;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +55,22 @@ public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadVi
                 }
             }
         });
+        viewModel.uc.finishRefreshing.observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object o) {
+                switch (binding.tabs.getSelectedTabPosition()){
+                    case 0:
+                        viewModel.setData(ChecksModelService.getInstance().getNoUpdateChecksModelList());
+                        break;
+                    case 1:
+                        viewModel.setData(ChecksModelService.getInstance().getUpdateChecksModelList());
+                        break;
+                    case 2:
+                        viewModel.setData(ChecksModelService.getInstance().getChecksModelList());
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -60,6 +79,7 @@ public class UploadFragment extends BaseFragment<FragmentUploadBinding, UploadVi
         binding.setAdapter(new RecyclerViewBindingAdapter());
         viewModel.setData(ChecksModelService.getInstance().getNoUpdateChecksModelList());
         setTabs();
+        Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_UPLOADVIEWMODEL_GET_ISUPLOAD);
     }
 
     private void setTabs(){

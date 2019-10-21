@@ -8,6 +8,7 @@ import android.util.Base64;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.service.UserService;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.FloorModel;
@@ -66,16 +67,27 @@ public class HttpDataUtil {
 
     /**
      * 获取用户所有的检查模块应用编码所对应的全部分类
-     * @param codes 用户的所有检查模块应用编码（组成的时候中间由,隔开）
+     * @param code 用户选中的检查模块应用编码
      * @return 获取用户所有的检查模块应用编码所对应的全部分类
      */
-    public static List<AllCategoryModel> getUserCategoryList(String codes,List<AllCategoryModel> categoryModels){
+    public static List<AllCategoryModel> getUserCategoryList(String code,List<AllCategoryModel> categoryModels){
         List<AllCategoryModel> allCategoryModelList=new ArrayList<>();
+        allCategoryModelList.addAll(getCategoryList(code,categoryModels));
+        return allCategoryModelList;
+    }
+
+    /**
+     * 获取全部mcode值
+     * @param codes
+     * @return
+     */
+    public static List<String> getAllMCode(String codes){
+        List<String> strings=new ArrayList<>();
         String[] codeStrs=codes.split(",");
         for (String code:codeStrs){
-            allCategoryModelList.addAll(getCategoryList(code,categoryModels));
+            strings.add(code);
         }
-        return allCategoryModelList;
+        return strings;
     }
 
 
@@ -369,9 +381,9 @@ public class HttpDataUtil {
             recordsBean.setBednos(itemsBean.getBednos());
             recordsBean.setClassId(itemsBean.getClassId());
             recordsBean.setClassName(itemsBean.getClassName());
+            recordsBean.setItemcount(itemsBean.getItemcount());
             recordsBeanList.add(recordsBean);
         }
-
         checkModel.setMcode(mAllCategoryModel.getMcode());
         checkModel.setCategory(mAllCategoryModel.getCategory());
         checkModel.setCateId(mAllCategoryModel.getId());

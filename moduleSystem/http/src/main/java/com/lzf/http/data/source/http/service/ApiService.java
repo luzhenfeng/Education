@@ -47,6 +47,9 @@ public interface ApiService {
     @GET("mq/GetSyncList")
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(@Query("token") String token);
 
+    @GET("mq/GetStudentAvatars")
+    Observable<BaseResponse> getStudentAvatars(@Query("token") String token);
+
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("mq/CreateCheck")
     Observable<BaseResponse> createCheck(@Query("token") String token, @Body RequestBody model);

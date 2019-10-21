@@ -13,6 +13,7 @@ import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.base.MultiItemViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -40,6 +41,32 @@ public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel
             @Override
             public void call() {
                 viewModel.onRight1ItemClick(viewModel.getRightItemPosition(RightOneItemViewModel.this));
+            }
+        });
+        entity.get().onItemAddClick=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                if (entity.get().isSelect.get()){
+                    entity.get().count.set(entity.get().count.get()+1);
+                    entity.get().items.get().setItemcount(entity.get().count.get());
+                }else {
+                    ToastUtils.showShort("请先选择对应检查项！");
+                }
+            }
+        });
+        entity.get().onItemMinusClick=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                if (entity.get().isSelect.get()){
+                    if (entity.get().count.get()==1){
+                        ToastUtils.showShort("最少为1");
+                    }else {
+                        entity.get().count.set(entity.get().count.get()-1);
+                        entity.get().items.get().setItemcount(entity.get().count.get());
+                    }
+                }else {
+                    ToastUtils.showShort("请先选择对应检查项！");
+                }
             }
         });
     }

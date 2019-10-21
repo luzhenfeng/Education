@@ -2,6 +2,7 @@
 <layout >
     <data>
         <import type="com.nhsoft.check.viewModel.RightOneItemViewModel"></import>
+        <import type="android.view.View"></import>
         <variable
             name="viewModel"
             type="RightOneItemViewModel" />
@@ -18,8 +19,8 @@
 
         <TextView
             android:id="@+id/tv_item_num"
-            android:layout_width="57px"
-            android:layout_height="57px"
+            android:layout_width="60px"
+            android:layout_height="60px"
             android:layout_marginRight="20px"
             android:background="@drawable/bg_oval_6bb978"
             android:gravity="center"
@@ -37,10 +38,54 @@
             android:layout_weight="1"
             android:text="@{viewModel.entity.content}"
             android:textColor="@color/color_919191"
-            android:textSize="46px"
-            android:maxLines="1">
+            android:textSize="48px"
+            android:maxLines="1"
+            android:ellipsize="end">
 
         </TextView>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="200px"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginRight="20px"
+            android:layout_marginLeft="20px"
+            android:visibility="@{viewModel.entity.showCount?View.VISIBLE:View.GONE}">
+            <TextView
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:background="@drawable/bg_oval_6bb978"
+                android:text="-"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="40px"
+                binding:onClickCommand="@{viewModel.entity.onItemMinusClick}"
+                binding:isThrottleFirst ="@{Boolean.TRUE}">
+
+            </TextView>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{String.valueOf(viewModel.entity.count)}"
+                android:gravity="center"
+                android:textSize="48px"
+                android:textColor="@color/color_919191">
+
+            </TextView>
+            <TextView
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:background="@drawable/bg_oval_6bb978"
+                android:text="+"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="40px"
+                binding:onClickCommand="@{viewModel.entity.onItemAddClick}"
+                binding:isThrottleFirst ="@{Boolean.TRUE}">
+
+            </TextView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_item_class"
@@ -50,7 +95,7 @@
             binding:onClickCommand="@{viewModel.entity.onSelectClass}"
             android:textColor="@color/color_666666"
             android:layout_marginRight="58px"
-            android:textSize="46px"
+            android:textSize="48px"
             android:maxLines="1">
 
         </TextView>

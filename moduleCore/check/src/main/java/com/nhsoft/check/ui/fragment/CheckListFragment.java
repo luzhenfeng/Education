@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter;
 import com.nhsoft.check.BR;
@@ -95,7 +96,14 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
             binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
         for (String s : viewModel.entity.get().tabs.get()) {
-            binding.tabs.addTab(binding.tabs.newTab().setText(s));
+            binding.tabs.addTab(binding.tabs.newTab().setCustomView(getTabItemView(s)));
         }
+    }
+
+    public View getTabItemView(String name){
+        View newtab = LayoutInflater.from(getContext()).inflate(R.layout.tab_item_text, null);
+        TextView tv = newtab.findViewById(R.id.tv_tab_text);
+        tv.setText(name);
+        return newtab;
     }
 }

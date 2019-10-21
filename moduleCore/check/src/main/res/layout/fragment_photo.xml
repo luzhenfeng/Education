@@ -26,7 +26,9 @@
             binding:itemBinding="@{viewModel.entity.itemBinding}"
             binding:layoutManager="@{LayoutManagers.grid(3)}"
             binding:items="@{viewModel.entity.observableList}"
-            binding:itemAnimator="@{null}">
+            binding:itemAnimator="@{null}"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px">
 
         </android.support.v7.widget.RecyclerView>
         <Button

@@ -12,6 +12,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class ChecksModel {
     @Id(autoincrement = true)
     private Long id;
+    private String userid;
     private String mcode;
     private int category;
     private String cateId;
@@ -25,12 +26,13 @@ public class ChecksModel {
     private String students;
     private String photos;
     private boolean isUpdate;//是否已上传
-    @Generated(hash = 712216278)
-    public ChecksModel(Long id, String mcode, int category, String cateId,
-            String cateName, String checkDate, String classId, String className,
-            String objectId, String objectName, String records, String students,
-            String photos, boolean isUpdate) {
+    @Generated(hash = 2117646223)
+    public ChecksModel(Long id, String userid, String mcode, int category,
+            String cateId, String cateName, String checkDate, String classId,
+            String className, String objectId, String objectName, String records,
+            String students, String photos, boolean isUpdate) {
         this.id = id;
+        this.userid = userid;
         this.mcode = mcode;
         this.category = category;
         this.cateId = cateId;
@@ -131,5 +133,11 @@ public class ChecksModel {
     }
     public void setIsUpdate(boolean isUpdate) {
         this.isUpdate = isUpdate;
+    }
+    public String getUserid() {
+        return this.userid;
+    }
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

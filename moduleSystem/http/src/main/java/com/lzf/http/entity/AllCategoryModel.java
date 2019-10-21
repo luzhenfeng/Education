@@ -150,6 +150,7 @@ public class AllCategoryModel {
         private String bednos;
         private String classId;
         private String className;
+        private int itemcount;
 
         public double getPscore() {
             return pscore;
@@ -237,6 +238,14 @@ public class AllCategoryModel {
 
         public void setBednos(String bednos) {
             this.bednos = bednos;
+        }
+
+        public int getItemcount() {
+            return itemcount;
+        }
+
+        public void setItemcount(int itemcount) {
+            this.itemcount = itemcount;
         }
     }
 }

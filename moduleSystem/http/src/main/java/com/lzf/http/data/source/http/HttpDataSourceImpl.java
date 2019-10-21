@@ -77,6 +77,11 @@ public class HttpDataSourceImpl implements HttpDataSource {
     }
 
     @Override
+    public Observable<BaseResponse> getStudentAvatars(String token) {
+        return apiService.getStudentAvatars(token);
+    }
+
+    @Override
     public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return apiService.createCheck(token,model);
     }

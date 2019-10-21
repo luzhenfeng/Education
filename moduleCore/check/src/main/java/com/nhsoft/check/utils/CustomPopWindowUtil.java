@@ -77,7 +77,7 @@ public class CustomPopWindowUtil {
                     }
                 })
                 .create()
-                .showAtLocation(parent, Gravity.BOTTOM, 0,(int)(Constant.mScreenWidthScale * 252));
+                .showAtLocation(parent, Gravity.BOTTOM, 0,0);
     }
 
     public void dismiss(){

@@ -10,6 +10,7 @@ import android.view.View;
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
 import com.nhsoft.check.message.ConstantMessage;
+import com.nhsoft.check.utils.CustomPopWindowUtil;
 
 import java.util.List;
 
@@ -53,6 +54,8 @@ public class PopupViewModel {
             observableList.set(pos,newItemViewModel);
             selectPos.set(pos);
             Messenger.getDefault().send(pos, ConstantMessage.TOKEN_POPUPVIEWMODEL_SELECTITEM);
+        }else {
+            CustomPopWindowUtil.getInstance().dismiss();
         }
     }
 

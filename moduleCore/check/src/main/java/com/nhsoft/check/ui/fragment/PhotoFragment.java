@@ -57,7 +57,7 @@ public class PhotoFragment extends BaseTokePhotoFragment<FragmentPhotoBinding, P
         viewModel.uc.onClickImage.observe(this, new Observer() {
             @Override
             public void onChanged(@Nullable Object o) {
-                showCutPopup(viewModel.limit.get() - viewModel.realityNum.get());
+                showPopup(viewModel.limit.get() - viewModel.realityNum.get());
             }
         });
     }

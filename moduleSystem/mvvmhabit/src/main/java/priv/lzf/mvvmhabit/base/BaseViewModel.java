@@ -48,6 +48,12 @@ public class BaseViewModel<M extends BaseModel> extends AndroidViewModel impleme
         mCompositeDisposable.add(disposable);
     }
 
+    protected void clearSubscribe(){
+        if (mCompositeDisposable!=null){
+            mCompositeDisposable.clear();
+        }
+    }
+
     /**
      * 事件绑定
      */

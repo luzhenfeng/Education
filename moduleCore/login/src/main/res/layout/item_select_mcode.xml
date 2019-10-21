@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.lzf.login.viewModel.SelectMCodeItemViewModel"/>
+        <variable
+            name="viewModel"
+            type="SelectMCodeItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="30px"
+        android:paddingBottom="30px"
+        binding:onClickCommand="@{viewModel.entity.onItemClick}">
+        <ImageView
+            android:layout_width="135px"
+            android:layout_height="135px"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="68px"
+            android:src="@{viewModel.entity.image}">
+
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="48px"
+            android:textColor="@color/black"
+            android:text="@{viewModel.entity.mCodeName}">
+
+        </TextView>
+
+    </LinearLayout>
+</layout>

@@ -66,18 +66,21 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
                 CustomPopWindowUtil.getInstance().setAdapter();
             }
         });
-        viewModel.uc.takePhoto.observe(this, new Observer() {
-            @Override
-            public void onChanged(@Nullable Object o) {
-//                showCutPopup(9);
-            }
-        });
+//        viewModel.uc.takePhoto.observe(this, new Observer() {
+//            @Override
+//            public void onChanged(@Nullable Object o) {
+////                showCutPopup(9);
+//            }
+//        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        viewModel.sentInformationMessage();
+        if (viewModel.isFirst.get()){
+            viewModel.isFirst.set(false);
+            viewModel.sentInformationMessage();
+        }
     }
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <data>
+        <import type="com.lzf.login.viewModel.SelectMCodeViewModel"/>
+        <import type="com.nhsoft.base.base.adapter.RecyclerViewBindingAdapter" />
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+        <variable
+            name="viewModel"
+            type="SelectMCodeViewModel" />
+        <variable
+            name="adapter"
+            type="RecyclerViewBindingAdapter" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="1450px"
+        android:orientation="vertical"
+        tools:context=".ui.fragment.SelectMCodeFragment"
+        android:background="@color/white"
+        android:layout_marginTop="50px"
+        android:paddingLeft="70px"
+        android:paddingRight="70px">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="德育"
+            android:textStyle="bold"
+            android:textSize="76px"
+            android:textColor="@color/black"
+            android:layout_marginBottom="98px">
+
+        </TextView>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewModel.entity.itemBinding}"
+            binding:items="@{viewModel.entity.observableList}"
+            binding:layoutManager="@{LayoutManagers.grid(4)}"
+            binding:itemAnimator="@{null}">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</layout>

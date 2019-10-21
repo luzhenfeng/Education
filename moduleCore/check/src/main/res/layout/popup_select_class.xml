@@ -11,30 +11,27 @@
             name="adapter"
             type="RecyclerViewBindingAdapter" />
     </data>
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:binding="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="430px"
+        android:layout_height="wrap_content"
         android:background="@color/white">
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="55px"
             android:textSize="46px"
             android:textColor="@color/color_666666"
             android:textStyle="bold"
+            android:layout_centerHorizontal="true"
             android:text="@{viewModel.title}"/>
         <TextView
             android:id="@+id/tv_confirm"
             android:layout_width="278px"
             android:layout_height="90px"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_alignParentRight="true"
             android:background="@drawable/bg_solid_6bb978_corner_100"
             android:textColor="@color/white"
             android:textSize="43px"
@@ -46,15 +43,12 @@
             binding:onClickCommand="@{viewModel.onClick}"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_class"
-            android:layout_width="0px"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="44px"
+            android:layout_below="@id/text"
             android:paddingLeft="110px"
             android:paddingRight="110px"
+            android:paddingTop="30px"
             binding:adapter="@{adapter}"
             binding:itemBinding="@{viewModel.itemBinding}"
             binding:layoutManager="@{LayoutManagers.grid(4)}"
@@ -63,5 +57,5 @@
 
         </android.support.v7.widget.RecyclerView>
 
-    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 </layout>

@@ -37,6 +37,7 @@ public class CheckModel {
     private List<StudentsBean> students;
     private List<String> photos;
 
+
     public String getMcode() {
         return mcode;
     }
@@ -155,6 +156,7 @@ public class CheckModel {
         private String bednos;
         private String classId;
         private String className;
+        private int itemcount;
 
         public String getId() {
             return id;
@@ -234,6 +236,14 @@ public class CheckModel {
 
         public void setClassName(String className) {
             this.className = className;
+        }
+
+        public int getItemcount() {
+            return itemcount;
+        }
+
+        public void setItemcount(int itemcount) {
+            this.itemcount = itemcount;
         }
     }
 

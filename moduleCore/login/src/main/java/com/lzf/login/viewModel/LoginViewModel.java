@@ -15,10 +15,12 @@ import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
+import com.lzf.login.ui.activity.SelectMCodeActivity;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.FileUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
@@ -28,6 +30,7 @@ import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.http.BaseResponse;
+import priv.lzf.mvvmhabit.http.NetworkUtil;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.RxUtils;
@@ -46,6 +49,9 @@ public class LoginViewModel extends BaseViewModel<Repository> {
 
     //是否请求检查类别
     public boolean isCheckCategory=false;
+
+
+    public List<AppListModel> appListModelList=new ArrayList<>();
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -79,6 +85,14 @@ public class LoginViewModel extends BaseViewModel<Repository> {
             ToastUtils.showShort("请输入密码！");
             return;
         }
+        if (!NetworkUtil.isNetworkAvailable(getApplication())){
+            if (entity.get().username.get().equals(model.getUserName())&&entity.get().password.get().equals(model.getPassword())){
+                startCheck();
+            }else {
+                ToastUtils.showShort("账号或者密码错误！");
+            }
+            return;
+        }
         addSubscribe(model.login(entity.get().username.get(),entity.get().password.get())
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
                 .compose(RxUtils.schedulersTransformer()) //线程调度
@@ -98,6 +112,7 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 model.saveToken(response.getData().getToken().getAccess_token());
                                 model.saveUserName(entity.get().username.get());
                                 model.savePassword(entity.get().password.get());
+//                                get();
                                 getAppList();
                             }else {
                                 ToastUtils.showShort("保存失败");
@@ -129,6 +144,30 @@ public class LoginViewModel extends BaseViewModel<Repository> {
     }
 
 
+    private void get(){
+        addSubscribe(model.getStudentAvatars(model.getToken())
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .subscribe(new Consumer<BaseResponse<List<SycnListModel>>>() {
+                    @Override
+                    public void accept(BaseResponse response) throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                }));
+    }
+
+
     private void getAppList(){
         addSubscribe(model.getAppList(model.getToken())
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
@@ -137,16 +176,15 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 .subscribe(new Consumer<BaseResponse<List<AppListModel>>>() {
                     @Override
                     public void accept(BaseResponse<List<AppListModel>> response) throws Exception {
-                        KLog.e("getAppList"+new Gson().toJson(response.getData()));
                         if (response.isOk()){
-                            List<AppListModel> appListModelList=response.getData();
+                            appListModelList=response.getData();
                             if (appListModelList!=null){
                                 String codes="";
                                 for (int i=0;i<appListModelList.get(0).getApps().size();i++){
                                     if (i==appListModelList.get(0).getApps().size()-1){
-                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode();
+                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode()+":"+appListModelList.get(0).getApps().get(i).getName();
                                     }else {
-                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode()+",";
+                                        codes=codes+appListModelList.get(0).getApps().get(i).getCode()+":"+appListModelList.get(0).getApps().get(i).getName()+",";
                                     }
                                 }
                                 model.saveCodes(codes);
@@ -286,7 +324,15 @@ public class LoginViewModel extends BaseViewModel<Repository> {
 
     private void startCheck(){
         dismissDialog();
-        ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+        String[] mCodes=model.getCodes().split(",");
+        if (mCodes.length>1){
+            startActivity(SelectMCodeActivity.class);
+        }else if (mCodes.length==1){
+            if (NetworkUtil.isNetworkAvailable(getApplication())){
+                model.saveCode(appListModelList.get(0).getApps().get(0).getCode());
+            }
+            ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+        }
         finish();
     }
 

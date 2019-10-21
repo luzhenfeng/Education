@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -141,7 +142,8 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             public void call(TabLayout.Tab tab) {
                 if (!isSelect.get()){
                     tabPosition.set(tab.getPosition());
-                    getCurrentCategory(tab.getText().toString());
+                    TextView t= (TextView) tab.getCustomView();
+                    getCurrentCategory(t.getText().toString());
                     Messenger.getDefault().send(mAllCategoryModel, ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND);
                 }else {
                     uc.selectTab.setValue(tabPosition.get());
@@ -356,7 +358,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
                 AllCategoryModel.ItemsBean itemsBean = itemsBeanList.get(i);
                 setRight1Item(i, itemsBean,chidrensBean.getShowbed());
                 if (chidrensBean.getShowbed() == 1) {
-                    setRight5Item(itemsBean.getId());
+                    setRight5Item(itemsBean.getId(),mRoomModel.getTotalcount());
                 }
             }
         }
@@ -411,8 +413,11 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         rightOneEntity.image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_aaaaaa);
         rightOneEntity.items.set(itemsBean);
         rightOneEntity.showbed.set(showbed);
-        if (mRoomModel.getChildrens().size()>1&&showbed==0){
+        if (mRoomModel.getChildrens().size()>1&&showbed==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
             rightOneEntity.classes.set("选择班级");
+        }
+        if (itemsBean.getRuletype()==3||itemsBean.getRuletype()==6){
+            rightOneEntity.showCount.set(true);
         }
         MultiItemViewModel rightOneItem = new RightOneItemViewModel(this, rightOneEntity);
         rightOneItem.multiItemType(MultiRecycleType_Right1);
@@ -454,10 +459,12 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     /**
      * 右侧列表条目类型5
      * @param id 上一条的id
+     * @param num 床的数量
      */
-    public void setRight5Item(String id) {
+    public void setRight5Item(String id,int num) {
         RightFiveEntity rightFiveEntity = new RightFiveEntity();
         rightFiveEntity.id.set(id);
+        rightFiveEntity.totalCount.set(num);
         MultiItemViewModel rightFiveItem = new RightFiveItemViewModel(this, rightFiveEntity);
         rightFiveItem.multiItemType(MultiRecycleType_Right5);
         entity.get().observableRightList.add(rightFiveItem);
@@ -521,6 +528,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         if (rightOneItemViewModel.entity.get().isSelect.get()){
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_aaaaaa);
             rightOneItemViewModel.entity.get().isSelect.set(false);
+            rightOneItemViewModel.entity.get().count.set(1);
             removeRightItemSelect(rightOneItemViewModel.entity.get());
             if (rightOneItemViewModel.entity.get().showbed.get()==1){
                 clearBed(pos);
@@ -654,6 +662,8 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         }
     }
 
+
+
     public void clearBed(int pos){
         RightFiveItemViewModel rightFiveItemViewModel= (RightFiveItemViewModel) entity.get().observableRightList.get(pos+1);
         rightFiveItemViewModel.entity.get().text1Select.set(false);
@@ -666,6 +676,16 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         rightFiveItemViewModel.entity.get().text8Select.set(false);
         rightFiveItemViewModel.entity.get().text9Select.set(false);
         rightFiveItemViewModel.entity.get().text10Select.set(false);
+        rightFiveItemViewModel.entity.get().text11Select.set(false);
+        rightFiveItemViewModel.entity.get().text12Select.set(false);
+        rightFiveItemViewModel.entity.get().text13Select.set(false);
+        rightFiveItemViewModel.entity.get().text14Select.set(false);
+        rightFiveItemViewModel.entity.get().text15Select.set(false);
+        rightFiveItemViewModel.entity.get().text16Select.set(false);
+        rightFiveItemViewModel.entity.get().text17Select.set(false);
+        rightFiveItemViewModel.entity.get().text18Select.set(false);
+        rightFiveItemViewModel.entity.get().text19Select.set(false);
+        rightFiveItemViewModel.entity.get().text20Select.set(false);
     }
 
     /**
@@ -717,6 +737,39 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         }
         if (entity.text10Select.get()){
             bedNos+=entity.text10.get()+",";
+        }
+        if (entity.text11Select.get()){
+            bedNos+=entity.text11.get()+",";
+        }
+        if (entity.text12Select.get()){
+            bedNos+=entity.text12.get()+",";
+        }
+        if (entity.text13Select.get()){
+            bedNos+=entity.text13.get()+",";
+        }
+        if (entity.text14Select.get()){
+            bedNos+=entity.text14.get()+",";
+        }
+        if (entity.text15Select.get()){
+            bedNos+=entity.text15.get()+",";
+        }
+        if (entity.text16Select.get()){
+            bedNos+=entity.text16.get()+",";
+        }
+        if (entity.text17Select.get()){
+            bedNos+=entity.text17.get()+",";
+        }
+        if (entity.text18Select.get()){
+            bedNos+=entity.text18.get()+",";
+        }
+        if (entity.text19Select.get()){
+            bedNos+=entity.text19.get()+",";
+        }
+        if (entity.text20Select.get()){
+            bedNos+=entity.text20.get()+",";
+        }
+        if (!bedNos.equals("")){
+            bedNos=bedNos.substring(0,bedNos.length()-1);
         }
         return bedNos;
     }

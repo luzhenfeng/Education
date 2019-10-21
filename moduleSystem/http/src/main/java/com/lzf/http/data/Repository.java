@@ -78,6 +78,11 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
+    public Observable<BaseResponse> getStudentAvatars(String token) {
+        return mHttpDataSource.getStudentAvatars(token);
+    }
+
+    @Override
     public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return mHttpDataSource.createCheck(token,model);
     }
@@ -145,6 +150,16 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     @Override
     public String getCodes() {
         return mLocalDataSource.getCodes();
+    }
+
+    @Override
+    public void saveCode(String code) {
+        mLocalDataSource.saveCode(code);
+    }
+
+    @Override
+    public String getCode() {
+        return mLocalDataSource.getCode();
     }
 
     @Override

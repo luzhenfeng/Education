@@ -14,10 +14,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.utils.HttpDataUtil;
+import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.upload.BR;
 import com.nhsoft.upload.R;
@@ -67,7 +69,7 @@ public class UploadViewModel extends BaseViewModel<Repository> {
     public List<Long> ids=new ArrayList<>();
 
     public class UIChangeObservable {
-        //下拉刷新完成
+        //刷新完成
         public SingleLiveEvent finishRefreshing = new SingleLiveEvent<>();
         //上拉加载完成
         public SingleLiveEvent finishLoadmore = new SingleLiveEvent<>();
@@ -78,6 +80,21 @@ public class UploadViewModel extends BaseViewModel<Repository> {
     public UploadViewModel(@NonNull Application application) {
         super(application);
         model = Injection.provideDemoRepository();
+        initMessenger();
+    }
+
+    public void initMessenger() {
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD, Boolean.class, new BindingConsumer<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                if (aBoolean.booleanValue()){
+                    showDialog();
+                }else {
+                    dismissDialog();
+                    uc.finishRefreshing.call();
+                }
+            }
+        });
     }
 
 
@@ -121,23 +138,6 @@ public class UploadViewModel extends BaseViewModel<Repository> {
         }
     });
 
-
-    //下拉刷新
-    public BindingCommand onTwinklingRefreshCommand = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            ToastUtils.showShort("下拉刷新");
-
-        }
-    });
-    //上拉加载
-    public BindingCommand onTwinklingLoadMoreCommand = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-
-        }
-    });
-
     public void setData(List<ChecksModel> checksModels){
         observableList.clear();
         for (ChecksModel checksModel:checksModels){
@@ -150,6 +150,7 @@ public class UploadViewModel extends BaseViewModel<Repository> {
             uploadEntity.setText4("类型:"+(checksModel.getCategory()==0?"班级检查":checksModel.getCategory()==1?"寝室检查":"公共场地"));
             uploadEntity.setUpload(checksModel.getIsUpdate());
             uploadEntity.setChecksModel(checksModel);
+            uploadEntity.setName(UserService.getInstance().getRealname());
             FileItemViewModel itemViewModel = new FileItemViewModel(this, uploadEntity);
             //双向绑定动态添加Item
             observableList.add(itemViewModel);
@@ -258,6 +259,14 @@ public class UploadViewModel extends BaseViewModel<Repository> {
     }
 
     /**
+     * 获取条目下标
+     *
+     * @return
+     */
+    public int getItemPosition(FileItemViewModel fileItemViewModel) {
+        return observableList.indexOf(fileItemViewModel);
+    }
+    /**
      * 网络请求方法，在ViewModel中调用Model层，通过Okhttp+Retrofit+RxJava发起请求
      */
     public void requestNetWork() {
@@ -325,14 +334,19 @@ public class UploadViewModel extends BaseViewModel<Repository> {
 //                    }
 //                });
     }
+    //下拉刷新
+    public BindingCommand onTwinklingRefreshCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            ToastUtils.showShort("下拉刷新");
 
+        }
+    });
+    //上拉加载
+    public BindingCommand onTwinklingLoadMoreCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
 
-    /**
-     * 获取条目下标
-     *
-     * @return
-     */
-    public int getItemPosition(FileItemViewModel fileItemViewModel) {
-        return observableList.indexOf(fileItemViewModel);
-    }
+        }
+    });
 }
