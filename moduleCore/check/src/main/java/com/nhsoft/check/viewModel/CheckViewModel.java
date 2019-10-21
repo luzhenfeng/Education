@@ -246,8 +246,13 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND, AllCategoryModel.class, new BindingConsumer<AllCategoryModel>() {
             @Override
             public void call(AllCategoryModel allCategoryModel) {
-                mAllCategoryModel = allCategoryModel;
-                setFloorNameList(mAllCategoryModel.getCategory());
+                if (mAllCategoryModel.getCategory()==allCategoryModel.getCategory()){
+                    mAllCategoryModel = allCategoryModel;
+                }else {
+                    mAllCategoryModel = allCategoryModel;
+                    setFloorNameList(mAllCategoryModel.getCategory());
+                }
+//                setFloorNameList(mAllCategoryModel.getCategory());
             }
         });
         

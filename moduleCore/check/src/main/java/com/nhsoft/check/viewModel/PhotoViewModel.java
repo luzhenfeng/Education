@@ -16,8 +16,6 @@ import com.nhsoft.check.R;
 import com.nhsoft.check.entity.PhotoEntity;
 import com.nhsoft.check.entity.PhotoItemEntity;
 import com.nhsoft.check.message.ConstantMessage;
-import com.nhsoft.check.photo.PhotoBean;
-
 import java.util.List;
 
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -26,7 +24,6 @@ import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
-import priv.lzf.mvvmhabit.utils.SPUtils;
 
 /**
  * Created by lzf on 2019/10/18.
