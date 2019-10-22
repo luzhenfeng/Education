@@ -56,7 +56,7 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
                     viewModel.setTitle("选择检查项班级");
                     viewModel.isShowButton(View.VISIBLE);
                     CustomPopWindowUtil.getInstance().setData(viewModel.getCurrenItem(),viewModel.mRoomModel);
-                    CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(), getView());
+                    CustomPopWindowUtil.getInstance().showAtBottomPopupWindow(getContext(), binding.tabs, (int) (172* Constant.mScreenWidthScale));
                 }
                 CustomPopWindowUtil.getInstance().setAdapter();
             }

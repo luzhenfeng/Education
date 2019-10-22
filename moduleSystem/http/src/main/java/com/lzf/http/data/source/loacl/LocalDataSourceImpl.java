@@ -39,6 +39,26 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
+    public void saveBaseUrl(String baseUrl) {
+        SPUtils.getInstance().put("baseUrl",baseUrl);
+    }
+
+    @Override
+    public String getBaseUrl() {
+        return SPUtils.getInstance().getString("baseUrl","http://work.nbnz.net/api/");
+    }
+
+    @Override
+    public void saveBaseFaceUrl(String baseFaceUrl) {
+        SPUtils.getInstance().put("baseFaceUrl",baseFaceUrl);
+    }
+
+    @Override
+    public String getBaseFaceUrl() {
+        return SPUtils.getInstance().getString("baseFaceUrl","");
+    }
+
+    @Override
     public void saveUserName(String userName) {
         SPUtils.getInstance().put("username",userName);
     }

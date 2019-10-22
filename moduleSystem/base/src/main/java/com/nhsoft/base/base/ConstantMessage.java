@@ -11,4 +11,7 @@ public class ConstantMessage {
 
     //选择模块界面 发送是否后台正在上传 给上传界面
     public final static String TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD = "token_selectMCode_view_model_is_upload";
+
+    //服务器注册界面保存项登录界面发送初始化网络请求接口
+    public final static String TOKEN_REGISTERVIEWMODEL_NETWORK = "token_register_view_model_network";
 }

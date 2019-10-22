@@ -19,6 +19,7 @@ import com.nhsoft.check.R;
 import com.nhsoft.check.databinding.FragmentCheckBinding;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.check.viewModel.CheckViewModel;
+import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.DateUtil;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
@@ -63,12 +64,13 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
                     viewModel.setTitle("选择楼宇");
                     CustomPopWindowUtil.getInstance().setData(binding.tvFloor.getText().toString(),viewModel.mFloorNameList);
                     viewModel.mPopupViewModel.selectPos.set(viewModel.mFloorNameList.indexOf(binding.tvFloor.getText().toString()));
+                    CustomPopWindowUtil.getInstance().showAtBottomPopupWindow(getContext(),getView(),(int) (172* Constant.mScreenWidthScale));
                 }else if (integer.intValue()==2){
                     viewModel.setTitle("选择班级");
                     CustomPopWindowUtil.getInstance().setData(binding.tvRoom.getText().toString(),viewModel.mRoomNameList);
                     viewModel.mPopupViewModel.selectPos.set(viewModel.mRoomNameList.indexOf(binding.tvRoom.getText().toString()));
+                    CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(),getView());
                 }
-                CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(),getView());
                 CustomPopWindowUtil.getInstance().setAdapter();
             }
         });

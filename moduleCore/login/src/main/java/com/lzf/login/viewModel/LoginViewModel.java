@@ -2,6 +2,8 @@ package com.lzf.login.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
+import android.databinding.ObservableLong;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -9,13 +11,16 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
+import com.lzf.http.data.RetrofitClient;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
+import com.lzf.login.ui.activity.RegisterActivity;
 import com.lzf.login.ui.activity.SelectMCodeActivity;
+import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.FileUtil;
@@ -29,6 +34,7 @@ import io.reactivex.functions.Consumer;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 import priv.lzf.mvvmhabit.http.NetworkUtil;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
@@ -53,13 +59,21 @@ public class LoginViewModel extends BaseViewModel<Repository> {
 
     public List<AppListModel> appListModelList=new ArrayList<>();
 
+    //点击的时间
+    public ObservableLong time=new ObservableLong(0);
+
+    //点击的次数
+    public ObservableInt num=new ObservableInt(0);
+
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        model=Injection.provideDemoRepository();
+        model=Injection.provideDemoRepository(Constant.baseUrl);
+//        RetrofitClient.baseUrl= model.getBaseUrl();
         this.entity.set(new LoginEntity());
         entity.get().username.set(model.getUserName());
         entity.get().password.set(model.getPassword());
         bindingCommand();
+        initMessenger();
     }
 
     @Override
@@ -71,7 +85,49 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 login();
             }
         });
+        entity.get().register=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+               register();
+            }
+        });
     }
+
+    public void initMessenger() {
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_REGISTERVIEWMODEL_NETWORK, new BindingAction() {
+            @Override
+            public void call() {
+                model=Injection.provideDemoRepository();
+            }
+        });
+    }
+
+    /**
+     * 到注册界面
+     */
+    public void register(){
+        if (num.get()==0){
+            time.set(System.currentTimeMillis());
+            num.set(num.get()+1);
+        }else if (num.get()>=4){
+            if (System.currentTimeMillis()-time.get()>1000){
+                num.set(0);
+            }else {
+                startActivity(RegisterActivity.class);
+                num.set(0);
+                finish();
+            }
+        }else {
+            if (System.currentTimeMillis()-time.get()>1000){
+                num.set(0);
+            }else {
+                time.set(System.currentTimeMillis());
+                num.set(num.get()+1);
+            }
+        }
+    }
+
+
 
     /**
      * 网络模拟一个登陆操作
@@ -91,6 +147,14 @@ public class LoginViewModel extends BaseViewModel<Repository> {
             }else {
                 ToastUtils.showShort("账号或者密码错误！");
             }
+            return;
+        }
+        if (Constant.baseUrl==null){
+            ToastUtils.showShort("机器未在后台注册！");
+            return;
+        }
+        if (model.login(entity.get().username.get(),entity.get().password.get())==null){
+            ToastUtils.showShort("服务器网址错误！");
             return;
         }
         addSubscribe(model.login(entity.get().username.get(),entity.get().password.get())

@@ -17,4 +17,8 @@ public class Constant {
     public final static String checkObjectFileName="checkObject.json";
     //checkCategory文件名
     public final static String checkCategoryFileName="checkCategory.json";
+    //服务器网址
+    public static String baseUrl;
+    //人脸识别网址
+    public static String baseFaceUrl="";
 }

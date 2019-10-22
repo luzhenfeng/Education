@@ -535,9 +535,11 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             if (rightOneItemViewModel.entity.get().showbed.get()==1){
                 clearBed(pos);
             }
-            rightOneItemViewModel.entity.get().items.get().setClassName(null);
-            rightOneItemViewModel.entity.get().items.get().setClassId(null);
-            rightOneItemViewModel.entity.get().classes.set("班级选择");
+            if (mRoomModel.getChildrens().size()>1&&rightOneItemViewModel.entity.get().items.get().getShowbed()==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
+                rightOneItemViewModel.entity.get().items.get().setClassName(null);
+                rightOneItemViewModel.entity.get().items.get().setClassId(null);
+                rightOneItemViewModel.entity.get().classes.set("选择班级");
+            }
         }else {
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_select);
             rightOneItemViewModel.entity.get().isSelect.set(true);

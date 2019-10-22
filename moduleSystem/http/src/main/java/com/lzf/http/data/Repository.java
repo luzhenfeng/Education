@@ -88,6 +88,26 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
+    public void saveBaseUrl(String baseUrl) {
+        mLocalDataSource.saveBaseUrl(baseUrl);
+    }
+
+    @Override
+    public String getBaseUrl() {
+        return mLocalDataSource.getBaseUrl();
+    }
+
+    @Override
+    public void saveBaseFaceUrl(String baseFaceUrl) {
+        mLocalDataSource.saveBaseFaceUrl(baseFaceUrl);
+    }
+
+    @Override
+    public String getBaseFaceUrl() {
+        return mLocalDataSource.getBaseFaceUrl();
+    }
+
+    @Override
     public void saveUserName(String userName) {
         mLocalDataSource.saveUserName(userName);
     }

@@ -10,6 +10,26 @@ import com.lzf.http.entity.LoginModel;
  */
 public interface LocalDataSource {
     /**
+     * 保存服务器网址
+     */
+    void saveBaseUrl(String baseUrl);
+
+    /**
+     * 获取服务器网址
+     */
+    String getBaseUrl();
+
+    /**
+     * 保存人脸识别网址
+     */
+    void saveBaseFaceUrl(String baseFaceUrl);
+
+    /**
+     * 获取人脸识别网址
+     */
+    String getBaseFaceUrl();
+
+    /**
      * 保存用户名
      */
     void saveUserName(String userName);

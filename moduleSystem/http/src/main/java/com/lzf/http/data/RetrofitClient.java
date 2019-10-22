@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 
 
+import com.nhsoft.pxview.constant.Constant;
+import com.nhsoft.pxview.constant.ConstantSystem;
 
 import java.io.File;
 import java.util.Map;
@@ -40,8 +42,8 @@ public class RetrofitClient {
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
-    public static String baseUrl = "http://work.nbnz.net/api/";
-
+//    public static String baseUrl = "http://work.nbnz.net/api/";
+//    public static String baseUrl ;
     private static Context mContext = Utils.getContext();
 
     private static OkHttpClient okHttpClient;
@@ -59,13 +61,13 @@ public class RetrofitClient {
     }
 
     private RetrofitClient() {
-        this(baseUrl, null);
+        this(Constant.baseUrl, null);
     }
 
     private RetrofitClient(String url, Map<String, String> headers) {
 
         if (TextUtils.isEmpty(url)) {
-            url = baseUrl;
+            url = Constant.baseUrl;
         }
 
         if (httpCacheDirectory == null) {
@@ -101,20 +103,23 @@ public class RetrofitClient {
                 .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS))
                 // 这里你可以根据自己的机型设置同时连接的个数和时间，我这里8个，和每个保持时间为10s
                 .build();
-        retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(url)
-                .build();
-
+        try {
+            retrofit = new Retrofit.Builder()
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .baseUrl(url)
+                    .build();
+        }catch (Exception e){
+            e.fillInStackTrace();
+        }
     }
 
     /**
      * create you ApiService
      * Create an implementation of the API endpoints defined by the {@code service} interface.
      */
-    public <T> T create(final Class<T> service) {
+    public <T> T create(final Class<T> service) throws Exception{
         if (service == null) {
             throw new RuntimeException("Api service is null!");
         }

@@ -49,10 +49,13 @@ public class HttpDataSourceImpl implements HttpDataSource {
 
     @SuppressLint("MissingPermission")
     @Override
-    public Observable<BaseResponse<LoginModel>> login(String username, String password) {
+    public Observable<BaseResponse<LoginModel>> login(String username, String password){
         String nonce=EncryptionUtil.getNonce();
         String timestamp=EncryptionUtil.getTimestamp();
         String serial=Build.SERIAL;
+        if (apiService==null){
+            return null;
+        }
         return apiService.login(username, EncryptionUtil.MD5(password),EncryptionUtil.signatureString(Constant.APPSECRET,timestamp,nonce),timestamp,nonce,Constant.APPID,serial);
     }
 

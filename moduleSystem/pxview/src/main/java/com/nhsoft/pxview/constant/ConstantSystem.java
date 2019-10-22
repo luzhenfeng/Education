@@ -9,4 +9,5 @@ public class ConstantSystem {
     public static final float UI_WIDTH=1600f;
     //UI图的高
     public static final float UI_HEIGHT=2560f;
+
 }
