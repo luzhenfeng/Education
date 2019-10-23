@@ -6,6 +6,7 @@ import android.databinding.ObservableInt;
 import android.databinding.ObservableLong;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.widget.Button;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
@@ -56,6 +57,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
     //是否请求检查类别
     public boolean isCheckCategory=false;
 
+    public boolean isDown=false;
+
 
     public List<AppListModel> appListModelList=new ArrayList<>();
 
@@ -85,6 +88,15 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 login();
             }
         });
+
+        entity.get().down=new BindingCommand<Button>(new BindingAction() {
+            @Override
+            public void call() {
+                isDown=true;
+                login();
+            }
+        });
+
         entity.get().register=new BindingCommand(new BindingAction() {
             @Override
             public void call() {
@@ -306,12 +318,16 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
-                        if (isCheckObject){
+                        if (isDown){
                             checkObject();
-                        }else if (isCheckCategory){
-                            getAllCategoryList();
                         }else {
-                           startCheck();
+                            if (isCheckObject){
+                                checkObject();
+                            }else if (isCheckCategory){
+                                getAllCategoryList();
+                            }else {
+                                startCheck();
+                            }
                         }
                     }
                 }));
@@ -344,10 +360,14 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
-                        if (isCheckCategory){
+                        if (isDown){
                             getAllCategoryList();
                         }else {
-                            startCheck();
+                            if (isCheckCategory){
+                                getAllCategoryList();
+                            }else {
+                                startCheck();
+                            }
                         }
                     }
                 }));

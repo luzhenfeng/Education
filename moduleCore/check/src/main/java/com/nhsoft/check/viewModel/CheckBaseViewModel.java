@@ -159,10 +159,12 @@ public class CheckBaseViewModel extends BasePopupViewModel {
                 if (mPopupViewModel.title.get().equals("选择学生")){
                     setSelectSudentList(mPopupViewModel.observableList);
                     entity.get().students.set(getStudents());
+                    sentCheckItemMessager();
                     CustomPopWindowUtil.getInstance().dismiss();
                 }else if (mPopupViewModel.title.get().equals("选择检查项班级")){
                     RightOneItemViewModel rightOneItemViewModel= (RightOneItemViewModel) entity.get().observableRightList.get(selectRightPos.get());
                     rightOneItemViewModel.entity.get().classes.set(setSelectCheckClass(rightOneItemViewModel));
+                    sentCheckItemMessager();
                     CustomPopWindowUtil.getInstance().dismiss();
                 }
             }
@@ -645,7 +647,30 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     public double score(List<AllCategoryModel.ItemsBean> mSelectItemsBeanList){
         double score=0d;
         for (AllCategoryModel.ItemsBean itemsBean:mSelectItemsBeanList){
-            score+=itemsBean.getScore();
+            if (itemsBean.getShowbed()==0){
+                if (mRoomModel.getChildrens().size()>1&&entity.get().isShowStudent.get()!=View.VISIBLE){
+                    String classsIds=itemsBean.getClassId();
+                    if (classsIds==null||classsIds.equals("")){
+
+                    }else {
+                        int num=classsIds.split(",").length;
+                        score+=(itemsBean.getScore()*num);
+                    }
+                }else {
+                    score+=itemsBean.getScore();
+                }
+            }else {
+                String beds=itemsBean.getBednos();
+                if (beds==null||beds.equals("")){
+
+                }else {
+                    int num=beds.split(",").length;
+                    score+=(itemsBean.getScore()*num);
+                }
+            }
+        }
+        if (entity.get().isShowStudent.get()==View.VISIBLE){
+            score=score*mSelectSudentList.size();
         }
         return score;
     }
@@ -657,6 +682,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     public void onRight5SelectBed(int pos){
         RightFiveItemViewModel rightFiveItemViewModel= (RightFiveItemViewModel) entity.get().observableRightList.get(pos);
         updateSelectItemsBeanList(rightFiveItemViewModel.entity.get());
+        sentCheckItemMessager();
     }
 
     public boolean isSelectStep(int pos){
@@ -782,7 +808,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
     }
 
     /**
-     * 发送改变Item选中状态数据到CheckViewModel
+     * 发送改变Item选中状态数据到CheckViewModel,还有床号选择的变化
      */
     public void sentCheckItemMessager(){
         SelectChange selectChange=new SelectChange();
@@ -795,6 +821,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         }
         Messenger.getDefault().send(selectChange,ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_SELECTITEM);
     }
+
 
     /**
      *发送提交的数据

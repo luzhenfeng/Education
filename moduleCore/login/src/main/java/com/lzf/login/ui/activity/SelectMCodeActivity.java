@@ -22,7 +22,7 @@ public class SelectMCodeActivity extends BaseToolBarActivity<ActivityBaseToolBar
     @Override
     protected void initToolBar() {
         viewModel.setLeftIconVisible(View.GONE);
-        viewModel.setTitleText("鄞州职高德育管理");
+        viewModel.setTitleText("德育日常工作管理");
     }
 
     @Override

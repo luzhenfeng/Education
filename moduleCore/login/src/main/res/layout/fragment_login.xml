@@ -98,6 +98,18 @@
                 android:layout_alignParentBottom="true"
                 binding:onClickCommand="@{viewModel.entity.login}"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="140px"
+                android:layout_marginBottom="100px"
+                android:background="@drawable/bg_solid_6bb978_corner_20"
+                android:text="登录并下载"
+                android:textColor="@color/white"
+                android:textSize="55px"
+                android:textStyle="bold"
+                android:layout_alignParentBottom="true"
+                binding:onClickCommand="@{viewModel.entity.down}"/>
+
         </LinearLayout>
         <View
             android:layout_width="match_parent"

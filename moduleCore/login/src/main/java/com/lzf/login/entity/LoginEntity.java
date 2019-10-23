@@ -13,5 +13,6 @@ public class LoginEntity {
     public ObservableField<String> username=new ObservableField<>("");
     public ObservableField<String> password=new ObservableField<>("");
     public BindingCommand<Button> login;
+    public BindingCommand<Button> down;
     public BindingCommand register;
 }

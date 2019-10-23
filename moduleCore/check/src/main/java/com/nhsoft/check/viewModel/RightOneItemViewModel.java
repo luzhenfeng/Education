@@ -34,7 +34,11 @@ public class RightOneItemViewModel extends MultiItemViewModel<CheckBaseViewModel
         entity.get().onSelectClass=new BindingCommand<>(new BindingAction() {
             @Override
             public void call() {
-                viewModel.onSelectClass(viewModel.getRightItemPosition(RightOneItemViewModel.this));
+                if (entity.get().isSelect.get()){
+                    viewModel.onSelectClass(viewModel.getRightItemPosition(RightOneItemViewModel.this));
+                }else {
+                    ToastUtils.showShort("请先选择对应检查项！");
+                }
             }
         });
         entity.get().onItemClick=new BindingCommand(new BindingAction() {
