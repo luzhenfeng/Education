@@ -7,6 +7,13 @@
         <activity android:name=".ui.activity.LoginActivity"></activity>
         <activity android:name=".ui.activity.SelectMCodeActivity"></activity>
         <activity android:name=".ui.activity.RegisterActivity"></activity>
+        <activity android:name=".MyErrorActivity"
+            android:process=":error_activity"/>
+        <provider
+            android:name="priv.lzf.mvvmhabit.crash.CaocInitProvider"
+            android:authorities="${applicationId}.customactivityoncrashinitprovider"
+            android:exported="false"
+            android:initOrder="101" />
     </application>
 
 </manifest>

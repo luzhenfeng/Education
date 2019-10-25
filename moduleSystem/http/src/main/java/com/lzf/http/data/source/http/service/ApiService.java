@@ -54,4 +54,9 @@ public interface ApiService {
     @POST("mq/CreateCheck")
     Observable<BaseResponse> createCheck(@Query("token") String token, @Body RequestBody model);
 
+    //错误发送
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @POST("robot/send?access_token=c509149c7a6fc25a31aebf4837256221559b72ffea225b75d78992c2b58aa33d")
+    Observable<Object> sendError(@Body RequestBody route);
+
 }
