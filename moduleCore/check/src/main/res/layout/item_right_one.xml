@@ -19,14 +19,14 @@
 
         <TextView
             android:id="@+id/tv_item_num"
-            android:layout_width="60px"
-            android:layout_height="60px"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:layout_marginRight="20px"
             android:background="@drawable/bg_oval_6bb978"
             android:gravity="center"
             android:text="@{String.valueOf(viewModel.entity.index)}"
             android:textColor="@color/white"
-            android:textSize="46px"
+            android:textSize="50px"
             android:textStyle="bold">
 
         </TextView>
@@ -38,27 +38,27 @@
             android:layout_weight="1"
             android:text="@{viewModel.entity.content}"
             android:textColor="@color/color_919191"
-            android:textSize="48px"
+            android:textSize="@dimen/text_size"
             android:maxLines="1"
             android:ellipsize="end">
 
         </TextView>
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="200px"
+            android:layout_width="240px"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:layout_marginRight="20px"
             android:layout_marginLeft="20px"
             android:visibility="@{viewModel.entity.showCount?View.VISIBLE:View.GONE}">
             <TextView
-                android:layout_width="60px"
-                android:layout_height="60px"
+                android:layout_width="80px"
+                android:layout_height="80px"
                 android:background="@drawable/bg_oval_6bb978"
                 android:text="-"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="40px"
+                android:textSize="50px"
                 binding:onClickCommand="@{viewModel.entity.onItemMinusClick}"
                 binding:isThrottleFirst ="@{Boolean.TRUE}">
 
@@ -69,18 +69,18 @@
                 android:layout_weight="1"
                 android:text="@{String.valueOf(viewModel.entity.count)}"
                 android:gravity="center"
-                android:textSize="48px"
+                android:textSize="@dimen/text_size"
                 android:textColor="@color/color_919191">
 
             </TextView>
             <TextView
-                android:layout_width="60px"
-                android:layout_height="60px"
+                android:layout_width="80px"
+                android:layout_height="80px"
                 android:background="@drawable/bg_oval_6bb978"
                 android:text="+"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:textSize="40px"
+                android:textSize="50px"
                 binding:onClickCommand="@{viewModel.entity.onItemAddClick}"
                 binding:isThrottleFirst ="@{Boolean.TRUE}">
 
@@ -96,15 +96,15 @@
             binding:onClickCommand="@{viewModel.entity.onSelectClass}"
             android:textColor="@color/color_666666"
             android:layout_marginRight="58px"
-            android:textSize="48px"
+            android:textSize="@dimen/text_size"
             android:maxLines="1">
 
         </TextView>
 
         <ImageView
             android:id="@+id/iv_item_image"
-            android:layout_width="55px"
-            android:layout_height="55px"
+            android:layout_width="80px"
+            android:layout_height="80px"
             android:src="@{viewModel.entity.image}">
 
         </ImageView>

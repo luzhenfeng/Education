@@ -18,8 +18,8 @@
             android:layout_marginTop="10px"
             android:gravity="center_vertical">
             <ImageView
-                android:layout_width="34px"
-                android:layout_height="39px"
+                android:layout_width="50px"
+                android:layout_height="50px"
                 android:src="@{viewModel.entity.image,default=@drawable/inspect7}"
                 android:layout_marginRight="20px">
 
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="46px"
+                android:textSize="@dimen/text_size"
                 android:text="@{viewModel.entity.title}">
 
             </TextView>

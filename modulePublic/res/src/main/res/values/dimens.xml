@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size">60px</dimen>
+    <dimen name="text_bed_size">55px</dimen>
+    <dimen name="bed_height">80px</dimen>
+    <dimen name="bed_width">100px</dimen>
+</resources>
