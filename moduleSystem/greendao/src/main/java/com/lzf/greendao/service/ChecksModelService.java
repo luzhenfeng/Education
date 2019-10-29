@@ -6,6 +6,7 @@ import com.lzf.greendao.service.greendao.ChecksModelDao;
 import com.lzf.greendao.service.greendao.DaoSession;
 import com.lzf.greendao.utils.MatterUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 import priv.lzf.mvvmhabit.utils.KLog;
@@ -47,9 +48,11 @@ public class ChecksModelService {
      * @return
      */
     public List<ChecksModel> getChecksModelList(){
-        return mDaoSession.getChecksModelDao().queryBuilder()
+        List<ChecksModel> checksModelList=mDaoSession.getChecksModelDao().queryBuilder()
                 .where(ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
+        Collections.reverse(checksModelList);
+        return checksModelList;
     }
 
     /**
@@ -57,9 +60,11 @@ public class ChecksModelService {
      * @return
      */
     public List<ChecksModel> getNoUpdateChecksModelList(){
-        return mDaoSession.getChecksModelDao().queryBuilder()
+        List<ChecksModel> checksModelList=mDaoSession.getChecksModelDao().queryBuilder()
                 .where(ChecksModelDao.Properties.IsUpdate.eq(false),ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
+        Collections.reverse(checksModelList);
+        return checksModelList;
     }
 
     /**
@@ -67,9 +72,11 @@ public class ChecksModelService {
      * @return
      */
     public List<ChecksModel> getUpdateChecksModelList(){
-        return mDaoSession.getChecksModelDao().queryBuilder()
+        List<ChecksModel> checksModelList=mDaoSession.getChecksModelDao().queryBuilder()
                 .where(ChecksModelDao.Properties.IsUpdate.eq(true),ChecksModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
+        Collections.reverse(checksModelList);
+        return checksModelList;
     }
 
     /**

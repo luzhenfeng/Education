@@ -21,6 +21,7 @@ import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.service.ChecksModelService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
+import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.utils.HttpDataUtil;
 import com.lzf.login.BR;
@@ -137,6 +138,11 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
     }
 
     public void login(String code) {
+        List<AllCategoryModel> mAllCategoryModelList = HttpDataUtil.getAllCategoryList(getApplication());
+        if (mAllCategoryModelList==null||mAllCategoryModelList.size()==0){
+            ToastUtils.showLong("数据下载失败请到登入界面重新下载");
+            return;
+        }
         model.saveCode(code);
         ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
     }

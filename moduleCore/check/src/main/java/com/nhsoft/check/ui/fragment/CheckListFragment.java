@@ -94,9 +94,9 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
     }
 
     private void setTabs() {
-        if (viewModel.entity.get().tabs.get().size() > 5) {
-            binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }
+//        if (viewModel.entity.get().tabs.get().size() > 5) {
+        binding.tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+//        }
         for (String s : viewModel.entity.get().tabs.get()) {
             binding.tabs.addTab(binding.tabs.newTab().setCustomView(getTabItemView(s)));
         }

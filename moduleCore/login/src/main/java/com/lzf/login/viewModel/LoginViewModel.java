@@ -188,7 +188,7 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 model.saveToken(response.getData().getToken().getAccess_token());
                                 model.saveUserName(entity.get().username.get());
                                 model.savePassword(entity.get().password.get());
-                                get();
+//                                get();
                                 getAppList();
                             }else {
                                 ToastUtils.showShort("保存失败");
