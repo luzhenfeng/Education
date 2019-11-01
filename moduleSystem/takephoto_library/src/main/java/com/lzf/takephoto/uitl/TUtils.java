@@ -13,12 +13,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.darsh.multipleimageselect.models.Image;
+import com.lzf.takephoto.R;
 import com.lzf.takephoto.model.CropOptions;
 import com.lzf.takephoto.model.TException;
 import com.lzf.takephoto.model.TExceptionType;
 import com.lzf.takephoto.model.TImage;
 import com.lzf.takephoto.model.TIntentWap;
-import org.devio.takephoto.R;
 import com.lzf.takephoto.model.TContextWrap;
 import com.soundcloud.android.crop.Crop;
 

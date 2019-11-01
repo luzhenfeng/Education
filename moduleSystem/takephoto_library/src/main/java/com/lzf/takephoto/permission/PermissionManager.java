@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.lzf.takephoto.R;
 import com.lzf.takephoto.app.TakePhoto;
 import com.lzf.takephoto.model.InvokeParam;
 import com.lzf.takephoto.model.TContextWrap;
@@ -137,20 +138,20 @@ public class PermissionManager {
         String tip = null;
         switch (type) {
             case DENIED:
-                listener.takeFail(null, tip = activity.getResources().getString(org.devio.takephoto.R.string.tip_permission_camera_storage));
+                listener.takeFail(null, tip = activity.getResources().getString(R.string.tip_permission_camera_storage));
                 break;
             case ONLY_CAMERA_DENIED:
-                listener.takeFail(null, tip = activity.getResources().getString(org.devio.takephoto.R.string.tip_permission_camera));
+                listener.takeFail(null, tip = activity.getResources().getString(R.string.tip_permission_camera));
                 break;
             case ONLY_STORAGE_DENIED:
-                listener.takeFail(null, tip = activity.getResources().getString(org.devio.takephoto.R.string.tip_permission_storage));
+                listener.takeFail(null, tip = activity.getResources().getString(R.string.tip_permission_storage));
                 break;
             case GRANTED:
                 try {
                     invokeParam.getMethod().invoke(invokeParam.getProxy(), invokeParam.getArgs());
                 } catch (Exception e) {
                     e.printStackTrace();
-                    listener.takeFail(null, tip = activity.getResources().getString(org.devio.takephoto.R.string.tip_permission_camera_storage));
+                    listener.takeFail(null, tip = activity.getResources().getString(R.string.tip_permission_camera_storage));
                 }
                 break;
             default:

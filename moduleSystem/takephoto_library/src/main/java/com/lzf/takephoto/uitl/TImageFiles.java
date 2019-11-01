@@ -11,6 +11,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import com.lzf.takephoto.R;
 import com.lzf.takephoto.model.TException;
 import com.lzf.takephoto.model.TExceptionType;
 
@@ -124,7 +125,7 @@ public class TImageFiles {
         boolean isPicture =
             TextUtils.isEmpty(minType) ? false : ".jpg|.gif|.png|.bmp|.jpeg|.webp|".contains(minType.toLowerCase()) ? true : false;
         if (!isPicture) {
-            Toast.makeText(context, context.getResources().getText(org.devio.takephoto.R.string.tip_type_not_image), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getText(R.string.tip_type_not_image), Toast.LENGTH_SHORT).show();
         }
         return isPicture;
     }

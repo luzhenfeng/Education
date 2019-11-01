@@ -50,6 +50,7 @@ public class CheckListFragment extends BaseFragment<FragmentCheckListBinding, Ch
                 if (integer.intValue()==3){
                     viewModel.setTitle("选择学生");
                     viewModel.isShowButton(View.VISIBLE);
+                    viewModel.mPopupViewModel.isShowSelectAllButton.set(View.VISIBLE);
                     CustomPopWindowUtil.getInstance().setData(viewModel.mSelectSudentList, viewModel.mStudentList);
                     CustomPopWindowUtil.getInstance().showAtBottomPopupWindow(getContext(), binding.tabs, (int) (172* Constant.mScreenWidthScale));
                 }else if (integer.intValue()==4){

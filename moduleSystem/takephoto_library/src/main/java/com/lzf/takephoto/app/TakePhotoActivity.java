@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.lzf.takephoto.R;
 import com.lzf.takephoto.model.InvokeParam;
 import com.lzf.takephoto.permission.PermissionManager;
 import com.lzf.takephoto.permission.TakePhotoInvocationHandler;
-import org.devio.takephoto.R;
 import com.lzf.takephoto.model.TContextWrap;
 import com.lzf.takephoto.model.TResult;
 import com.lzf.takephoto.permission.InvokeListener;

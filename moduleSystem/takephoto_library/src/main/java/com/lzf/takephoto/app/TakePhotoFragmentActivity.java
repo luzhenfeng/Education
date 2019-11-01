@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.lzf.takephoto.R;
 import com.lzf.takephoto.permission.PermissionManager;
 import com.lzf.takephoto.model.InvokeParam;
 import com.lzf.takephoto.model.TContextWrap;
@@ -75,7 +76,7 @@ public class TakePhotoFragmentActivity extends FragmentActivity implements TakeP
 
     @Override
     public void takeCancel() {
-        Log.i(TAG, getResources().getString(org.devio.takephoto.R.string.msg_operation_canceled));
+        Log.i(TAG, getResources().getString(R.string.msg_operation_canceled));
     }
 
     @Override

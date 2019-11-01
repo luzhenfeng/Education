@@ -28,6 +28,12 @@ public class PopupViewModel {
 
     public ObservableInt isShowButton=new ObservableInt(View.GONE);
 
+    public ObservableInt isShowSelectAllButton=new ObservableInt(View.GONE);
+
+    public BindingCommand onClickSelectAll;
+
+    public ObservableField<String> selectAllStr=new ObservableField<>("全选");
+
     public BindingCommand onClick;
     //给左边RecyclerView添加ObservableList
     public ObservableList<PopupItemViewModel> observableList = new ObservableArrayList<>();
@@ -84,6 +90,18 @@ public class PopupViewModel {
      */
     public int getItemPosition(PopupItemViewModel popupItemViewModel) {
         return observableList.indexOf(popupItemViewModel);
+    }
+
+    public void selectAll(boolean select){
+        for (PopupItemViewModel popupItemViewModel:observableList){
+            popupItemViewModel.entity.get().isSelect.set(select);
+            if (select){
+                popupItemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(),R.drawable.check_box_select);
+            }else {
+                popupItemViewModel.entity.get().selectState= ContextCompat.getDrawable(BaseApplication.getInstance(),R.drawable.check_box_aaaaaa);
+            }
+            observableList.set(observableList.indexOf(popupItemViewModel),popupItemViewModel);
+        }
     }
 
 }

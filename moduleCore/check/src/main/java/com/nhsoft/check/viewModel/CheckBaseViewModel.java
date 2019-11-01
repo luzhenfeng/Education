@@ -140,7 +140,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         entity.get().onTabSelectedCommand = new BindingCommand<TabLayout.Tab>(new BindingConsumer<TabLayout.Tab>() {
             @Override
             public void call(TabLayout.Tab tab) {
-                if (!isSelect.get()){
+                if (!isSelect.get()&&mSelectSudentList.size()==0){
                     tabPosition.set(tab.getPosition());
                     TextView t= (TextView) tab.getCustomView();
                     getCurrentCategory(t.getText().toString());
@@ -166,6 +166,19 @@ public class CheckBaseViewModel extends BasePopupViewModel {
                     rightOneItemViewModel.entity.get().classes.set(setSelectCheckClass(rightOneItemViewModel));
                     sentCheckItemMessager();
                     CustomPopWindowUtil.getInstance().dismiss();
+                }
+            }
+        });
+
+        mPopupViewModel.onClickSelectAll=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                if (mPopupViewModel.selectAllStr.get().equals("全选")){
+                    mPopupViewModel.selectAllStr.set("取消全选");
+                    mPopupViewModel.selectAll(true);
+                }else {
+                    mPopupViewModel.selectAllStr.set("全选");
+                    mPopupViewModel.selectAll(false);
                 }
             }
         });
@@ -233,7 +246,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE, new BindingAction() {
             @Override
             public void call() {
-                if (isSelect.get()){
+                if (isSelect.get()||mSelectSudentList.size()!=0){
                     clearData();
                 }
             }

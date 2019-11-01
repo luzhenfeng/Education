@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55px"
-            android:textSize="46px"
+            android:textSize="70px"
             android:textColor="@color/color_666666"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
@@ -30,17 +30,31 @@
         <TextView
             android:id="@+id/tv_confirm"
             android:layout_width="278px"
-            android:layout_height="90px"
+            android:layout_height="100px"
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_solid_6bb978_corner_100"
             android:textColor="@color/white"
-            android:textSize="43px"
+            android:textSize="60px"
             android:layout_marginTop="28px"
             android:layout_marginRight="64px"
             android:text="确定"
             android:gravity="center"
             android:visibility="@{viewModel.isShowButton}"
             binding:onClickCommand="@{viewModel.onClick}"/>
+
+        <TextView
+            android:layout_width="278px"
+            android:layout_height="100px"
+            android:background="@drawable/bg_solid_6bb978_corner_100"
+            android:textColor="@color/white"
+            android:textSize="60px"
+            android:layout_marginTop="28px"
+            android:layout_marginLeft="64px"
+            android:text="@{viewModel.selectAllStr}"
+            android:gravity="center"
+            android:visibility="@{viewModel.isShowSelectAllButton}"
+            binding:onClickCommand="@{viewModel.onClickSelectAll}"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_class"
             android:layout_width="match_parent"
