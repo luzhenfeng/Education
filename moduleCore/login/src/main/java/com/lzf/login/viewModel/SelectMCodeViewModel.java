@@ -14,11 +14,15 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
@@ -55,6 +59,10 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
 public class SelectMCodeViewModel extends BaseViewModel<Repository> {
 
     public ObservableField<SelectMCodeEntity> entity = new ObservableField<>();
+
+    public ObservableField<String> avatar=new ObservableField<>(UserService.getInstance().getAvatar().equals("")?"http://work.nbnz.net//Content/images/head/on-boy.jpg":UserService.getInstance().getAvatar());
+
+    public ObservableField<String> name=new ObservableField<>(UserService.getInstance().getRealname());
 
     //上传到第几条
     public ObservableInt upLodePos=new ObservableInt(0);
@@ -100,6 +108,17 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
             SelectMCodeItemViewModel viewModel = new SelectMCodeItemViewModel(this, selectMCodeItemEntity);
             entity.get().observableList.add(viewModel);
         }
+    }
+
+
+    public void setHead(ImageView imageView){
+        RequestOptions requestOptions =
+                RequestOptions.circleCropTransform()
+                ;
+        Glide.with(getApplication())
+                .load(avatar.get())
+                .apply(requestOptions)
+                .into(imageView);
     }
 
     public Drawable getDrawable(String mcode) {

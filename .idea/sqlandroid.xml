@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SQLAndroidSettings">
+    <option name="autocommit" value="true" />
     <option name="packageNameByDirectory">
       <map>
         <entry key="D:\wokespace\Education\AndroidSqlEditorDatabases\" value="com.lzf.education" />
-        <entry key="D:\wokespace\git\Education\AndroidSqlEditorDatabases\" value="com.nhsoft.utils" />
+        <entry key="D:\wokespace\git\Education\AndroidSqlEditorDatabases\" value="com.nhsoft.pxview" />
       </map>
     </option>
     <option name="storageVersion" value="2" />

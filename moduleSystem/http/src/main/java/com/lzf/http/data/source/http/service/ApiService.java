@@ -3,6 +3,7 @@ package com.lzf.http.data.source.http.service;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.FloorModel;
+import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -48,7 +49,7 @@ public interface ApiService {
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(@Query("token") String token);
 
     @GET("mq/GetStudentAvatars")
-    Observable<BaseResponse> getStudentAvatars(@Query("token") String token);
+    Observable<BaseResponse<List<HeadModel>>> getStudentAvatars(@Query("token") String token);
 
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("mq/CreateCheck")
@@ -58,5 +59,16 @@ public interface ApiService {
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("robot/send?access_token=c509149c7a6fc25a31aebf4837256221559b72ffea225b75d78992c2b58aa33d")
     Observable<Object> sendError(@Body RequestBody route);
+
+
+    @FormUrlEncoded
+    @POST("/auth/login")
+    Observable<BaseResponse<LoginModel>> faceLogin(@Field("username") String username,
+                                               @Field("password") String password,
+                                               @Field("signature") String signature,
+                                               @Field("timestamp") String timestamp,
+                                               @Field("nonce") String nonce,
+                                               @Field("appid") String appid,
+                                               @Field("deviceno") String deviceno);
 
 }

@@ -2,6 +2,7 @@ package com.nhsoft.check.ui.fragment;
 
 
 import android.arch.lifecycle.Observer;
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.lzf.takephoto.model.TResult;
 import com.nhsoft.check.BR;
 import com.nhsoft.check.R;
+import com.nhsoft.check.databinding.DialogSuccessBinding;
 import com.nhsoft.check.databinding.FragmentCheckBinding;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.check.viewModel.CheckViewModel;
@@ -24,6 +27,7 @@ import com.nhsoft.utils.utils.DateUtil;
 
 import priv.lzf.mvvmhabit.base.BaseFragment;
 import priv.lzf.mvvmhabit.utils.KLog;
+import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.SPUtils;
 
 /**
@@ -72,6 +76,40 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
                     CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(),getView());
                 }
                 CustomPopWindowUtil.getInstance().setAdapter();
+            }
+        });
+        viewModel.uc.face.observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object o) {
+                viewModel.getPermission(CheckFragment.this);
+            }
+        });
+
+        viewModel.uc.success.observe(this, new Observer() {
+            @Override
+            public void onChanged(@Nullable Object o) {
+                View view= LayoutInflater.from(getContext()).inflate(R.layout.dialog_success,null);
+                final DialogSuccessBinding binding = DataBindingUtil.bind(view);
+                final MaterialDialog dialog=MaterialDialogUtils.showCustomDialog(getContext(),view).build();
+                dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        binding.unbind();
+                    }
+                });
+                binding.ivCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                binding.btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
 //        viewModel.uc.takePhoto.observe(this, new Observer() {

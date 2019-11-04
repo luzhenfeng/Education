@@ -36,6 +36,23 @@ public class FileUtil {
         }
     }
 
+//    //把数据保存到SD卡中
+//    public static void savePhoto (Context context,String fileName){
+//        FileOutputStream fileOutputStream=null;
+//        BufferedWriter bufferedWriter = null;
+//        try {
+//            File file = new File(context.getExternalCacheDir().getPath(),fileName);
+//            fileOutputStream = new FileOutputStream(file);
+//            bufferedWriter= new BufferedWriter(new OutputStreamWriter(fileOutputStream));
+//            bufferedWriter.write(inputText);
+//            bufferedWriter.close();
+//            fileOutputStream.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
     //把数据从SD卡中文件读取
     public static String load(Context context,String fileName){
         FileInputStream fileInputStream;

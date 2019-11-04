@@ -44,4 +44,8 @@ public class UserService {
         return mDaoSession.getUserModelDao().load(1l).getRealname();
     }
 
+    public String getAvatar(){
+        return mDaoSession.getUserModelDao().load(1l).getAvatar();
+    }
+
 }

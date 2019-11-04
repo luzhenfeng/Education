@@ -9,6 +9,7 @@ import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.FloorModel;
+import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -78,7 +79,7 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
-    public Observable<BaseResponse> getStudentAvatars(String token) {
+    public Observable<BaseResponse<List<HeadModel>>> getStudentAvatars(String token) {
         return mHttpDataSource.getStudentAvatars(token);
     }
 

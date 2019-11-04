@@ -16,5 +16,8 @@ public class ModuleLifecycleReflexs {
     //检查模块
     private static final String LoginInit = "com.lzf.login.LoginModuleInit";
 
-    public static String[] initModuleNames = {BaseInit, UploadInit,CheckInit,LoginInit};
+    //检查模块
+    private static final String FaceInit = "com.lzf.face.FaceModuleInit";
+
+    public static String[] initModuleNames = {BaseInit, UploadInit,CheckInit,LoginInit,FaceInit};
 }

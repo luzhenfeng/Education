@@ -31,6 +31,10 @@ public abstract class ProgressCallBack<T> {
         subscribeLoadProgress();
     }
 
+    public ProgressCallBack() {
+        subscribeLoadProgress();
+    }
+
     public abstract void onSuccess(T t);
 
     public abstract void progress(long progress, long total);
@@ -75,6 +79,43 @@ public abstract class ProgressCallBack<T> {
             }
         }
     }
+
+
+    public void saveFile(ResponseBody body,String destFileDir,String destFileName) {
+        InputStream is = null;
+        byte[] buf = new byte[2048];
+        int len;
+        FileOutputStream fos = null;
+        try {
+            is = body.byteStream();
+            File dir = new File(destFileDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(dir, destFileName);
+            fos = new FileOutputStream(file);
+            while ((len = is.read(buf)) != -1) {
+                fos.write(buf, 0, len);
+            }
+            fos.flush();
+            unsubscribe();
+            //onCompleted();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) is.close();
+                if (fos != null) fos.close();
+            } catch (IOException e) {
+                Log.e("saveFile", e.getMessage());
+            }
+        }
+    }
+
+
+
 
     /**
      * 订阅加载的进度条

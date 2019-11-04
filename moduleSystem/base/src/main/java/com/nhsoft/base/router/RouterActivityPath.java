@@ -62,4 +62,13 @@ public class RouterActivityPath {
         /*登录界面*/
         public static final String PAGER_LOGIN = LOGIN + "/login";
     }
+
+    /**
+     * 刷脸组件
+     */
+    public static class Face{
+        private static final String FACE = "/face";
+        /*刷脸界面*/
+        public static final String PAGER_FACE = FACE + "/face";
+    }
 }

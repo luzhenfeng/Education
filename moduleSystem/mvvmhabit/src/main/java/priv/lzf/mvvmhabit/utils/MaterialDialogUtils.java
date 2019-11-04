@@ -302,6 +302,20 @@ public class MaterialDialogUtils {
         return builder;
     }
 
+    /***
+     * 获取自定义对话框
+     *
+     * @param
+     * @return MaterialDialog.Builder
+     */
+    public static MaterialDialog.Builder showCustomDialog(final Context context, View
+            view) {
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
+                .customView(view, true);
+        return builder;
+    }
+
 
     /***
      * 获取自定义对话框
@@ -312,7 +326,7 @@ public class MaterialDialogUtils {
     public static void showCustomDialog(final Context context, String title, int
             content) {
 
-        MaterialDialog dialog = new MaterialDialog.Builder(context)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
                 .title(title)
                 .customView(content, true)
                 .positiveText("确定")
@@ -322,7 +336,7 @@ public class MaterialDialogUtils {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
                     }
-                }).build();
+                });
 
 //        positiveAction = dialog.getActionButton(DialogAction.POSITIVE);
 //        //noinspection ConstantConditions

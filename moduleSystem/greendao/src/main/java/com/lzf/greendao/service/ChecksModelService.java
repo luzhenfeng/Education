@@ -103,4 +103,11 @@ public class ChecksModelService {
         return checksModelList.get(checksModelList.size()-1);
     }
 
+    public List<ChecksModel> getChecksModelList(String time){
+        return mDaoSession.getChecksModelDao().queryBuilder()
+                .where(ChecksModelDao.Properties.CheckDate.ge(time))
+                .list();
+    }
+
+
 }

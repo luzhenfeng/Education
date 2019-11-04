@@ -52,4 +52,10 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs project(':moduleSystem:facetrack').file('libs')
+    }
+}
+
 

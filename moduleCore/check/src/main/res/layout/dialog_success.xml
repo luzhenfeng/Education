@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="1280px"
+        android:layout_height="1150px"
+        android:gravity="center_horizontal">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="220px">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="80px"
+                android:text="提示"
+                android:layout_centerInParent="true">
+
+            </TextView>
+            <ImageView
+                android:id="@+id/iv_cancel"
+                android:layout_width="106px"
+                android:layout_height="match_parent"
+                android:src="@drawable/dialog_error"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="66px"
+                android:padding="20px">
+
+            </ImageView>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_e0e0e0">
+
+        </View>
+        <ImageView
+            android:layout_width="302px"
+            android:layout_height="302px"
+            android:src="@drawable/dialog_succes"
+            android:layout_marginTop="105px">
+
+        </ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已成功"
+            android:textSize="80px"
+            android:textColor="@color/black"
+            android:layout_marginTop="114px"></TextView>
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="492px"
+            android:layout_height="152px"
+            android:background="@drawable/bg_solid_6bb978_corner_10"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="70px"
+            android:layout_marginTop="100px"
+            android:layout_marginBottom="80px">
+
+        </Button>
+    </LinearLayout>
+</layout>

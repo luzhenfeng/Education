@@ -51,6 +51,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs project(':moduleSystem:facetrack').file('libs')
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -66,6 +72,8 @@ dependencies {
         implementation project(':moduleCore:check')
         //登录模块
         implementation project(':moduleCore:login')
+        //刷脸模块
+        implementation project(':moduleCore:face')
 //        //应用模块
 //        implementation project(':module-home')
 //        //工作模块

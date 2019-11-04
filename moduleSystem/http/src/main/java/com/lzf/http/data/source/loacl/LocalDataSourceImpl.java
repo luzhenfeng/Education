@@ -9,6 +9,9 @@ import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.source.LocalDataSource;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
+import com.nhsoft.utils.utils.DateUtil;
+
+import java.util.List;
 
 import priv.lzf.mvvmhabit.utils.SPUtils;
 
@@ -160,6 +163,17 @@ public class LocalDataSourceImpl implements LocalDataSource {
         model.setStudents(checkModel.getStudents()==null?"":new Gson().toJson(checkModel.getStudents()));
         model.setPhotos(checkModel.getPhotos()==null?"":new Gson().toJson(checkModel.getPhotos()));
         model.setIsUpdate(false);
+        List<ChecksModel> checksModelList=ChecksModelService.getInstance().getChecksModelList(DateUtil.getBeforeMinute(5));
+        if (checksModelList.size()>0){
+            for (ChecksModel checksModel:checksModelList){
+                if (model.getRecords().equals(checksModel.getRecords())
+                        &&model.getStudents().equals(checksModel.getStudents())
+                        &&model.getUserid().equals(checksModel.getUserid())
+                        &&model.getPhotos().equals(checksModel.getPhotos())){
+                    return false;
+                }
+            }
+        }
         return ChecksModelService.getInstance().insert(model);
     }
 

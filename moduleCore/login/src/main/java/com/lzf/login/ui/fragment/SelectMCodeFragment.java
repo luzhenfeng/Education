@@ -37,6 +37,7 @@ public class SelectMCodeFragment extends BaseFragment<FragmentSelectMcodeBinding
         viewModel.initReceiver(getContext());
         binding.setAdapter(new RecyclerViewBindingAdapter());
         viewModel.initData();
+        viewModel.setHead(binding.ivHead);
     }
 
     @Override

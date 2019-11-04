@@ -9,6 +9,15 @@ public class BaseResponse<T> {
     private String msg;
     private T data;
     private boolean success;
+    private int code;
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public int getResult() {
         return result;
@@ -44,5 +53,9 @@ public class BaseResponse<T> {
 
     public boolean isOk() {
         return result == 0;
+    }
+
+    public boolean isFaceOk(){
+        return code==0;
     }
 }

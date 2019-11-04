@@ -3,6 +3,7 @@ package com.lzf.http.data.source;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.FloorModel;
+import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -33,7 +34,7 @@ public interface HttpDataSource{
     Observable<BaseResponse<List<SycnListModel>>> getSyncList(String token);
 
     //模拟登录
-    Observable<BaseResponse> getStudentAvatars(String token);
+    Observable<BaseResponse<List<HeadModel>>> getStudentAvatars(String token);
 
     //创建检查记录
     Observable<BaseResponse> createCheck(String token, RequestBody model);

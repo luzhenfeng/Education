@@ -1,6 +1,7 @@
 package com.nhsoft.utils.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -13,5 +14,12 @@ public class DateUtil {
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return dateFormat.format(date);
+    }
+
+    public static String getBeforeMinute(int minute){
+        Calendar beforeTime = Calendar.getInstance();
+        beforeTime.add(Calendar.MINUTE, -minute);//
+        Date beforeD = beforeTime.getTime();
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(beforeD);
     }
 }
