@@ -127,6 +127,16 @@ public class LocalDataSourceImpl implements LocalDataSource {
     }
 
     @Override
+    public void saveAvatarsVersion(int version) {
+        SPUtils.getInstance().put("avatars",version);
+    }
+
+    @Override
+    public int getAvatarsVersion() {
+        return SPUtils.getInstance().getInt("avatars",0);
+    }
+
+    @Override
     public void saveCodes(String codes) {
         SPUtils.getInstance().put("codes",codes);
     }

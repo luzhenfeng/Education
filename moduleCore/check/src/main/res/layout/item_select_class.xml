@@ -2,6 +2,8 @@
 <layout>
     <data>
         <import type="com.nhsoft.check.viewModel.PopupItemViewModel"></import>
+        <import type="com.nhsoft.check.R"/>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="PopupItemViewModel" />
@@ -17,6 +19,15 @@
         android:layout_marginBottom="34px"
         android:layout_marginRight="20px"
         binding:onClickCommand="@{viewModel.entity.onItemClick}">
+        <ImageView
+            android:layout_width="60px"
+            android:layout_height="80px"
+            binding:url="@{viewModel.entity.headPic}"
+            binding:placeholderRes="@{R.drawable.head}"
+            android:scaleType="centerCrop"
+            android:visibility="@{viewModel.entity.isShow?View.VISIBLE:View.GONE}">
+
+        </ImageView>
         <TextView
             android:id="@+id/tv_class_name"
             android:layout_width="0px"

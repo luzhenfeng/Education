@@ -164,6 +164,16 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
+    public void saveAvatarsVersion(int version) {
+        mLocalDataSource.saveAvatarsVersion(version);
+    }
+
+    @Override
+    public int getAvatarsVersion() {
+        return mLocalDataSource.getAvatarsVersion();
+    }
+
+    @Override
     public void saveCodes(String codes) {
         mLocalDataSource.saveCodes(codes);
     }

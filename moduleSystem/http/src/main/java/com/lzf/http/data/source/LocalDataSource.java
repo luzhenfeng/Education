@@ -87,6 +87,19 @@ public interface LocalDataSource {
      */
     int getCheckCategoryVersion();
 
+
+    /**
+     * 保存检查分类版本
+     */
+    void saveAvatarsVersion(int version);
+
+    /**
+     * 获取检查分类版本
+     * @return
+     */
+    int getAvatarsVersion();
+
+
     /**
      * 保存全部权限模块 保存例(m3-3:卫生,m3-4:纪律) ,把多个模块隔开  ：把模块和模块名隔开 -取-后面的数字取对应本地图片
      */

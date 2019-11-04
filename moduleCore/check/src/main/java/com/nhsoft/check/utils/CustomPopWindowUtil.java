@@ -26,6 +26,7 @@ import com.nhsoft.pxview.utils.RelayoutViewTool;
 import java.util.List;
 
 import priv.lzf.mvvmhabit.base.BaseApplication;
+import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.widget.CustomPopWindow;
 
 /**
@@ -133,12 +134,14 @@ public class CustomPopWindowUtil {
      * @param selectStudentList 选中的学生
      * @param studentsBeanList 当前房间全部的学生
      */
-    public void setData(List<FloorModel.StudentsBean> selectStudentList, List<FloorModel.StudentsBean> studentsBeanList){
+    public void setData(Context context,List<FloorModel.StudentsBean> selectStudentList, List<FloorModel.StudentsBean> studentsBeanList){
         if (binding!=null){
             binding.getViewModel().observableList.clear();
             for (FloorModel.StudentsBean studentsBean:studentsBeanList){
                 PopupItemViewEntity entity=new PopupItemViewEntity();
                 entity.text.set(studentsBean.getStudentname());
+                entity.isShow.set(true);
+                entity.headPic.set(context.getExternalCacheDir().getPath() + "PhotoFile/"+studentsBean.getUserid()+".jpg");
                 if (selectStudentList.contains(studentsBean)){
                     entity.selectState= ContextCompat.getDrawable(BaseApplication.getInstance(), R.drawable.check_box_select);
                     entity.isSelect.set(true);

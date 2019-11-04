@@ -17,6 +17,10 @@ public class PopupItemViewEntity {
     public Drawable selectState;
     //条目点击
     public BindingCommand onItemClick;
+    //头像
+    public ObservableField<String> headPic=new ObservableField<>("");
+    //是否显示头像
+    public ObservableBoolean isShow=new ObservableBoolean(false);
     //是否选中
     public ObservableBoolean isSelect=new ObservableBoolean(false);
     //id

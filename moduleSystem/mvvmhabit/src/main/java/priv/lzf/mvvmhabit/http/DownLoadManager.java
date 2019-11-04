@@ -21,6 +21,7 @@ import priv.lzf.mvvmhabit.http.interceptor.ProgressInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import priv.lzf.mvvmhabit.utils.KLog;
+import priv.lzf.mvvmhabit.utils.RxUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -37,6 +38,7 @@ public class DownLoadManager {
     private static DownLoadManager instance;
 
     private static Retrofit retrofit;
+    private DownLoadSubscriber mDownLoadSubscriber;
 
     private DownLoadManager() {
         buildNetWork();
@@ -56,6 +58,7 @@ public class DownLoadManager {
 
     //下载
     public void load(String downUrl, final ProgressCallBack callBack) {
+        mDownLoadSubscriber=new DownLoadSubscriber<ResponseBody>(callBack);
         retrofit.create(ApiService.class)
                 .download(downUrl)
                 .subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
@@ -67,23 +70,23 @@ public class DownLoadManager {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
-                .subscribe(new DownLoadSubscriber<ResponseBody>(callBack));
+                .subscribe(mDownLoadSubscriber);
     }
 
     //下载
     public void load(final List<String> downUrls, final String destFileDir, final ProgressCallBack callBack) {
         //注意：此处是保存多张图片，可以采用异步线程
-        ArrayList<Observable<Boolean>> observables = new ArrayList<>();
+        ArrayList<Observable<ResponseBody>> observables = new ArrayList<>();
         final AtomicInteger count = new AtomicInteger();
         for (final String image : downUrls){
             observables.add(retrofit.create(ApiService.class)
                     .download(image)
                             .subscribeOn(Schedulers.io())
-                            .map(new Function<ResponseBody, Boolean>() {
+                            .map(new Function<ResponseBody, ResponseBody>() {
                                 @Override
-                                public Boolean apply(ResponseBody responseBody) throws Exception {
+                                public ResponseBody apply(ResponseBody responseBody) throws Exception {
                                     callBack.saveFile(responseBody,destFileDir,image.split("PhotoFile/")[1]);
-                                    return true;
+                                    return responseBody;
                                 }
                             })
 
@@ -92,15 +95,30 @@ public class DownLoadManager {
         // observable的merge 将所有的observable合成一个Observable，所有的observable同时发射数据
         Observable.merge(observables)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io()) //指定线程保存文件
-                .doOnNext(new Consumer<Boolean>() {
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .doOnNext(new Consumer<ResponseBody>() {
                     @Override
-                    public void accept(Boolean aBoolean) throws Exception {
+                    public void accept(ResponseBody responseBody) throws Exception {
 
                     }
                 })
+                .doOnError(new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        if (throwable instanceof ResponseThrowable) {
+
+                        }
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
-                .subscribe(new DownLoadSubscriber<Boolean>(callBack));
+                .subscribe(new DownLoadSubscriber<ResponseBody>(callBack));
+    }
+
+    public void dispose(){
+        if (mDownLoadSubscriber!=null){
+            mDownLoadSubscriber.dispose();
+        }
     }
 
 
@@ -114,7 +132,7 @@ public class DownLoadManager {
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(NetworkUtil.url)
+                .baseUrl("http://work.nbnz.net")
                 .build();
     }
 

@@ -1,6 +1,7 @@
 package com.lzf.login.viewModel;
 
 import android.app.Application;
+import android.content.Intent;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableLong;
@@ -21,6 +22,7 @@ import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.login.entity.LoginEntity;
+import com.lzf.login.service.DownPicService;
 import com.lzf.login.ui.activity.RegisterActivity;
 import com.lzf.login.ui.activity.SelectMCodeActivity;
 import com.nhsoft.base.base.ConstantMessage;
@@ -35,6 +37,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import okhttp3.ResponseBody;
+import priv.lzf.mvvmhabit.base.AppManager;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
@@ -46,6 +49,7 @@ import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.http.download.ProgressCallBack;
 import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.RxUtils;
+import priv.lzf.mvvmhabit.utils.SPUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
@@ -62,6 +66,9 @@ public class LoginViewModel extends BaseViewModel<Repository> {
     //是否请求检查类别
     public boolean isCheckCategory=false;
 
+    //是否请求头像
+    public boolean isAvatars=false;
+
     public boolean isDown=false;
 
 
@@ -75,7 +82,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
     //点击的次数
     public ObservableInt num=new ObservableInt(0);
 
-
+    //下载失败的图片
+    public List<String> errorPicture=new ArrayList<>();
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -197,7 +205,6 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 model.saveToken(response.getData().getToken().getAccess_token());
                                 model.saveUserName(entity.get().username.get());
                                 model.savePassword(entity.get().password.get());
-//                                get();
                                 getAppList();
                             }else {
                                 ToastUtils.showShort("保存失败");
@@ -226,56 +233,6 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                     }
                 }));
 
-    }
-
-
-    private void get(){
-        addSubscribe(model.getStudentAvatars(model.getToken())
-                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
-                .compose(RxUtils.schedulersTransformer()) //线程调度
-                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
-                .subscribe(new Consumer<BaseResponse<List<HeadModel>>>() {
-                    @Override
-                    public void accept(BaseResponse<List<HeadModel>> response) throws Exception {
-                        if (response.isOk()){
-                            mHeadModelList=response.getData();
-                            List<String> paths=new ArrayList<>();
-                            for (HeadModel headModel:mHeadModelList){
-                                if (headModel.getAvatar().contains("PhotoFile")){
-                                    paths.add(headModel.getAvatar());
-                                }
-                            }
-                            if (paths.size()!=0){
-                                DownLoadManager.getInstance().load(paths,getApplication().getExternalCacheDir().getPath()+"PhotoFile", new ProgressCallBack<ResponseBody>() {
-                                    @Override
-                                    public void onSuccess(ResponseBody responseBody) {
-
-                                    }
-
-                                    @Override
-                                    public void progress(long progress, long total) {
-
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
-                }, new Action() {
-                    @Override
-                    public void run() throws Exception {
-
-                    }
-                }));
     }
 
 
@@ -329,7 +286,7 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                     public void accept(BaseResponse<List<SycnListModel>> response) throws Exception {
                         if (response.isOk()) {
                             List<SycnListModel> sycnListModelList = response.getData();
-                            if (sycnListModelList.size() >= 2) {
+                            if (sycnListModelList.size() >= 3) {
                                 if (sycnListModelList.get(0).getVersion() > model.getCheckObjectVersion()) {
                                     isCheckObject = true;
                                     model.saveCheckObjectVersion(sycnListModelList.get(0).getVersion());
@@ -337,6 +294,10 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 if (sycnListModelList.get(1).getVersion() > model.getCheckCategoryVersion()) {
                                     isCheckCategory = true;
                                     model.saveCheckCategoryVersion(sycnListModelList.get(1).getVersion());
+                                }
+                                if (sycnListModelList.get(2).getVersion()>model.getAvatarsVersion()){
+                                    isAvatars=true;
+                                    model.saveAvatarsVersion(sycnListModelList.get(2).getVersion());
                                 }
                             }
                         }
@@ -360,6 +321,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                                 checkObject();
                             }else if (isCheckCategory){
                                 getAllCategoryList();
+                            }else if (isAvatars){
+                                getAvatars();
                             }else {
                                 startCheck();
                             }
@@ -400,6 +363,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                         }else {
                             if (isCheckCategory){
                                 getAllCategoryList();
+                            }else if (isAvatars){
+                                getAvatars();
                             }else {
                                 startCheck();
                             }
@@ -435,10 +400,56 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
+                        if (isAvatars){
+                            getAvatars();
+                        }else {
+                            startCheck();
+                        }
+                    }
+                }));
+    }
+
+    private void getAvatars(){
+        addSubscribe(model.getStudentAvatars(model.getToken())
+                .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle
+                .subscribe(new Consumer<BaseResponse<List<HeadModel>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<HeadModel>> response) throws Exception {
+                        if (response.isOk()){
+                            mHeadModelList=response.getData();
+                            List<String> paths=new ArrayList<>();
+                            for (HeadModel headModel:mHeadModelList){
+                                if (headModel.getAvatar().contains("PhotoFile")){
+                                    paths.add(headModel.getAvatar());
+                                }
+                            }
+                            if (paths.size()!=0){
+                                String json=new Gson().toJson(paths);
+                                FileUtil.save(getApplication(),json, Constant.avatarsFileName);
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
                         startCheck();
                     }
                 }));
     }
+
+
+
+
 
 
     private void startCheck(){
@@ -452,7 +463,16 @@ public class LoginViewModel extends BaseViewModel<Repository> {
             }
             ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
         }
+        if (!SPUtils.getInstance().getBoolean("isDownHeadPicSuccess",false)){
+            startService();
+        }
         finish();
+    }
+
+    public void startService(){
+        Intent intent = new Intent(getApplication(), DownPicService.class);
+        //开启服务
+        AppManager.getAppManager().currentActivity().startService(intent);
     }
 
 }

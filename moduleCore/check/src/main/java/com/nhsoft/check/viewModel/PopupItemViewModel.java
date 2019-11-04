@@ -2,6 +2,7 @@ package com.nhsoft.check.viewModel;
 
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.nhsoft.check.entity.PopupItemViewEntity;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
