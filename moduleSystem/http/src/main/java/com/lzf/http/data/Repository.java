@@ -139,6 +139,26 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     }
 
     @Override
+    public void saveFaceToken(String token) {
+        mLocalDataSource.saveFaceToken(token);
+    }
+
+    @Override
+    public String getFaceToken() {
+        return  mLocalDataSource.getFaceToken();
+    }
+
+    @Override
+    public void saveFaceId(String id) {
+        mLocalDataSource.saveFaceId(id);
+    }
+
+    @Override
+    public String getFaceId() {
+        return mLocalDataSource.getFaceId();
+    }
+
+    @Override
     public boolean insertUser(LoginModel loginModel) {
         return mLocalDataSource.insertUser(loginModel);
     }

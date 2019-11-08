@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitClient {
     //超时时间
-    private static final int DEFAULT_TIMEOUT = 20;
+    private static final int DEFAULT_TIMEOUT = 40;
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
@@ -100,7 +100,8 @@ public class RetrofitClient {
                 )
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS))
+                .readTimeout(DEFAULT_TIMEOUT,TimeUnit.SECONDS)
+                .connectionPool(new ConnectionPool(8, 20, TimeUnit.SECONDS))
                 // 这里你可以根据自己的机型设置同时连接的个数和时间，我这里8个，和每个保持时间为10s
                 .build();
         try {

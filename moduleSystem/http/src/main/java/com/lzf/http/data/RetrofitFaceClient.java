@@ -40,7 +40,7 @@ public class RetrofitFaceClient {
     //缓存时间
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
-    public static String baseUrl = "http://192.168.0.50";
+    public static String baseUrl = "http://192.168.0.50:8866";
 //    public static String baseUrl ;
     private static Context mContext = Utils.getContext();
 

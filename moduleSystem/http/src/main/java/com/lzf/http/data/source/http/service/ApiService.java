@@ -2,14 +2,19 @@ package com.lzf.http.data.source.http.service;
 
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
+import com.lzf.http.entity.FaceLoginModel;
+import com.lzf.http.entity.FaceResultModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
+import java.lang.annotation.Target;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 import retrofit2.http.Body;
@@ -17,7 +22,10 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 /**
@@ -62,13 +70,15 @@ public interface ApiService {
 
 
     @FormUrlEncoded
-    @POST("/auth/login")
-    Observable<BaseResponse<LoginModel>> faceLogin(@Field("username") String username,
-                                               @Field("password") String password,
-                                               @Field("signature") String signature,
-                                               @Field("timestamp") String timestamp,
-                                               @Field("nonce") String nonce,
-                                               @Field("appid") String appid,
-                                               @Field("deviceno") String deviceno);
+    @POST("/pad/login")
+    Observable<BaseResponse<FaceLoginModel>> faceLogin(@Field("username") String username,
+                                                       @Field("password") String password,
+                                                       @Field("pad_id") String pad_id,
+                                                       @Field("device_type") int device_type);
+
+    //商品编辑
+    @Multipart
+    @POST("/recognize")
+    Observable<FaceResultModel> recognize(@PartMap HashMap<String, RequestBody> requestBodyHashMap, @Part MultipartBody.Part image);
 
 }

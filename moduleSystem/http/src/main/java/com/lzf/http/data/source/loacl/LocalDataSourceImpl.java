@@ -48,7 +48,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getBaseUrl() {
-        return SPUtils.getInstance().getString("baseUrl","http://work.nbnz.net/api/");
+        return SPUtils.getInstance().getString("baseUrl","http://10.44.48.71:8080/api/");
     }
 
     @Override
@@ -89,6 +89,26 @@ public class LocalDataSourceImpl implements LocalDataSource {
     @Override
     public String getToken() {
         return SPUtils.getInstance().getString("token","");
+    }
+
+    @Override
+    public void saveFaceToken(String token) {
+        SPUtils.getInstance().put("faceToken",token);
+    }
+
+    @Override
+    public String getFaceToken() {
+        return SPUtils.getInstance().getString("faceToken","");
+    }
+
+    @Override
+    public void saveFaceId(String id) {
+        SPUtils.getInstance().put("faceId",id);
+    }
+
+    @Override
+    public String getFaceId() {
+        return SPUtils.getInstance().getString("faceId","");
     }
 
     @Override

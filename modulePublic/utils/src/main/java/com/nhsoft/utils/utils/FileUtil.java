@@ -1,8 +1,10 @@
 package com.nhsoft.utils.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,6 +36,20 @@ public class FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void saveBitmapFile(Context context,Bitmap bitmap,String fileName) {
+        File file = new File(context.getExternalCacheDir().getPath(),fileName);//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 //    //把数据保存到SD卡中

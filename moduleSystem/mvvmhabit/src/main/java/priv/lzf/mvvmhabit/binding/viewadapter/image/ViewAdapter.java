@@ -16,7 +16,7 @@ public final class ViewAdapter {
     public static void setImageUri(ImageView imageView, String url, int placeholderRes) {
         if (!TextUtils.isEmpty(url)) {
             //使用Glide框架加载图片
-            Glide.with(imageView.getContext())
+            Glide.with(imageView.getContext().getApplicationContext())
                     .load(url)
                     .apply(new RequestOptions().placeholder(placeholderRes))
                     .into(imageView);

@@ -12,10 +12,19 @@ public class UploadEntity {
     private String text2;
     private String text3;
     private String text4;
+    private String studentNames;
     private boolean isSelect;
     private boolean isUpload;
     private ChecksModel mChecksModel;
     private String name;
+
+    public String getStudentNames() {
+        return studentNames;
+    }
+
+    public void setStudentNames(String studentNames) {
+        this.studentNames = studentNames;
+    }
 
     public String getName() {
         return name;

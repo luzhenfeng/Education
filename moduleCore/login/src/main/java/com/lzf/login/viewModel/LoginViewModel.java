@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.ObservableField;
 import android.databinding.ObservableInt;
 import android.databinding.ObservableLong;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -15,8 +16,11 @@ import com.lzf.greendao.service.ChecksModelService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
 import com.lzf.http.data.RetrofitClient;
+import com.lzf.http.data.RetrofitFaceClient;
+import com.lzf.http.data.source.http.service.ApiService;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
+import com.lzf.http.entity.FaceLoginModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
@@ -234,7 +238,6 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                 }));
 
     }
-
 
     private void getAppList(){
         addSubscribe(model.getAppList(model.getToken())

@@ -61,6 +61,27 @@ public interface LocalDataSource {
     String getToken();
 
     /**
+     * 保存人脸识别token
+     */
+    void saveFaceToken(String token);
+
+    /**
+     * 获取人脸识别token
+     */
+    String getFaceToken();
+
+    /**
+     * 保存人脸识别id
+     */
+    void saveFaceId(String id);
+
+    /**
+     * 获取人脸识别id
+     */
+    String getFaceId();
+
+
+    /**
      * 保存user表
      */
     boolean insertUser(LoginModel loginModel);

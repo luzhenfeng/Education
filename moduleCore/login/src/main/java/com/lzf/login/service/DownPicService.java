@@ -36,10 +36,12 @@ public class DownPicService extends Service {
     public void onCreate() {
         super.onCreate();
         downUrls=getDownUrls();
-        if (getPicIndex()<downUrls.size()-1){
-            int index=getPicIndex();
-            if (index<downUrls.size()){
-                upLoadPic(downUrls,getPicIndex());
+        if (downUrls!=null&&downUrls.size()>0){
+            if (getPicIndex()<downUrls.size()-1){
+                int index=getPicIndex();
+                if (index<downUrls.size()){
+                    upLoadPic(downUrls,getPicIndex());
+                }
             }
         }
     }

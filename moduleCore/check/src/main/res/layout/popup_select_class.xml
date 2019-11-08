@@ -65,7 +65,7 @@
             android:paddingTop="30px"
             binding:adapter="@{adapter}"
             binding:itemBinding="@{viewModel.itemBinding}"
-            binding:layoutManager="@{LayoutManagers.grid(4)}"
+            binding:layoutManager="@{LayoutManagers.grid(viewModel.itemNum)}"
             binding:items="@{viewModel.observableList}"
             binding:itemAnimator="@{null}">
 

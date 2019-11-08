@@ -115,7 +115,7 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
         RequestOptions requestOptions =
                 RequestOptions.circleCropTransform()
                 ;
-        Glide.with(getApplication())
+        Glide.with(getApplication().getApplicationContext())
                 .load(avatar.get())
                 .apply(requestOptions)
                 .into(imageView);
@@ -280,5 +280,11 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
                         }
                     }
                 }));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.with(getApplication().getApplicationContext()).pauseRequests();
     }
 }

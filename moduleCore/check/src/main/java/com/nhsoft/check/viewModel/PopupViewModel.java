@@ -34,6 +34,8 @@ public class PopupViewModel {
 
     public ObservableField<String> selectAllStr=new ObservableField<>("全选");
 
+    public ObservableInt itemNum=new ObservableInt(4);
+
     public BindingCommand onClick;
     //给左边RecyclerView添加ObservableList
     public ObservableList<PopupItemViewModel> observableList = new ObservableArrayList<>();

@@ -145,6 +145,7 @@ public class UploadViewModel extends BaseViewModel<Repository> {
             UploadEntity uploadEntity =new UploadEntity();
             uploadEntity.setId(checksModel.getId());
             uploadEntity.setText1((checksModel.getObjectName()==null?"":checksModel.getObjectName()+"-")+(checksModel.getClassName().equals("")?"":"("+checksModel.getClassName()+")"));
+            uploadEntity.setStudentNames(getStudentNames(checksModel).equals("")?"":"违规学生:"+getStudentNames(checksModel));
             uploadEntity.setText2(checksModel.getCateName()+"("+checksModel.getCheckDate()+"-"+"扣"+score(recordsBeanList)+"分"+")");
             uploadEntity.setText3(getCheckItem(recordsBeanList));
             uploadEntity.setText4("类型:"+(checksModel.getCategory()==0?"班级检查":checksModel.getCategory()==1?"寝室检查":"公共场地"));
@@ -155,6 +156,22 @@ public class UploadViewModel extends BaseViewModel<Repository> {
             //双向绑定动态添加Item
             observableList.add(itemViewModel);
         }
+    }
+
+
+    private String getStudentNames(ChecksModel checksModel){
+        String studentNames="";
+        if (checksModel.getStudents()!=null&&!checksModel.getStudents().equals("")){
+            List<CheckModel.StudentsBean> studentsBeanList=new Gson().fromJson(checksModel.getStudents(),new TypeToken<List<CheckModel.StudentsBean>>(){}.getType());
+            for (CheckModel.StudentsBean studentsBean:studentsBeanList){
+                if (studentsBeanList.indexOf(studentsBean)==studentsBeanList.size()-1){
+                    studentNames+=studentsBean.getStudentname();
+                }else {
+                    studentNames+=studentsBean.getStudentname()+",";
+                }
+            }
+        }
+        return studentNames;
     }
 
     /**

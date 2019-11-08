@@ -10,7 +10,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="400px"
+        android:layout_height="wrap_content"
         android:paddingTop="30px">
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -49,6 +49,17 @@
                 android:maxLines="1">
 
             </TextView>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/tv_class"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                android:text="@{viewModel.entity.getStudentNames()}"-->
+<!--                android:textSize="40px"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:maxLines="1">-->
+
+<!--            </TextView>-->
             <TextView
                 android:id="@+id/tv_check_type"
                 android:layout_width="0px"
@@ -92,6 +103,21 @@
                 app:layout_constraintRight_toLeftOf="@id/iv_image1"
                 app:layout_constraintHorizontal_bias="0"
                 android:text="@{viewModel.entity.getText4()}"
+                android:layout_marginLeft="58px"
+                android:textSize="40px"
+                android:paddingRight="20px"
+                android:textColor="@color/color_919191"
+                android:ellipsize="end">
+
+            </TextView>
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@id/iv_image"
+                app:layout_constraintTop_toBottomOf="@id/tv_type"
+               app:layout_constraintRight_toLeftOf="@id/iv_image1"
+                app:layout_constraintHorizontal_bias="0"
+                android:text="@{viewModel.entity.getStudentNames()}"
                 android:layout_marginLeft="58px"
                 android:textSize="40px"
                 android:paddingRight="20px"

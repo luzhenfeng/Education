@@ -51,6 +51,7 @@ import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.http.BaseResponse;
+import priv.lzf.mvvmhabit.http.NetworkUtil;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.RxUtils;
@@ -284,7 +285,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 if (isSave) {
                     upload(checkModel);
                 } else {
-                    ToastUtils.showShort("数据已保存");
+                    ToastUtils.showShort("不能提交相同违规记录");
                 }
             }
         });
@@ -460,7 +461,6 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                     @Override
                     public void accept(BaseResponse response) throws Exception {
                         if (response.isOk()) {
-                            uc.success.call();
                             ChecksModel checksModel = ChecksModelService.getInstance().getMaxChecksModel();
                             checksModel.setIsUpdate(true);
                             boolean isUpdate = ChecksModelService.getInstance().updateChecksModel(checksModel);
@@ -479,12 +479,14 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                         if (throwable instanceof ResponseThrowable) {
 //                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
+                        uc.success.call();
                         clearData();
                         Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                     }
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
+                        uc.success.call();
                         clearData();
                         Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                         //关闭对话框
