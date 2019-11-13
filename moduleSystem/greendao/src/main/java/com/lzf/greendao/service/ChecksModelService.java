@@ -105,7 +105,7 @@ public class ChecksModelService {
 
     public List<ChecksModel> getChecksModelList(String time){
         return mDaoSession.getChecksModelDao().queryBuilder()
-                .where(ChecksModelDao.Properties.CheckDate.ge(time))
+                .where(ChecksModelDao.Properties.CreateDate.ge(time))
                 .list();
     }
 

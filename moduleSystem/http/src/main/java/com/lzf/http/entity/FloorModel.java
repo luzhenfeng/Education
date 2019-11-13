@@ -186,6 +186,15 @@ public class FloorModel {
         private String studentno;
         private String classid;
         private String classname;
+        private String fid;
+
+        public String getFid() {
+            return fid;
+        }
+
+        public void setFid(String fid) {
+            this.fid = fid;
+        }
 
         public String getDormid() {
             return dormid;

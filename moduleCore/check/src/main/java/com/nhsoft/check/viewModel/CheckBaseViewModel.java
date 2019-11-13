@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.lzf.http.data.Injection;
+import com.lzf.http.data.Repository;
 import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
@@ -44,6 +46,7 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
+import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
@@ -51,7 +54,7 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * 作者：Created by 45703
  * 时间：Created on 2019/9/27.
  */
-public class CheckBaseViewModel extends BasePopupViewModel {
+public class CheckBaseViewModel extends BasePopupViewModel<Repository> {
 
     public static final String MultiRecycleType_Head = "head";
     public static final String MultiRecycleType_Right1 = "right1";
@@ -69,6 +72,9 @@ public class CheckBaseViewModel extends BasePopupViewModel {
 
     //所有楼
     public List<FloorModel> mFloorModelList = new ArrayList<>();
+
+    //当前楼
+    public FloorModel mFloorModel;
 
     //用户所对应的分类
     public List<AllCategoryModel> userCategoryList = new ArrayList<>();
@@ -122,6 +128,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
 
     public CheckBaseViewModel(@NonNull Application application) {
         super(application);
+        model= Injection.provideDemoRepository();
         initMessenger();
         entity.set(new CheckBaseEntity());
         bindingCommand();
@@ -219,6 +226,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
             @Override
             public void call(CheckInformation checkInformation) {
                 mFloorModelList = checkInformation.mFloorModelList;
+                mFloorModel=checkInformation.mFloorModel;
                 userCategoryList = checkInformation.userCategoryList;
                 mRoomModel=checkInformation.mRoomModel;
                 entity.get().tabs.set(getTabs());
@@ -258,6 +266,61 @@ public class CheckBaseViewModel extends BasePopupViewModel {
                 sentSubjectMessager();
             }
         });
+        //刷脸返回的值
+        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT, Integer.class, new BindingConsumer<Integer>() {
+            @Override
+            public void call(Integer integer) {
+
+            }
+        });
+    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (!model.getFaceId().equals("")){
+//            FloorModel.StudentsBean studentsBean=HttpDataUtil.findStudent(Integer.parseInt(model.getFaceId()),mFloorModel,mFloorModelList);
+//            if (studentsBean!=null){
+//                String id=null;
+//                if (studentsBean.getDormid()!=null){
+//                    id=studentsBean.getDormid();
+//                }else {
+//                    id=studentsBean.getClassid();
+//                }
+//                if (id!=null){
+//                    if (isCurrentRoomStudent(studentsBean)){
+//                        for (FloorModel.StudentsBean studentsBean1:mSelectSudentList){
+//                            if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
+//                                return;
+//                            }
+//                        }
+//                        mSelectSudentList.add(studentsBean);
+//                        entity.get().students.set(getStudents());
+//                    }else {
+//                        Messenger.getDefault().send(studentsBean, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1);
+//                        mSelectSudentList.clear();
+//                        mSelectSudentList.add(studentsBean);
+//                        entity.get().students.set(getStudents());
+//                    }
+//
+//                }
+//
+//            }
+//        }
+//    }
+
+    /**
+     * 刷脸返回的是否当前房间的学生
+     * @param studentsBean
+     * @return
+     */
+    public boolean isCurrentRoomStudent(FloorModel.StudentsBean studentsBean){
+        for (FloorModel.StudentsBean studentsBean1:mStudentList){
+            if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void itemBinding() {
@@ -430,15 +493,17 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         itemsBean.setClassName(null);
         rightOneEntity.items.set(itemsBean);
         rightOneEntity.showbed.set(showbed);
-        if (mRoomModel.getChildrens().size()>1&&showbed==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
-            rightOneEntity.classes.set("选择班级");
+        if (mRoomModel.getChildrens()!=null){
+            if (mRoomModel.getChildrens().size()>1&&showbed==0&&entity.get().isShowStudent.get()!=View.VISIBLE){
+                rightOneEntity.classes.set("选择班级");
+            }
+            if (itemsBean.getRuletype()==3||itemsBean.getRuletype()==6){
+                rightOneEntity.showCount.set(true);
+            }
+            MultiItemViewModel rightOneItem = new RightOneItemViewModel(this, rightOneEntity);
+            rightOneItem.multiItemType(MultiRecycleType_Right1);
+            entity.get().observableRightList.add(rightOneItem);
         }
-        if (itemsBean.getRuletype()==3||itemsBean.getRuletype()==6){
-            rightOneEntity.showCount.set(true);
-        }
-        MultiItemViewModel rightOneItem = new RightOneItemViewModel(this, rightOneEntity);
-        rightOneItem.multiItemType(MultiRecycleType_Right1);
-        entity.get().observableRightList.add(rightOneItem);
     }
 
 
@@ -558,6 +623,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         }else {
             rightOneItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_select);
             rightOneItemViewModel.entity.get().isSelect.set(true);
+            rightOneItemViewModel.entity.get().items.get().setItemcount(rightOneItemViewModel.entity.get().count.get());
             mSelectItemsBeanList.add(rightOneItemViewModel.entity.get().items.get());
         }
         rightOneItemViewModel.entity.get().hasFou.set(true);
@@ -586,9 +652,11 @@ public class CheckBaseViewModel extends BasePopupViewModel {
      */
     public void removeRightItemSelect(RightOneEntity entity){
         for (AllCategoryModel.ItemsBean itemsBean:mSelectItemsBeanList){
-            if (itemsBean.getId().equals(entity.items.get().getId())){
-                mSelectItemsBeanList.remove(itemsBean);
-                return;
+            if (itemsBean.getId()!=null){
+                if (itemsBean.getId().equals(entity.items.get().getId())){
+                    mSelectItemsBeanList.remove(itemsBean);
+                    return;
+                }
             }
         }
     }
@@ -605,6 +673,7 @@ public class CheckBaseViewModel extends BasePopupViewModel {
         }else {
             rightFourItemViewModel.entity.get().image=ContextCompat.getDrawable(getApplication(), R.drawable.check_box_select);
             rightFourItemViewModel.entity.get().isSelect.set(true);
+            rightFourItemViewModel.entity.get().deduction.set(rightFourItemViewModel.entity.get().deduction.get());
             mSelectItemsBeanList.add(addOrUpdateSelectFourItem(rightFourItemViewModel));
         }
         entity.get().observableRightList.set(pos,rightFourItemViewModel);

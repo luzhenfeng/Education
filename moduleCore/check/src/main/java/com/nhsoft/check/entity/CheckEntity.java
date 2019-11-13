@@ -32,4 +32,5 @@ public class CheckEntity {
     public BindingCommand tvSubmit;
     public BindingCommand tvFloor;
     public BindingCommand tvRoom;
+    public BindingCommand tvTime;
 }

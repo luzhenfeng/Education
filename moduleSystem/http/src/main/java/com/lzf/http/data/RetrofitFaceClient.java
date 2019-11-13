@@ -59,13 +59,13 @@ public class RetrofitFaceClient {
     }
 
     private RetrofitFaceClient() {
-        this(baseUrl, null);
+        this(Constant.baseFaceUrl+":8866", null);
     }
 
     private RetrofitFaceClient(String url, Map<String, String> headers) {
 
         if (TextUtils.isEmpty(url)) {
-            url = baseUrl;
+            url = Constant.baseFaceUrl+":8866";
         }
 
         if (httpCacheDirectory == null) {

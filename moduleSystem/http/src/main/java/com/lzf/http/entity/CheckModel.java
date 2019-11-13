@@ -29,6 +29,7 @@ public class CheckModel {
     private String cateId;
     private String cateName;
     private String checkDate;
+    private String createDate;
     private String classId;
     private String className;
     private String objectId;
@@ -37,6 +38,14 @@ public class CheckModel {
     private List<StudentsBean> students;
     private List<String> photos;
 
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     public String getMcode() {
         return mcode;

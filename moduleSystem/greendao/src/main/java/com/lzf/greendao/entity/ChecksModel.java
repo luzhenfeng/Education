@@ -18,6 +18,7 @@ public class ChecksModel {
     private String cateId;
     private String cateName;
     private String checkDate;
+    private String createDate;
     private String classId;
     private String className;
     private String objectId;
@@ -26,11 +27,11 @@ public class ChecksModel {
     private String students;
     private String photos;
     private boolean isUpdate;//是否已上传
-    @Generated(hash = 2117646223)
+    @Generated(hash = 1530252698)
     public ChecksModel(Long id, String userid, String mcode, int category,
-            String cateId, String cateName, String checkDate, String classId,
-            String className, String objectId, String objectName, String records,
-            String students, String photos, boolean isUpdate) {
+            String cateId, String cateName, String checkDate, String createDate,
+            String classId, String className, String objectId, String objectName,
+            String records, String students, String photos, boolean isUpdate) {
         this.id = id;
         this.userid = userid;
         this.mcode = mcode;
@@ -38,6 +39,7 @@ public class ChecksModel {
         this.cateId = cateId;
         this.cateName = cateName;
         this.checkDate = checkDate;
+        this.createDate = createDate;
         this.classId = classId;
         this.className = className;
         this.objectId = objectId;
@@ -81,7 +83,7 @@ public class ChecksModel {
         this.cateName = cateName;
     }
     public String getCheckDate() {
-        return this.checkDate;
+        return this.checkDate==null?"2019-11-11 11:11":this.checkDate;
     }
     public void setCheckDate(String checkDate) {
         this.checkDate = checkDate;
@@ -139,5 +141,11 @@ public class ChecksModel {
     }
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+    public String getCreateDate() {
+        return this.createDate;
+    }
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 }

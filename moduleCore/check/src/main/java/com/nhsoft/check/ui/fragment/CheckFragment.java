@@ -1,16 +1,21 @@
 package com.nhsoft.check.ui.fragment;
 
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,6 +30,10 @@ import com.nhsoft.check.viewModel.CheckViewModel;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.DateUtil;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import priv.lzf.mvvmhabit.base.AppManager;
 import priv.lzf.mvvmhabit.base.BaseFragment;
 import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
@@ -112,6 +121,31 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
                 });
             }
         });
+        viewModel.uc.time.observe(this, new Observer() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onChanged(@Nullable Object o) {
+//                DatePicker datePicker=new DatePicker(getContext());
+                final Calendar cal = Calendar.getInstance();
+                final DatePickerDialog datePickerDialog=new DatePickerDialog(getContext(),AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        cal.set(Calendar.YEAR, year);
+                        cal.set(Calendar.MONTH,month);
+                        cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+                        viewModel.entity.get().date.set(DateUtil.getDate(cal.getTime()));
+                    }
+                },cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH));
+                DatePicker dp = datePickerDialog.getDatePicker();
+                dp.setMaxDate(new Date().getTime());
+                datePickerDialog.show();
+//                DatePickerDialog datePickerDialog= (DatePickerDialog) new DatePickerDialog.Builder(getContext())
+//                        .create();
+//                datePickerDialog.show();
+//                DatePickerDialog datePickerDialog= new DatePickerDialog(getContext().getApplicationContext());
+//                datePickerDialog.show();
+            }
+        });
 //        viewModel.uc.takePhoto.observe(this, new Observer() {
 //            @Override
 //            public void onChanged(@Nullable Object o) {
@@ -119,6 +153,7 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
 //            }
 //        });
     }
+
 
     @Override
     public void onStart() {

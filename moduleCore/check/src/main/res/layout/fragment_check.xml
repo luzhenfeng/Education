@@ -59,7 +59,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size"
                 android:textColor="@color/black"
-                android:text="@{viewModel.entity.date}">
+                android:text="@{viewModel.entity.date}"
+                binding:onClickCommand="@{viewModel.entity.tvTime}">
 
             </TextView>
 

@@ -16,7 +16,7 @@ public class RightFourEntity {
     //序号
     public ObservableInt index=new ObservableInt(1);
     //扣分
-    public ObservableField<String> deduction=new ObservableField("0");
+    public ObservableField<String> deduction=new ObservableField("1");
 
     public ObservableField<String> editText=new ObservableField<>("");
 

@@ -22,6 +22,7 @@ import com.megvii.facetrack.FaceTrackOption;
 import com.megvii.facetrack.FaceTracker;
 import com.megvii.facetrack.MVFace;
 import com.megvii.facetrack.camera.MVCameraPreview;
+import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.utils.utils.FileUtil;
 
 import java.io.File;
@@ -34,6 +35,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
+import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.KLog;
@@ -50,17 +52,23 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
     public FaceTracker faceTracker;
     public FaceViewModel(@NonNull Application application) {
         super(application);
-        model= Injection.provideDemoRepository();
-        if (model.getFaceToken().equals("")){
-            faceLogin();
-        }
+        model= Injection.provideFaceRepository();
         option=new FaceTrackOption.Builder()
+//                .setFrontCamera(false)
                 .build();
         faceTracker = new FaceTracker();
     }
 
     public void startTrack(Activity activity,MVCameraPreview cameraPreview) {
         faceTracker.start(activity, cameraPreview, option, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (model.getFaceToken().equals("")){
+            faceLogin();
+        }
     }
 
     @Override
@@ -148,8 +156,9 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
                 .subscribe(new Consumer<FaceResultModel>() {
                     @Override
                     public void accept(FaceResultModel response) throws Exception {
-                        if (response.isCan_door_open()){
+                        if (response.getError()==0){
                             model.saveFaceId(response.getPerson().getSubject_id()+"");
+//                            Messenger.getDefault().send(response.getPerson().getSubject_id(), ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT);
                             ToastUtils.showShort("识别成功");
                         }else {
                             model.saveFaceId("");
@@ -161,6 +170,7 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
                     public void accept(Throwable throwable) throws Exception {
                         //关闭对话框
                         ToastUtils.showShort("识别失败");
+                        model.saveFaceId("");
                         dismissDialog();
                         finish();
                         if (throwable instanceof ResponseThrowable) {

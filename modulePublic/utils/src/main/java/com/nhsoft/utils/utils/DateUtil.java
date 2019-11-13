@@ -22,4 +22,9 @@ public class DateUtil {
         Date beforeD = beforeTime.getTime();
         return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(beforeD);
     }
+
+    public static String getDate(Date time){
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return df.format(time);
+    }
 }

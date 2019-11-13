@@ -23,6 +23,7 @@ public class LoginModuleInit implements IModuleInit {
         DaoManager.getInstance().init(application);
 //        Constant.baseUrl= SPUtils.getInstance().getString("baseUrl","http://work.nbnz.net/api/");
         Constant.baseUrl= SPUtils.getInstance().getString("baseUrl","http://10.44.48.71:8080/api/");
+        Constant.baseFaceUrl= SPUtils.getInstance().getString("baseFaceUrl","http://192.168.0.50");
         initCrash();
         KLog.e("登录层初始化 -- onInitAhead");
         return false;

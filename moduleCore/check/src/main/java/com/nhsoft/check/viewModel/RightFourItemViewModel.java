@@ -38,7 +38,6 @@ public class RightFourItemViewModel extends MultiItemViewModel<CheckBaseViewMode
 //                entity.get().text1Select.set(!entity.get().text1Select.get());
 //                MaterialDialogUtils.showSingleListDialog()
                 List<String> strings=new ArrayList<>();
-                strings.add("0");
                 strings.add("0.5");
                 strings.add("1");
                 strings.add("1.5");

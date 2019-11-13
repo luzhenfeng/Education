@@ -14,4 +14,9 @@ public class ConstantMessage {
 
     //服务器注册界面保存项登录界面发送初始化网络请求接口
     public final static String TOKEN_REGISTERVIEWMODEL_NETWORK = "token_register_view_model_network";
+
+    //刷脸成功返回的数据传到Check界面
+    public final static String TOKEN_FACEVIEWMODEL_RESULT = "token_face_view_model_result";
+    //刷脸成功返回的数据传到Check界面
+    public final static String TOKEN_FACEVIEWMODEL_RESULT1 = "token_face_view_model_result1";
 }

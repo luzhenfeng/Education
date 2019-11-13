@@ -50,6 +50,22 @@ public class HttpDataUtil {
     }
 
     /**
+     * 获取除当前楼全部学生
+     * @param floorModelList 全部楼
+     * @param currentFloorModel 当前楼
+     * @return
+     */
+    public static List<FloorModel.StudentsBean> getAllFloorStudentList(List<FloorModel> floorModelList,FloorModel currentFloorModel){
+        List<FloorModel.StudentsBean> studentsBeanList=new ArrayList<>();
+        for (FloorModel floorModel:floorModelList){
+            if (!floorModel.getId().equals(currentFloorModel.getId())){
+                studentsBeanList.addAll(floorModel.getStudents());
+            }
+        }
+        return studentsBeanList;
+    }
+
+    /**
      * 获取检查模块应用编码所对应的全部分类
      * @param code 检查模块应用编码
      * @param categoryModels 所有分类
@@ -203,6 +219,84 @@ public class HttpDataUtil {
     public static List<FloorModel.StudentsBean> getAllStudentList(FloorModel mFloorModel){
         return mFloorModel.getStudents();
     }
+
+    /**
+     * 查找刷脸支付的学生
+     * @param subjectId 刷脸支付的id
+     * @param mFloorModel 当前楼
+     * @param floorModelList 所有楼
+     * @return
+     */
+    public static FloorModel.StudentsBean findStudent(int subjectId,FloorModel mFloorModel,List<FloorModel> floorModelList){
+        for (FloorModel.StudentsBean studentsBean:getAllStudentList(mFloorModel)){
+            if (studentsBean.getStudentid()==subjectId){
+                return studentsBean;
+            }
+        }
+        for (FloorModel.StudentsBean studentsBean:getAllFloorStudentList(floorModelList,mFloorModel)){
+            if (studentsBean.getStudentid()==subjectId){
+                return studentsBean;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取除当前楼的所有房间
+     * @param currentFloorModel 当前楼
+     * @param floorModelList 所有楼
+     * @return
+     */
+    public static List<FloorModel.RoomModel> findAllRooms(FloorModel currentFloorModel,List<FloorModel> floorModelList){
+        List<FloorModel.RoomModel> roomModelList=new ArrayList<>();
+        for (FloorModel floorModel:floorModelList){
+            if (!currentFloorModel.getId().equals(floorModel.getId())){
+                roomModelList.addAll(floorModel.getChildrens());
+            }
+        }
+        return roomModelList;
+    }
+
+    /**
+     * 获取刷脸返回学生的当前房间
+     * @param id 当前房间id
+     * @param floorModel 当前房间
+     * @param floorModelList 所有房间
+     * @return
+     */
+    public static FloorModel.RoomModel findRoom(String id,FloorModel floorModel,List<FloorModel> floorModelList){
+        for (FloorModel.RoomModel roomModel:floorModel.getChildrens()){
+            if (roomModel.getId().equals(id)){
+                return roomModel;
+            }
+        }
+        for (FloorModel.RoomModel roomModel:findAllRooms(floorModel,floorModelList)){
+            if (roomModel.getId().equals(id)){
+                return roomModel;
+            }
+        }
+        return null;
+    }
+
+//    /**
+//     * 获取刷脸返回学生的当前楼
+//     * @param id 当前楼id
+//     * @param floorModelList 所有楼
+//     * @return
+//     */
+//    public static FloorModel findFloor(String id,List<FloorModel> floorModelList){
+////        if (id.equals(currentFloorModel.getId())){
+////            return currentFloorModel;
+////        }
+//        for (FloorModel floorModel:floorModelList){
+//            if (floorModel.getId().equals(id)){
+//                return floorModel;
+//            }
+//        }
+//        return null;
+//    }
+
+
 
     /**
      * 获取对应房间里面的学生列表
@@ -390,6 +484,7 @@ public class HttpDataUtil {
         checkModel.setCateId(mAllCategoryModel.getId());
         checkModel.setCateName(mAllCategoryModel.getName());
         checkModel.setCheckDate(DateUtil.getCurrentTime());
+        checkModel.setCreateDate(DateUtil.getCurrentTime());
         if (mAllCategoryModel.getCategory()==0){
             checkModel.setClassId(mRoomModel.getId());
             checkModel.setClassName(mRoomModel.getName());

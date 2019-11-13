@@ -58,7 +58,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
 
     @Override
     public String getBaseFaceUrl() {
-        return SPUtils.getInstance().getString("baseFaceUrl","");
+        return SPUtils.getInstance().getString("baseFaceUrl","http://192.168.0.50");
     }
 
     @Override
@@ -185,6 +185,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
         model.setCateId(checkModel.getCateId());
         model.setCateName(checkModel.getCateName());
         model.setCheckDate(checkModel.getCheckDate());
+        model.setCreateDate(checkModel.getCreateDate());
         model.setClassId(checkModel.getClassId());
         model.setClassName(checkModel.getClassName());
         model.setObjectId(checkModel.getObjectId());
@@ -199,7 +200,15 @@ public class LocalDataSourceImpl implements LocalDataSource {
                 if (model.getRecords().equals(checksModel.getRecords())
                         &&model.getStudents().equals(checksModel.getStudents())
                         &&model.getUserid().equals(checksModel.getUserid())
-                        &&model.getPhotos().equals(checksModel.getPhotos())){
+                        &&model.getPhotos().equals(checksModel.getPhotos())
+                        &&model.getMcode().equals(checksModel.getMcode())
+                        &&model.getCategory()==checksModel.getCategory()
+                        &&model.getCateId().equals(checksModel.getCateId())
+                        &&model.getCateName().equals(checksModel.getCateName())
+                        &&model.getClassId().equals(checksModel.getClassId())
+                        &&model.getClassName().equals(checksModel.getClassName())
+                        &&model.getObjectId().equals(checksModel.getObjectId())
+                        &&model.getObjectName().equals(checksModel.getObjectName())){
                     return false;
                 }
             }

@@ -1,13 +1,14 @@
 package com.nhsoft.check.viewModel;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
+import android.app.DatePickerDialog;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -23,7 +24,6 @@ import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.base.router.RouterActivityPath;
-import com.nhsoft.check.R;
 import com.nhsoft.check.entity.CheckEntity;
 import com.nhsoft.check.entity.PhotoItemEntity;
 import com.nhsoft.check.message.CheckInformation;
@@ -51,7 +51,6 @@ import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.http.BaseResponse;
-import priv.lzf.mvvmhabit.http.NetworkUtil;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.RxUtils;
@@ -119,6 +118,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         public SingleLiveEvent<Integer> selectType = new SingleLiveEvent<>();
         public SingleLiveEvent face = new SingleLiveEvent();
         public SingleLiveEvent success=new SingleLiveEvent();
+        public SingleLiveEvent time=new SingleLiveEvent();
     }
 
     public CheckViewModel(@NonNull Application application) {
@@ -220,6 +220,14 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 }
             }
         });
+
+        entity.get().tvTime=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                uc.time.call();
+            }
+        });
+
     }
 
 
@@ -281,6 +289,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 mSelectItemsBeanList = subject.mSelectItemsBeanList;
                 // TODO: 2019/10/13
                 CheckModel checkModel = HttpDataUtil.getCheckModel(mAllCategoryModel, mRoomModel, mSelectSudentList, mSelectItemsBeanList, setPhotoes());
+                checkModel.setCheckDate(entity.get().date.get());
                 boolean isSave = model.insertCheckModel(checkModel);
                 if (isSave) {
                     upload(checkModel);
@@ -311,7 +320,68 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 }
             }
         });
+
+        //刷脸返回的值
+        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1, FloorModel.StudentsBean.class, new BindingConsumer<FloorModel.StudentsBean>() {
+            @Override
+            public void call(FloorModel.StudentsBean studentsBean) {
+                String id=null;
+                if (studentsBean.getDormid()!=null){
+                    id=studentsBean.getDormid();
+                }else {
+                    id=studentsBean.getClassid();
+                }
+                if (id!=null){
+                    FloorModel.RoomModel roomModel = HttpDataUtil.findRoom(id, mFloorModel, mFloorModelList);
+                    if (isCurrentFloorRoom(id)){
+                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
+                            showClearDialog(2);
+                        } else {
+                            entity.get().room.set(roomModel.getName());
+                            mRoomModel=roomModel;
+                            getStudent();
+                            Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+                        }
+                    }else {
+                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
+                            showClearDialog(2);
+                        } else {
+                            FloorModel floorModel1 = null;
+                            for (FloorModel floorModel:mFloorModelList){
+                                if (floorModel.getId().equals(studentsBean.getFid())){
+                                    floorModel1=floorModel;
+                                }
+                            }
+                            if (floorModel1!=null){
+                                mFloorModel=floorModel1;
+                                mRoomModel=roomModel;
+                                entity.get().floor.set(floorModel1.getName());
+                                entity.get().room.set(roomModel.getName());
+                                getStudent();
+                                Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+                            }
+                        }
+
+                    }
+                }
+            }
+        });
     }
+
+    /**
+     * 刷脸返回的是否当前楼的房间
+     * @param id 当前刷脸返回学生的房间id
+     * @return
+     */
+    public boolean isCurrentFloorRoom(String id){
+        for (FloorModel.RoomModel roomModel:mFloorModel.getChildrens()){
+            if (roomModel.getId().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * 获取图片路径
@@ -337,6 +407,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         checkInformation.mFloorModelList = mFloorModelList;
         checkInformation.userCategoryList = userCategoryList;
         checkInformation.mRoomModel = mRoomModel;
+        checkInformation.mFloorModel=mFloorModel;
         Messenger.getDefault().send(checkInformation, ConstantMessage.TOKEN_CHECKVIEWMODEL_INFORMATION);
         setStudentMeseenger();
     }

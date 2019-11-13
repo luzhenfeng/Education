@@ -17,4 +17,6 @@ public class CheckInformation {
     public List<AllCategoryModel> userCategoryList=new ArrayList<>();
     //当前房间
     public FloorModel.RoomModel mRoomModel;
+    //当前楼
+    public FloorModel mFloorModel;
 }

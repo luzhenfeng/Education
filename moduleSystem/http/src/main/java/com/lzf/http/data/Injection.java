@@ -45,4 +45,14 @@ public class Injection {
         //两条分支组成一个数据仓库
         return Repository.getInstance(httpDataSource, localDataSource);
     }
+
+    public static Repository provideFaceRepository(){
+
+        //网络数据源
+//        HttpDataSource httpDataSource = HttpDataSourceImpl.getInstance(apiService);
+        //本地数据源
+        LocalDataSource localDataSource = LocalDataSourceImpl.getInstance();
+        //两条分支组成一个数据仓库
+        return Repository.getInstance(null, localDataSource);
+    }
 }
