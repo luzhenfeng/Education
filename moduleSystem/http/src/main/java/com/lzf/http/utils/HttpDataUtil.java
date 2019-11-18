@@ -19,6 +19,7 @@ import com.nhsoft.utils.utils.FileUtil;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import priv.lzf.mvvmhabit.utils.SPUtils;
 
@@ -485,6 +486,7 @@ public class HttpDataUtil {
         checkModel.setCateName(mAllCategoryModel.getName());
         checkModel.setCheckDate(DateUtil.getCurrentTime());
         checkModel.setCreateDate(DateUtil.getCurrentTime());
+        checkModel.setUuid(UUID.randomUUID().toString());
         if (mAllCategoryModel.getCategory()==0){
             checkModel.setClassId(mRoomModel.getId());
             checkModel.setClassName(mRoomModel.getName());

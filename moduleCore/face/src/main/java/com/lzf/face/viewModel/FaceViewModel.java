@@ -1,11 +1,13 @@
 package com.lzf.face.viewModel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -46,6 +48,7 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * 作者：Created by 45703
  * 时间：Created on 2019/11/1.
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrackListener {
 
     public FaceTrackOption option;
@@ -94,9 +97,10 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void faceLogin(){
         addSubscribe(RetrofitLoginFaceClient.getInstance().create(ApiService.class)
-                .faceLogin("admin@demsino.com","123456", Build.SERIAL,2)
+                .faceLogin("admin@demsino.com","123456", (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)?Build.getSerial(): Build.SERIAL,2)
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())// 网络错误的异常转换, 这里可以换成自己的ExceptionHandle)

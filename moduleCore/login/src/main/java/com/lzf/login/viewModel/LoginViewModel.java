@@ -1,5 +1,6 @@
 package com.lzf.login.viewModel;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Intent;
 import android.databinding.ObservableField;
@@ -7,6 +8,7 @@ import android.databinding.ObservableInt;
 import android.databinding.ObservableLong;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.widget.Button;
 
@@ -25,6 +27,7 @@ import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
+import com.lzf.login.ErrorUtil;
 import com.lzf.login.entity.LoginEntity;
 import com.lzf.login.service.DownPicService;
 import com.lzf.login.ui.activity.RegisterActivity;
@@ -33,6 +36,7 @@ import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.FileUtil;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -225,6 +229,7 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                     public void accept(Throwable throwable) throws Exception {
                         //关闭对话框
                         dismissDialog();
+//                        ErrorUtil.request(throwable.toString());
                         if (throwable instanceof ResponseThrowable) {
                             ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
@@ -476,6 +481,23 @@ public class LoginViewModel extends BaseViewModel<Repository> {
         Intent intent = new Intent(getApplication(), DownPicService.class);
         //开启服务
         AppManager.getAppManager().currentActivity().startService(intent);
+    }
+
+    public void getPermission(Fragment fragment) {
+        //请求打开相机权限
+        RxPermissions rxPermissions = new RxPermissions(fragment);
+        rxPermissions.request(Manifest.permission.READ_PHONE_STATE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+//                            ARouter.getInstance().build(RouterActivityPath.Face.PAGER_FACE).navigation();
+//                            ToastUtils.showShort("权限已经打开，直接跳入相机");
+                        } else {
+                            ToastUtils.showShort("权限被拒绝");
+                        }
+                    }
+                });
     }
 
 }

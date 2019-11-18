@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
 greendao {
-    schemaVersion 4
+    schemaVersion 5
     daoPackage 'com.lzf.greendao.service.greendao'
     targetGenDir 'src/main/java'
 }

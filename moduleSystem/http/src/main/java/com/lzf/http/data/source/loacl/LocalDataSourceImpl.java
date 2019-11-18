@@ -12,6 +12,7 @@ import com.lzf.http.entity.LoginModel;
 import com.nhsoft.utils.utils.DateUtil;
 
 import java.util.List;
+import java.util.UUID;
 
 import priv.lzf.mvvmhabit.utils.SPUtils;
 
@@ -180,6 +181,7 @@ public class LocalDataSourceImpl implements LocalDataSource {
     public boolean insertCheckModel(CheckModel checkModel) {
         ChecksModel model=new ChecksModel();
         model.setUserid(UserService.getInstance().getUserId());
+        model.setUuid(checkModel.getUuid());
         model.setMcode(checkModel.getMcode());
         model.setCategory(checkModel.getCategory());
         model.setCateId(checkModel.getCateId());

@@ -2,7 +2,9 @@ package com.lzf.login.viewModel;
 
 import android.app.Application;
 import android.databinding.ObservableField;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
@@ -21,6 +23,7 @@ import priv.lzf.mvvmhabit.utils.ToastUtils;
  * 作者：Created by 45703
  * 时间：Created on 2019/10/21.
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RegisterViewModel extends BaseViewModel<Repository> {
 
 

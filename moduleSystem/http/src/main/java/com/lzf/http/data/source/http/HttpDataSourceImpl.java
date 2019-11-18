@@ -3,6 +3,7 @@ package com.lzf.http.data.source.http;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.http.service.ApiService;
@@ -12,6 +13,7 @@ import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
+import com.lzf.http.utils.ErrorUtil;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.EncryptionUtil;
 
@@ -48,12 +50,14 @@ public class HttpDataSourceImpl implements HttpDataSource {
         this.apiService = apiService;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("MissingPermission")
     @Override
     public Observable<BaseResponse<LoginModel>> login(String username, String password){
         String nonce=EncryptionUtil.getNonce();
         String timestamp=EncryptionUtil.getTimestamp();
-        String serial=Build.SERIAL;
+        String serial=(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)?Build.getSerial(): Build.SERIAL;
+//        ErrorUtil.request(serial);
         if (apiService==null){
             return null;
         }

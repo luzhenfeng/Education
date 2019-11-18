@@ -33,6 +33,12 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding,LoginViewMo
     }
 
     @Override
+    public void initData() {
+        super.initData();
+        viewModel.getPermission(this);
+    }
+
+    @Override
     public void initViewObservable() {
         super.initViewObservable();
     }

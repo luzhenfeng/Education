@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lzf.face">
 
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <application>
         <activity android:name=".ui.FaceActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>

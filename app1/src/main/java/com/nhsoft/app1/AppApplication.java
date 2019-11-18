@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.lzf.login.ui.activity.LoginActivity;
 import com.nhsoft.base.config.ModuleLifecycleConfig;
+import com.nhsoft.utils.utils.LanguageUtils;
 
 import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.crash.CaocConfig;
@@ -33,6 +34,8 @@ public class AppApplication extends BaseApplication {
         //....
         //初始化组件(靠后)
         ModuleLifecycleConfig.getInstance().initModuleLow(this);
+        //初始化语言
+        LanguageUtils.getLanguage(this,LanguageUtils.CHINALANGUAGE);
     }
 
     private void initCrash() {

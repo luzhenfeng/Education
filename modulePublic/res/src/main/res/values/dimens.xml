@@ -4,4 +4,8 @@
     <dimen name="text_bed_size">55px</dimen>
     <dimen name="bed_height">80px</dimen>
     <dimen name="bed_width">100px</dimen>
+    <dimen name="dialog_width">1280px</dimen>
+    <dimen name="dialog_height">1150px</dimen>
+<!--    <dimen name="dialog_width">1280px</dimen>-->
+<!--    <dimen name="dialog_width">1280px</dimen>-->
 </resources>
