@@ -27,6 +27,7 @@ import com.nhsoft.check.entity.RightFiveEntity;
 import com.nhsoft.check.entity.RightFourEntity;
 import com.nhsoft.check.entity.RightOneEntity;
 import com.nhsoft.check.entity.RightTwoEntity;
+import com.nhsoft.check.message.AddStudent;
 import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.check.message.CheckStudent;
 import com.nhsoft.check.message.ConstantMessage;
@@ -266,13 +267,28 @@ public class CheckBaseViewModel extends BasePopupViewModel<Repository> {
                 sentSubjectMessager();
             }
         });
-        //刷脸返回的值
-        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT, Integer.class, new BindingConsumer<Integer>() {
+        //添加学生
+        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_ADDSTUDENT, AddStudent.class, new BindingConsumer<AddStudent>() {
             @Override
-            public void call(Integer integer) {
-
+            public void call(AddStudent addStudent) {
+                mSelectSudentList.add(addStudent.getStudentsBean());
+                entity.get().students.set(getStudents());
             }
         });
+        //接收刷脸成功来拉取选中的数据
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKVIEWMODEL_FACE, new BindingAction() {
+            @Override
+            public void call() {
+                sentMessager();
+            }
+        });
+//        //刷脸返回的值
+//        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT, Integer.class, new BindingConsumer<Integer>() {
+//            @Override
+//            public void call(Integer integer) {
+//
+//            }
+//        });
     }
 
 //    @Override
@@ -904,6 +920,15 @@ public class CheckBaseViewModel extends BasePopupViewModel<Repository> {
         Messenger.getDefault().send(selectChange,ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_SELECTITEM);
     }
 
+    /**
+     * 发送选中数据
+     */
+    public void sentMessager(){
+        Subject subject=new Subject();
+        subject.mSelectItemsBeanList=mSelectItemsBeanList;
+        subject.mSelectSudentList=mSelectSudentList;
+        Messenger.getDefault().send(subject,ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_FACE);
+    }
 
     /**
      *发送提交的数据

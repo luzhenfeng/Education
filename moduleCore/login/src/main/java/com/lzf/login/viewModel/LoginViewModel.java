@@ -36,6 +36,7 @@ import com.nhsoft.base.base.ConstantMessage;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.pxview.constant.Constant;
 import com.nhsoft.utils.utils.FileUtil;
+import com.nhsoft.utils.utils.LanguageUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -209,6 +210,13 @@ public class LoginViewModel extends BaseViewModel<Repository> {
                     public void accept(BaseResponse<LoginModel> response) throws Exception {
                         KLog.e(new Gson().toJson(response.getData()));
                         if (response.isOk()) {
+                            if (response.getData().getUser().getTheme()==0){
+                                //初始化语言
+                                LanguageUtils.getLanguage(getApplication(),LanguageUtils.ENGLISHLANGUAGE);
+                            }else {
+                                //初始化语言
+                                LanguageUtils.getLanguage(getApplication(),LanguageUtils.CHINALANGUAGE);
+                            }
                             if (model.insertUser(response.getData())){
                                 model.saveToken(response.getData().getToken().getAccess_token());
                                 model.saveUserName(entity.get().username.get());

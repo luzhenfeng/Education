@@ -158,6 +158,22 @@ public class HttpDataUtil {
     }
 
     /**
+     * 获取单个分类category所对应的全部楼
+     * @param category
+     * @param floorModels
+     * @return
+     */
+    public static List<FloorModel> getFloorModel(int category,List<FloorModel> floorModels){
+        List<FloorModel> floorModelList=new ArrayList<>();
+        for (FloorModel floorModel : floorModels){
+            if (floorModel.getCategory()==category){
+                floorModelList.add(floorModel);
+            }
+        }
+        return floorModelList;
+    }
+
+    /**
      * 获取楼号对应的楼
      * @param floorName 楼名
      * @param floorModels 所有楼
@@ -225,7 +241,7 @@ public class HttpDataUtil {
      * 查找刷脸支付的学生
      * @param subjectId 刷脸支付的id
      * @param mFloorModel 当前楼
-     * @param floorModelList 所有楼
+     * @param floorModelList 当前分类的所有楼
      * @return
      */
     public static FloorModel.StudentsBean findStudent(int subjectId,FloorModel mFloorModel,List<FloorModel> floorModelList){

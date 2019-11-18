@@ -16,6 +16,8 @@ public class ConstantMessage {
     public final static String TOKEN_CHECKVIEWMODEL_CLEARDATA="token_check_view_model_clear_data";
     //CheckViewModel 发个切换的消息，防止有选中的学生
     public final static String TOKEN_CHECKVIEWMODEL_CHANGE="token_check_view_model_clear_change";
+    //CheckViewModel 发个刷脸成功到CheckBaseViewModel去获取数据
+    public final static String TOKEN_CHECKVIEWMODEL_FACE = "token_check_view_model_face";
 
     //CheckBaseViewModel 点击TabLayout
     public final static String TOKEN_CHECKBASEVIEWMODEL_ONTABSELECTEDCOMMAND = "token_check_base_view_model_onTabSelectedCommand";
@@ -23,6 +25,9 @@ public class ConstantMessage {
     public final static String TOKEN_CHECKBASEVIEWMODEL_SELECTITEM = "token_check_base_view_model_select_item";
     //CheckBaseViewModel传递选中的数据
     public final static String TOKEN_CHECKBASEVIEWMODEL_SUBJECT = "token_check_base_view_model_subject";
+    //CheckBaseViewModel刷脸成功后获取选中的数据
+    public final static String TOKEN_CHECKBASEVIEWMODEL_FACE = "token_check_base_view_model_face";
+
     //CheckBaseViewModel清除数据
     public final static String TOKEN_CHECKBASEVIEWMODEL_CLEARDATA = "token_check_base_view_model_clear_data";
 

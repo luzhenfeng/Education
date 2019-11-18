@@ -19,4 +19,7 @@ public class ConstantMessage {
     public final static String TOKEN_FACEVIEWMODEL_RESULT = "token_face_view_model_result";
     //刷脸成功返回的数据传到Check界面
     public final static String TOKEN_FACEVIEWMODEL_RESULT1 = "token_face_view_model_result1";
+
+    //刷脸成功添加学生
+    public final static String TOKEN_FACEVIEWMODEL_ADDSTUDENT = "token_face_view_model_add_student";
 }

@@ -1,6 +1,8 @@
 package com.lzf.face.ui;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lzf.face.BR;
@@ -11,6 +13,7 @@ import com.nhsoft.base.router.RouterActivityPath;
 
 import priv.lzf.mvvmhabit.base.BaseActivity;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 @Route(path = RouterActivityPath.Face.PAGER_FACE)
 public class FaceActivity extends BaseActivity<ActivityFaceBinding, FaceViewModel> {
 
@@ -23,6 +26,7 @@ public class FaceActivity extends BaseActivity<ActivityFaceBinding, FaceViewMode
     public int initVariableId() {
         return BR.viewModel;
     }
+
 
     @Override
     public void initData() {

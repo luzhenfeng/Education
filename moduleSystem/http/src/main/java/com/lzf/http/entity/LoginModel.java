@@ -72,6 +72,7 @@ public class LoginModel {
         private String userid;
         private String username;
         private int usertype;
+        private int theme;
 
         public String getAvatar() {
             return avatar;
@@ -119,6 +120,14 @@ public class LoginModel {
 
         public void setUsertype(int usertype) {
             this.usertype = usertype;
+        }
+
+        public int getTheme() {
+            return theme;
+        }
+
+        public void setTheme(int theme) {
+            this.theme = theme;
         }
     }
 }

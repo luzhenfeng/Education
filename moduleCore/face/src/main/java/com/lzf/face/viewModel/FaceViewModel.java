@@ -3,6 +3,7 @@ package com.lzf.face.viewModel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -36,6 +37,8 @@ import io.reactivex.functions.Consumer;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import priv.lzf.mvvmhabit.base.AppManager;
+import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.http.BaseResponse;
@@ -162,6 +165,9 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
                     public void accept(FaceResultModel response) throws Exception {
                         if (response.getError()==0){
                             model.saveFaceId(response.getPerson().getSubject_id()+"");
+                            Intent intent=new Intent();
+                            intent.putExtra("faceId",response.getPerson().getSubject_id());
+                            AppManager.getAppManager().currentActivity().setResult(1,intent);
 //                            Messenger.getDefault().send(response.getPerson().getSubject_id(), ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT);
                             ToastUtils.showShort("识别成功");
                         }else {

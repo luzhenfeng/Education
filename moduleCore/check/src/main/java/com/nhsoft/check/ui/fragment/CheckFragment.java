@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,6 +58,14 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
     @Override
     public int initVariableId() {
         return BR.viewModel;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==1){
+            viewModel.getFaceStdent(data.getIntExtra("faceId",0));
+        }
     }
 
     @Override

@@ -26,6 +26,7 @@ import com.lzf.http.utils.HttpDataUtil;
 import com.nhsoft.base.router.RouterActivityPath;
 import com.nhsoft.check.entity.CheckEntity;
 import com.nhsoft.check.entity.PhotoItemEntity;
+import com.nhsoft.check.message.AddStudent;
 import com.nhsoft.check.message.CheckInformation;
 import com.nhsoft.check.message.CheckStudent;
 import com.nhsoft.check.message.ConstantMessage;
@@ -73,6 +74,9 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
     //当前分类下的所有楼名
     public List<String> mFloorNameList = new ArrayList<>();
+
+    //当前分类下的所有楼
+    public List<FloorModel> mCurrentFloorModelList=new ArrayList<>();
 
     //当前楼所有房间
     public List<FloorModel.RoomModel> mRoomModelList = new ArrayList<>();
@@ -154,8 +158,8 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         entity.get().ivScan = new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                ToastUtils.showShort("此功能暂未开放");
-//                uc.face.call();
+//                ToastUtils.showShort("此功能暂未开放");
+                uc.face.call();
             }
         });
 
@@ -322,50 +326,133 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
         });
 
         //刷脸返回的值
-        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1, FloorModel.StudentsBean.class, new BindingConsumer<FloorModel.StudentsBean>() {
-            @Override
-            public void call(FloorModel.StudentsBean studentsBean) {
-                String id=null;
-                if (studentsBean.getDormid()!=null){
-                    id=studentsBean.getDormid();
+//        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1, FloorModel.StudentsBean.class, new BindingConsumer<FloorModel.StudentsBean>() {
+//            @Override
+//            public void call(FloorModel.StudentsBean studentsBean) {
+//                String id=null;
+//                if (studentsBean.getDormid()!=null){
+//                    id=studentsBean.getDormid();
+//                }else {
+//                    id=studentsBean.getClassid();
+//                }
+//                if (id!=null){
+//                    FloorModel.RoomModel roomModel = HttpDataUtil.findRoom(id, mFloorModel, mFloorModelList);
+//                    if (isCurrentFloorRoom(id)){
+//                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
+//                            showClearDialog(2);
+//                        } else {
+//                            entity.get().room.set(roomModel.getName());
+//                            mRoomModel=roomModel;
+//                            getStudent();
+//                            Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+//                        }
+//                    }else {
+//                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
+//                            showClearDialog(2);
+//                        } else {
+//                            FloorModel floorModel1 = null;
+//                            for (FloorModel floorModel:mFloorModelList){
+//                                if (floorModel.getId().equals(studentsBean.getFid())){
+//                                    floorModel1=floorModel;
+//                                }
+//                            }
+//                            if (floorModel1!=null){
+//                                mFloorModel=floorModel1;
+//                                mRoomModel=roomModel;
+//                                entity.get().floor.set(floorModel1.getName());
+//                                entity.get().room.set(roomModel.getName());
+//                                getStudent();
+//                                Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+//                            }
+//                        }
+//
+//                    }
+//                }
+//            }
+//        });
+    }
+
+    public void getFaceStdent(int faceId){
+        final FloorModel.StudentsBean studentsBean=HttpDataUtil.findStudent(faceId,mFloorModel,mCurrentFloorModelList);
+        if (studentsBean!=null){
+            String id=null;
+            if (studentsBean.getDormid()!=null){
+                id=studentsBean.getDormid();
+            }else {
+                id=studentsBean.getClassid();
+            }
+            if (id!=null){
+                Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_FACE);
+                if (isCurrentRoomStudent(studentsBean)){
+                    for (FloorModel.StudentsBean studentsBean1:mSelectSudentList){
+                        if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
+                            ToastUtils.showShort("该学生已添加");
+                            return;
+                        }
+                    }
+                    // TODO: 2019/11/18 添加当前学生
+                    Messenger.getDefault().send(getAddStudent(studentsBean), com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_ADDSTUDENT);
+//                    mSelectSudentList.add(studentsBean);
+//                    entity.get().students.set(getStudents());
                 }else {
-                    id=studentsBean.getClassid();
-                }
-                if (id!=null){
+                    clearData();
+                    Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CLEARDATA);
                     FloorModel.RoomModel roomModel = HttpDataUtil.findRoom(id, mFloorModel, mFloorModelList);
                     if (isCurrentFloorRoom(id)){
-                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
-                            showClearDialog(2);
-                        } else {
-                            entity.get().room.set(roomModel.getName());
-                            mRoomModel=roomModel;
-                            getStudent();
-                            Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
-                        }
+                        entity.get().room.set(roomModel.getName());
+                        getRoom(roomModel.getName());//选择房间
+                        // TODO: 2019/11/18 添加当前学生
+                        Messenger.getDefault().send(getAddStudent(studentsBean), com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_ADDSTUDENT);
                     }else {
-                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
-                            showClearDialog(2);
-                        } else {
-                            FloorModel floorModel1 = null;
-                            for (FloorModel floorModel:mFloorModelList){
-                                if (floorModel.getId().equals(studentsBean.getFid())){
-                                    floorModel1=floorModel;
-                                }
-                            }
-                            if (floorModel1!=null){
-                                mFloorModel=floorModel1;
-                                mRoomModel=roomModel;
-                                entity.get().floor.set(floorModel1.getName());
-                                entity.get().room.set(roomModel.getName());
-                                getStudent();
-                                Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+                        FloorModel floorModel1 = null;
+                        for (FloorModel floorModel:mCurrentFloorModelList){
+                            if (floorModel.getId().equals(studentsBean.getFid())){
+                                floorModel1=floorModel;
                             }
                         }
-
+                        if (floorModel1!=null){
+                            entity.get().floor.set(floorModel1.getName());
+                            getFloorModel(floorModel1.getName());//选择楼层
+                            setRoomNameList();
+                            // TODO: 2019/11/18 添加当前学生
+                            Messenger.getDefault().send(getAddStudent(studentsBean), com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_ADDSTUDENT);
+                        }
                     }
+//                    Messenger.getDefault().send(studentsBean, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1);
+//                    mSelectSudentList.clear();
+//                    mSelectSudentList.add(studentsBean);
+//                    entity.get().students.set(getStudents());
                 }
+
+            }
+        }
+        Messenger.getDefault().register(this, ConstantMessage.TOKEN_CHECKBASEVIEWMODEL_FACE, Subject.class, new BindingConsumer<Subject>() {
+            @Override
+            public void call(Subject subject) {
+                mSelectSudentList=subject.mSelectSudentList;
+                mSelectItemsBeanList=subject.mSelectItemsBeanList;
             }
         });
+    }
+
+    private AddStudent getAddStudent(FloorModel.StudentsBean studentsBean){
+        AddStudent addStudent=new AddStudent();
+        addStudent.setStudentsBean(studentsBean);
+        return addStudent;
+    }
+
+    /**
+     * 刷脸返回的是否当前房间的学生
+     * @param studentsBean
+     * @return
+     */
+    public boolean isCurrentRoomStudent(FloorModel.StudentsBean studentsBean){
+        for (FloorModel.StudentsBean studentsBean1:mStudentList){
+            if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -419,6 +506,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
      */
     public void setFloorNameList(int category) {
         mFloorNameList = HttpDataUtil.getFloorNameList(category, mFloorModelList);
+        mCurrentFloorModelList=HttpDataUtil.getFloorModel(category,mFloorModelList);
         if (mFloorNameList.size() != 0) {
             entity.get().floor.set(mFloorNameList.get(0));
             getFloorModel(mFloorNameList.get(0));
@@ -575,7 +663,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
-                            ARouter.getInstance().build(RouterActivityPath.Face.PAGER_FACE).navigation();
+                            ARouter.getInstance().build(RouterActivityPath.Face.PAGER_FACE).navigation(AppManager.getAppManager().currentActivity(),0);
 //                            ToastUtils.showShort("权限已经打开，直接跳入相机");
                         } else {
                             ToastUtils.showShort("权限被拒绝");
