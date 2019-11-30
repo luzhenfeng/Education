@@ -17,4 +17,5 @@ public class SelectMCodeItemEntity {
     public ObservableField<String> mCode=new ObservableField<>();
     public Drawable image;
     public BindingCommand onItemClick;
+    public BindingCommand onItemLongClick;
 }

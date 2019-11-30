@@ -6,10 +6,10 @@ import com.lzf.http.entity.FaceLoginModel;
 import com.lzf.http.entity.FaceResultModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
+import com.lzf.http.entity.LeaveStudentModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
-import java.lang.annotation.Target;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,9 +59,16 @@ public interface ApiService {
     @GET("mq/GetStudentAvatars")
     Observable<BaseResponse<List<HeadModel>>> getStudentAvatars(@Query("token") String token);
 
+    @GET("mq/GetLeave")
+    Observable<BaseResponse<List<LeaveStudentModel>>> getLeave(@Query("token") String token, @Query("date") String date);
+
     @Headers({"Content-Type: application/json", "Accept: application/json"})
     @POST("mq/CreateCheck")
     Observable<BaseResponse> createCheck(@Query("token") String token, @Body RequestBody model);
+
+    @Headers({"Content-Type: application/json", "Accept: application/json"})
+    @POST("mq/CreateNightRollCall")
+    Observable<BaseResponse> createNightRollCall(@Query("token") String token, @Body RequestBody model);
 
     //错误发送
     @Headers({"Content-Type: application/json", "Accept: application/json"})

@@ -47,7 +47,6 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
 import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
-import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
 
@@ -282,62 +281,8 @@ public class CheckBaseViewModel extends BasePopupViewModel<Repository> {
                 sentMessager();
             }
         });
-//        //刷脸返回的值
-//        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT, Integer.class, new BindingConsumer<Integer>() {
-//            @Override
-//            public void call(Integer integer) {
-//
-//            }
-//        });
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (!model.getFaceId().equals("")){
-//            FloorModel.StudentsBean studentsBean=HttpDataUtil.findStudent(Integer.parseInt(model.getFaceId()),mFloorModel,mFloorModelList);
-//            if (studentsBean!=null){
-//                String id=null;
-//                if (studentsBean.getDormid()!=null){
-//                    id=studentsBean.getDormid();
-//                }else {
-//                    id=studentsBean.getClassid();
-//                }
-//                if (id!=null){
-//                    if (isCurrentRoomStudent(studentsBean)){
-//                        for (FloorModel.StudentsBean studentsBean1:mSelectSudentList){
-//                            if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
-//                                return;
-//                            }
-//                        }
-//                        mSelectSudentList.add(studentsBean);
-//                        entity.get().students.set(getStudents());
-//                    }else {
-//                        Messenger.getDefault().send(studentsBean, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1);
-//                        mSelectSudentList.clear();
-//                        mSelectSudentList.add(studentsBean);
-//                        entity.get().students.set(getStudents());
-//                    }
-//
-//                }
-//
-//            }
-//        }
-//    }
-
-    /**
-     * 刷脸返回的是否当前房间的学生
-     * @param studentsBean
-     * @return
-     */
-    public boolean isCurrentRoomStudent(FloorModel.StudentsBean studentsBean){
-        for (FloorModel.StudentsBean studentsBean1:mStudentList){
-            if (studentsBean1.getUserid().equals(studentsBean.getUserid())){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public void itemBinding() {
         entity.get().itemLeftBinding = ItemBinding.of(BR.viewModel, R.layout.item_left);
@@ -1054,6 +999,7 @@ public class CheckBaseViewModel extends BasePopupViewModel<Repository> {
         mSelectItemsBeanList.clear();
         isSelect.set(false);
         entity.get().students.set("");
+        mPopupViewModel.selectAllStr.set("全选");
     }
 
 }

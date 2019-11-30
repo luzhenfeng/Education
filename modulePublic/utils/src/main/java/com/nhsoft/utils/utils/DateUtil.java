@@ -16,6 +16,12 @@ public class DateUtil {
         return dateFormat.format(date);
     }
 
+    public static String getCurrentDate(){
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
+    }
+
     public static String getBeforeMinute(int minute){
         Calendar beforeTime = Calendar.getInstance();
         beforeTime.add(Calendar.MINUTE, -minute);//

@@ -1,7 +1,9 @@
 package com.lzf.face.ui;
 
+import android.arch.lifecycle.Observer;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -32,5 +34,16 @@ public class FaceActivity extends BaseActivity<ActivityFaceBinding, FaceViewMode
     public void initData() {
         super.initData();
         viewModel.startTrack(this,binding.cameraPreview);
+    }
+
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+        viewModel.uc.errorMessage.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                binding.cameraPreview.setErrorMessage(s);
+            }
+        });
     }
 }

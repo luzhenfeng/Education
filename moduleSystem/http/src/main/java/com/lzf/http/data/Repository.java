@@ -3,6 +3,8 @@ package com.lzf.http.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
+import com.lzf.greendao.entity.DormCheckModel;
+import com.lzf.greendao.entity.StudentModel;
 import com.lzf.http.data.source.HttpDataSource;
 import com.lzf.http.data.source.LocalDataSource;
 import com.lzf.http.entity.AllCategoryModel;
@@ -10,6 +12,7 @@ import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
+import com.lzf.http.entity.LeaveStudentModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -86,6 +89,16 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     @Override
     public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return mHttpDataSource.createCheck(token,model);
+    }
+
+    @Override
+    public Observable<BaseResponse> createNightRollCall(String token, RequestBody model) {
+        return mHttpDataSource.createNightRollCall(token,model);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<LeaveStudentModel>>> getLeave(String token, String date) {
+        return mHttpDataSource.getLeave(token,date);
     }
 
     @Override
@@ -216,6 +229,11 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     @Override
     public boolean insertCheckModel(CheckModel checkModel) {
         return mLocalDataSource.insertCheckModel(checkModel);
+    }
+
+    @Override
+    public boolean insertDormCheckModel(DormCheckModel dormCheckModel, List<StudentModel> studentModelList) {
+        return mLocalDataSource.insertDormCheckModel(dormCheckModel,studentModelList);
     }
 
     @Override

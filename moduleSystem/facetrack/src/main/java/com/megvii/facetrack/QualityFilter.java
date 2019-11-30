@@ -2,6 +2,7 @@ package com.megvii.facetrack;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import megvii.megfaceandroid.MegfaceAttribute;
 import megvii.megfaceandroid.MegfaceAttributeBrightness;
@@ -78,6 +79,7 @@ public class QualityFilter {
                 return "请调用 QualityFilter.init() 初始化";
             }
         }
+
         MegfaceAttributePose attributePose = (MegfaceAttributePose) megfaceFace.attributes.get(MegfaceAttribute.MegfaceAttributeType.POSE);
         MegfaceAttributeQuality attributeQuality = (MegfaceAttributeQuality) megfaceFace.attributes.get(MegfaceAttribute.MegfaceAttributeType.QUALITY);
         MegfaceAttributeBrightness attributeBrightness = (MegfaceAttributeBrightness) megfaceFace.attributes.get(MegfaceAttribute.MegfaceAttributeType.BRIGHTNESS);
@@ -86,39 +88,52 @@ public class QualityFilter {
 
         int faceMin1 = megfaceFace.rect.right - megfaceFace.rect.left;
         int faceMin2 = megfaceFace.rect.bottom - megfaceFace.rect.top;
+        Log.e("aaa1",qualityOption.getRoll()+"");
+        Log.e("aaa2", Math.abs(attributePose.roll)+"");
+
         if (qualityOption.getFaceMin() > Math.min(faceMin1, faceMin2)) {
+            Log.e("aaa","aaaaaaa1");
             return "脸太小，请靠近镜头";
         }
         if (0 > Float.compare(qualityOption.getPitch(), Math.abs(attributePose.pitch))) {
             if (attributePose.pitch < 0) {
+                Log.e("aaa","aaaaaaa2");
                 return "仰头角度过大";
             } else {
+                Log.e("aaa","aaaaaaa3");
                 return "低头角度过大";
             }
         }
 
-        if (0 > Float.compare(qualityOption.getRoll(), Math.abs(attributePose.roll))) {
-            if (attributePose.roll < 0) {
-                return "左歪头角度过大";
-            } else {
-                return "右歪头角度过大";
-            }
-        }
+//        if (0 > Float.compare(qualityOption.getRoll(), Math.abs(attributePose.roll))) {
+////            if (qualityOption)
+//            if (attributePose.roll < 0) {
+//                Log.e("aaa","aaaaaaa4");
+//                return "左歪头角度过大";
+//            } else {
+//                Log.e("aaa","aaaaaaa5");
+//                return "右歪头角度过大";
+//            }
+//        }
 
         if (0 > Float.compare(qualityOption.getYaw(), Math.abs(attributePose.yaw))) {
             if (attributePose.yaw < 0) {
+                Log.e("aaa","aaaaaaa6");
                 return "右摇头角度过大";
             } else {
+                Log.e("aaa","aaaaaaa7");
                 return "左摇头角度过大";
             }
         }
 
         if (0 < Float.compare(qualityOption.getQuality(), Math.abs(attributeQuality.quality))) {
+            Log.e("aaa","aaaaaaa8");
             return "清晰度不够";
         }
 
         if (qualityOption.isMono()) { // 禁止黑白，分数必须小于 0.95
             if (0 > Float.compare(0.95f, Math.abs(attributeMono.mono))) {
+                Log.e("aaa","aaaaaaa9");
                 return "这是是黑白照片";
             }
         }
@@ -128,6 +143,7 @@ public class QualityFilter {
                     || attributeEyeStatus.leftEye == MGF_EYESTATUS_NORMALGLASSES_EYECLOSE
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_NORMALGLASSES_EYEOPEN
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_NORMALGLASSES_EYECLOSE) {
+                Log.e("aaa","aaaaaaa10");
                 return "戴了眼镜，请摘掉眼镜";
             }
         }
@@ -137,6 +153,7 @@ public class QualityFilter {
                     || attributeEyeStatus.leftEye == MGF_EYESTATUS_OTHER_OCCLUSION
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_DARKGLASSES
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_OTHER_OCCLUSION) {
+                Log.e("aaa","aaaaaaa11");
                 return "戴了墨镜或其它遮挡物，请摘掉";
             }
         }
@@ -146,21 +163,26 @@ public class QualityFilter {
                     || attributeEyeStatus.leftEye == MGF_EYESTATUS_NORMALGLASSES_EYECLOSE
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_NOGLASSES_EYECLOSE
                     || attributeEyeStatus.rightEye == MGF_EYESTATUS_NORMALGLASSES_EYECLOSE) {
+                Log.e("aaa","aaaaaaa12");
                 return "闭眼睛了，请睁开眼睛";
             }
         }
 
         if (attributeBrightness.brightness > qualityOption.getBrightMax()) {
+            Log.e("aaa","aaaaaaa13");
             return "亮度太高";
         }
 
         if (attributeBrightness.brightness < qualityOption.getBrightMin()) {
+            Log.e("aaa","aaaaaaa14");
             return "亮度太低";
         }
 
         if (attributeBrightness.std > qualityOption.getBrightStd()) {
+            Log.e("aaa","aaaaaaa15");
             return "标准差太高";
         }
+        Log.e("aaa","aaaaaaa");
 
         return null;
     }

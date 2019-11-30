@@ -1,7 +1,11 @@
 package priv.lzf.mvvmhabit.binding.viewadapter.view;
 
 import android.databinding.BindingAdapter;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -118,6 +122,24 @@ public class ViewAdapter {
             view.setVisibility(View.GONE);
         }
     }
+
+    /**
+     * view的背景
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @BindingAdapter(value = {"backgroundRes"}, requireAll = false)
+    public static void background(View view, final int res) {
+        view.setBackground(ContextCompat.getDrawable(view.getContext().getApplicationContext(),res));
+    }
+
+    /**
+     * view的字体颜色
+     */
+    @BindingAdapter(value = {"textColorRes"}, requireAll = false)
+    public static void textColorRes(TextView view, final int res) {
+        view.setTextColor(view.getContext().getResources().getColor(res));
+    }
+
 //    @BindingAdapter({"onTouchCommand"})
 //    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {
 //        view.setOnTouchListener(new View.OnTouchListener() {

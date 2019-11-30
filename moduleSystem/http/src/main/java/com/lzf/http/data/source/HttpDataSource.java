@@ -4,6 +4,7 @@ import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
+import com.lzf.http.entity.LeaveStudentModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 
@@ -38,6 +39,12 @@ public interface HttpDataSource{
 
     //创建检查记录
     Observable<BaseResponse> createCheck(String token, RequestBody model);
+
+    //创建检查记录
+    Observable<BaseResponse> createNightRollCall(String token, RequestBody model);
+
+    //创建检查记录
+    Observable<BaseResponse<List<LeaveStudentModel>>> getLeave(String token, String date);
 
 
 }

@@ -19,7 +19,7 @@ public class FaceQualityOption implements Serializable {
     public static final boolean DEFAULT_VALUE_MONO = false;
     public static final boolean DEFAULT_VALUE_GLASS = true;
     public static final boolean DEFAULT_CLOSE_EYE = false;
-    public static final boolean DEFAULT_VALUE_DARK_GLASS = false;
+    public static final boolean DEFAULT_VALUE_DARK_GLASS = true;
 
     private static final long serialVersionUID = 8431634521157945874L;
 

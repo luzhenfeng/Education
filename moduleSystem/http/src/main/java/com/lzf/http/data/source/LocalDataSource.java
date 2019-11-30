@@ -1,8 +1,12 @@
 package com.lzf.http.data.source;
 
 import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.entity.DormCheckModel;
+import com.lzf.greendao.entity.StudentModel;
 import com.lzf.http.entity.CheckModel;
 import com.lzf.http.entity.LoginModel;
+
+import java.util.List;
 
 /**
  * 作者：Created by 45703
@@ -149,6 +153,12 @@ public interface LocalDataSource {
      * @param checkModel
      */
     boolean insertCheckModel(CheckModel checkModel);
+
+    /**
+     * 插入
+     * @param dormCheckModel
+     */
+    boolean insertDormCheckModel(DormCheckModel dormCheckModel, List<StudentModel> studentModelList);
 
     /**
      * 保存图片路径

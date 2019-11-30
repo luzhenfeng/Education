@@ -29,7 +29,18 @@ public class SelectMCodeItemViewModel extends ItemViewModel<SelectMCodeViewModel
         entity.get().onItemClick=new BindingCommand(new BindingAction() {
             @Override
             public void call() {
-                viewModel.login(entity.get().mCode.get());
+                if (entity.get().mCodeName.get().contains("寝室点名")){
+                    viewModel.loginDorm(entity.get().mCode.get());
+                }else {
+                    viewModel.login(entity.get().mCode.get());
+                }
+
+            }
+        });
+        entity.get().onItemLongClick=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+
             }
         });
     }

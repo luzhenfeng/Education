@@ -23,6 +23,7 @@
     <attr name="isThrottleFirst" format="boolean" />
     <attr name="currentView" format="reference" />
     <attr name="isVisible" format="boolean" />
+    <attr name="backgroundRes" format="integer"/>
     <!-- require boolean value to decide whether requestFocus for view. -->
     <declare-styleable name="View">
         <!-- require BindingCommand {@link com.kelin.mvvmlight.command.BindingCommand } to deal with view click event. -->
@@ -65,6 +66,7 @@
         <!--require BindingCommand<String> -->
         <attr name="afterTextChangedCommand" format="reference" />
         <attr name="textChanged" format="reference" />
+        <attr name="textColorRes" format="integer"/>
     </declare-styleable>
 
 
@@ -81,6 +83,7 @@
         <attr name="onSuccessCommand" format="reference" />
         <!--require BindingCommand<CloseableReference<CloseableImage>> See {@link com.kelin.mvvmlight.command.BindingCommand} -->
         <attr name="onFailureCommand" format="reference" />
+        <attr name="circle" format="boolean"></attr>
 
     </declare-styleable>
 
@@ -101,6 +104,7 @@
     </declare-styleable>
     <declare-styleable name="RadioGroup">
         <attr name="onCheckedChangedCommand" format="reference" />
+        <attr name="clearCheck" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="Spinner">

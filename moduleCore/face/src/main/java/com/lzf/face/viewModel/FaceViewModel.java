@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.lzf.face.util.IntentDataHelper;
@@ -20,6 +21,7 @@ import com.lzf.http.data.RetrofitLoginFaceClient;
 import com.lzf.http.data.source.http.service.ApiService;
 import com.lzf.http.entity.FaceLoginModel;
 import com.lzf.http.entity.FaceResultModel;
+import com.megvii.facetrack.FaceQualityOption;
 import com.megvii.facetrack.FaceTrackListener;
 import com.megvii.facetrack.FaceTrackOption;
 import com.megvii.facetrack.FaceTracker;
@@ -41,6 +43,7 @@ import priv.lzf.mvvmhabit.base.AppManager;
 import priv.lzf.mvvmhabit.base.BaseApplication;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.bus.Messenger;
+import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
 import priv.lzf.mvvmhabit.utils.KLog;
@@ -56,12 +59,31 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
 
     public FaceTrackOption option;
     public FaceTracker faceTracker;
+//    private MVFace face;
+    private boolean isRequest;
+    private int faceNum=0;
+
+    //封装一个界面发生改变的观察者
+    public UIChangeObservable uc = new UIChangeObservable();
+
+    public class UIChangeObservable {
+        //        public ObservableBoolean showSelectClassPopupWindow=new ObservableBoolean(false);
+        public SingleLiveEvent<String> errorMessage = new SingleLiveEvent<>();
+    }
+
+
+
     public FaceViewModel(@NonNull Application application) {
         super(application);
         model= Injection.provideFaceRepository();
+//        FaceQualityOption.DEFAULT_VALUE_DARK_GLASS=true;
         option=new FaceTrackOption.Builder()
-//                .setFrontCamera(false)
+                .setFrontCamera(false)
+                .setEnableAutoStop(false)
+//                .setFaceTrackCount(10)
+                .setResourceId(com.megvii.facetrack.R.drawable.face)
                 .build();
+
         faceTracker = new FaceTracker();
     }
 
@@ -82,6 +104,7 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
         // 质量判断
         String errorMessage = face.getErrorMessage();
         KLog.e(errorMessage);
+        uc.errorMessage.setValue(errorMessage);
 //        cameraPreview.setErrorMessage(errorMessage);
         if (!TextUtils.isEmpty(errorMessage)) {
 //            takePicture.setVisibility(View.GONE);
@@ -94,10 +117,14 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
         }
         IntentDataHelper.setFaceList(face.getCropFace());
         IntentDataHelper.setBigFaceList(face.getOriginalFace());
-        if (option.isEnableAutoStop()) {
+//        if (option.isEnableAutoStop()) {
+//            this.face=face;
+        Log.e("aaaaaaaaaa","aaaaaaaaaaaa");
+        if (!isRequest){
             recognize(getFile(getBitmap(face)));
-
         }
+
+//        }
     }
 
     @SuppressLint("MissingPermission")
@@ -157,29 +184,43 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
-                        showDialog();
+                        isRequest=true;
+//                        showDialog();
                     }
                 })
                 .subscribe(new Consumer<FaceResultModel>() {
                     @Override
                     public void accept(FaceResultModel response) throws Exception {
                         if (response.getError()==0){
-                            model.saveFaceId(response.getPerson().getSubject_id()+"");
-                            Intent intent=new Intent();
-                            intent.putExtra("faceId",response.getPerson().getSubject_id());
-                            AppManager.getAppManager().currentActivity().setResult(1,intent);
+                            if (response.getPerson()!=null){
+                                model.saveFaceId(response.getPerson().getSubject_id()+"");
+                                Intent intent=new Intent();
+                                intent.putExtra("faceId",response.getPerson().getSubject_id());
+                                AppManager.getAppManager().currentActivity().setResult(1,intent);
 //                            Messenger.getDefault().send(response.getPerson().getSubject_id(), ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT);
-                            ToastUtils.showShort("识别成功");
+                                ToastUtils.showShort("识别成功");
+                                dismissDialog();
+                                finish();
+                            }else {
+                                isRequest=false;
+                            }
                         }else {
-                            model.saveFaceId("");
-                            ToastUtils.showShort("识别失败");
+                            faceNum++;
+                            if (faceNum==10){
+                                model.saveFaceId("");
+                                ToastUtils.showShort("识别失败");
+                                dismissDialog();
+                                finish();
+                            }
+                            isRequest=false;
                         }
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         //关闭对话框
-                        ToastUtils.showShort("识别失败");
+                        Log.e("aaaaaaaaa",throwable.getMessage());
+                        ToastUtils.showShort(throwable.getMessage());
                         model.saveFaceId("");
                         dismissDialog();
                         finish();
@@ -191,8 +232,8 @@ public class FaceViewModel extends BaseViewModel<Repository> implements FaceTrac
                     @Override
                     public void run() throws Exception {
                         //关闭对话框
-                        dismissDialog();
-                        finish();
+//                        dismissDialog();
+//                        finish();
                     }
                 }));
     }

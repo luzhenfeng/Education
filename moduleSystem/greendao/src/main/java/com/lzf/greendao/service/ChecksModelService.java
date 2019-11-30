@@ -4,6 +4,7 @@ import com.lzf.greendao.db.DaoManager;
 import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.service.greendao.ChecksModelDao;
 import com.lzf.greendao.service.greendao.DaoSession;
+import com.lzf.greendao.service.greendao.DormCheckModelDao;
 import com.lzf.greendao.utils.MatterUtils;
 
 import java.util.Collections;
@@ -105,7 +106,7 @@ public class ChecksModelService {
 
     public List<ChecksModel> getChecksModelList(String time){
         return mDaoSession.getChecksModelDao().queryBuilder()
-                .where(ChecksModelDao.Properties.CreateDate.ge(time))
+                .where(ChecksModelDao.Properties.CreateDate.ge(time), DormCheckModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
     }
 

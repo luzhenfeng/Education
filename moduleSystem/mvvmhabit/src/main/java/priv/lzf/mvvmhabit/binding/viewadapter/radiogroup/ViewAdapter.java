@@ -17,8 +17,17 @@ public class ViewAdapter {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-                bindingCommand.execute(radioButton.getText().toString());
+                if (radioButton!=null)
+                    bindingCommand.execute(radioButton.getText().toString());
             }
         });
     }
+
+    @BindingAdapter(value = {"clearCheck"}, requireAll = false)
+    public static void clearCheck(final RadioGroup radioGroup,boolean clearCheck) {
+        if (clearCheck)
+            radioGroup.clearCheck();
+    }
+
+
 }

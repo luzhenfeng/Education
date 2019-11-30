@@ -10,7 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.megvii.bus.R;
+
+import com.megvii.facetrack.R;
 
 import java.util.List;
 

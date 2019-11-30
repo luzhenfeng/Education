@@ -3,8 +3,11 @@ package com.lzf.http.data.source.loacl;
 
 import com.google.gson.Gson;
 import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.entity.DormCheckModel;
+import com.lzf.greendao.entity.StudentModel;
 import com.lzf.greendao.entity.UserModel;
 import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.greendao.service.DormCheckModelService;
 import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.source.LocalDataSource;
 import com.lzf.http.entity.CheckModel;
@@ -216,6 +219,11 @@ public class LocalDataSourceImpl implements LocalDataSource {
             }
         }
         return ChecksModelService.getInstance().insert(model);
+    }
+
+    @Override
+    public boolean insertDormCheckModel(DormCheckModel dormCheckModel, List<StudentModel> studentModelList) {
+        return DormCheckModelService.getInstance().insert(dormCheckModel,studentModelList);
     }
 
     @Override

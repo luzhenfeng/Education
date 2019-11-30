@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.megvii.bus">
+    package="com.megvii.facetrack">
 
     <application
         android:allowBackup="true"

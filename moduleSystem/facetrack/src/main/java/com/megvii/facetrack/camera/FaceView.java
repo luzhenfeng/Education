@@ -11,7 +11,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 
-import com.megvii.bus.R;
+import com.megvii.facetrack.R;
+
 
 public class FaceView extends View {
     private static final int RES_ID = R.drawable.face_rect;

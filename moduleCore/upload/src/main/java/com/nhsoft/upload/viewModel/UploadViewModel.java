@@ -195,9 +195,9 @@ public class UploadViewModel extends BaseViewModel<Repository> {
         String items="";
         for (CheckModel.RecordsBean recordsBean:recordsBeanList){
             if (recordsBeanList.indexOf(recordsBean)==recordsBeanList.size()-1){
-                items+=recordsBean.getName();
+                items+=recordsBean.getName()+(recordsBean.getBednos()==null?"":":"+recordsBean.getBednos());
             }else {
-                items+=recordsBean.getName()+",";
+                items+=recordsBean.getName()+(recordsBean.getBednos()==null?"":":"+recordsBean.getBednos())+",";
             }
         }
         return items;

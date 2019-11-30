@@ -245,12 +245,13 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                     entity.get().floor.set(name);
                     getFloorModel(name);
                     setRoomNameList();
+                    CustomPopWindowUtil.getInstance().dismiss();
                 } else if (uc.selectType.getValue().intValue() == 2) {
                     String name = mRoomNameList.get(i.intValue());
                     entity.get().room.set(name);
                     getRoom(name);
+                    CustomPopWindowUtil.getInstance().dismiss();
                 }
-                CustomPopWindowUtil.getInstance().dismiss();
             }
         });
 
@@ -324,52 +325,6 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 }
             }
         });
-
-        //刷脸返回的值
-//        Messenger.getDefault().register(this, com.nhsoft.base.base.ConstantMessage.TOKEN_FACEVIEWMODEL_RESULT1, FloorModel.StudentsBean.class, new BindingConsumer<FloorModel.StudentsBean>() {
-//            @Override
-//            public void call(FloorModel.StudentsBean studentsBean) {
-//                String id=null;
-//                if (studentsBean.getDormid()!=null){
-//                    id=studentsBean.getDormid();
-//                }else {
-//                    id=studentsBean.getClassid();
-//                }
-//                if (id!=null){
-//                    FloorModel.RoomModel roomModel = HttpDataUtil.findRoom(id, mFloorModel, mFloorModelList);
-//                    if (isCurrentFloorRoom(id)){
-//                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
-//                            showClearDialog(2);
-//                        } else {
-//                            entity.get().room.set(roomModel.getName());
-//                            mRoomModel=roomModel;
-//                            getStudent();
-//                            Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
-//                        }
-//                    }else {
-//                        if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
-//                            showClearDialog(2);
-//                        } else {
-//                            FloorModel floorModel1 = null;
-//                            for (FloorModel floorModel:mFloorModelList){
-//                                if (floorModel.getId().equals(studentsBean.getFid())){
-//                                    floorModel1=floorModel;
-//                                }
-//                            }
-//                            if (floorModel1!=null){
-//                                mFloorModel=floorModel1;
-//                                mRoomModel=roomModel;
-//                                entity.get().floor.set(floorModel1.getName());
-//                                entity.get().room.set(roomModel.getName());
-//                                getStudent();
-//                                Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
-//                            }
-//                        }
-//
-//                    }
-//                }
-//            }
-//        });
     }
 
     public void getFaceStdent(int faceId){

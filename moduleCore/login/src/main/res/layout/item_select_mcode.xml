@@ -15,7 +15,8 @@
         android:gravity="center"
         android:paddingTop="30px"
         android:paddingBottom="30px"
-        binding:onClickCommand="@{viewModel.entity.onItemClick}">
+        binding:onClickCommand="@{viewModel.entity.onItemClick}"
+        binding:onLongClickCommand="@{viewModel.entity.onItemLongClick}">
         <ImageView
             android:layout_width="135px"
             android:layout_height="135px"

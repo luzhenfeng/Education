@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.nhsoft.check.R"/>
+        <import type="com.nhsoft.check.viewModel.DormLeftItemViewModel"></import>
+        <variable
+            name="viewModel"
+            type="DormLeftItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="230px"
+        android:gravity="center_vertical"
+        binding:backgroundRes="@{viewModel.entity.select?android.R.color.white:android.R.color.transparent}"
+        binding:onClickCommand="@{viewModel.entity.itemClick}">
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="60px"
+            android:layout_height="60px"
+            android:layout_marginLeft="36px"
+            android:layout_marginRight="27px"
+            android:src="@drawable/dorm_left"/>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size"
+            android:text="@{viewModel.entity.title}"
+            android:maxLines="2"
+            android:layout_marginRight="10px"/>
+
+    </LinearLayout>
+</layout>

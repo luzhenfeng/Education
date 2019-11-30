@@ -21,7 +21,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.lzf.greendao.entity.ChecksModel;
+import com.lzf.greendao.entity.DormCheckModel;
 import com.lzf.greendao.service.ChecksModelService;
+import com.lzf.greendao.service.DormCheckModelService;
 import com.lzf.greendao.service.UserService;
 import com.lzf.http.data.Injection;
 import com.lzf.http.data.Repository;
@@ -108,6 +110,18 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
             SelectMCodeItemViewModel viewModel = new SelectMCodeItemViewModel(this, selectMCodeItemEntity);
             entity.get().observableList.add(viewModel);
         }
+//        addDorm(true);
+    }
+
+    public void addDorm(boolean dorm){
+        if (dorm){
+            SelectMCodeItemEntity selectMCodeItemEntity = new SelectMCodeItemEntity();
+            selectMCodeItemEntity.image = ContextCompat.getDrawable(getApplication(), R.drawable.mcode2);
+            selectMCodeItemEntity.mCodeName.set("寝室点名");
+            selectMCodeItemEntity.mCode.set("");
+            SelectMCodeItemViewModel viewModel = new SelectMCodeItemViewModel(this, selectMCodeItemEntity);
+            entity.get().observableList.add(viewModel);
+        }
     }
 
 
@@ -149,6 +163,9 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
             case 8:
                 drawable = ContextCompat.getDrawable(getApplication(), R.drawable.mcode8);
                 break;
+            case 98:
+                drawable = ContextCompat.getDrawable(getApplication(), R.drawable.mcode2);
+                break;
             case 99:
                 drawable = ContextCompat.getDrawable(getApplication(), R.drawable.mcode9);
                 break;
@@ -164,6 +181,16 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
         }
         model.saveCode(code);
         ARouter.getInstance().build(RouterActivityPath.Check.PAGER_CHECK).navigation();
+    }
+
+    public void loginDorm(String code){
+        List<AllCategoryModel> mAllCategoryModelList = HttpDataUtil.getAllCategoryList(getApplication());
+        if (mAllCategoryModelList==null||mAllCategoryModelList.size()==0){
+            ToastUtils.showLong("数据下载失败请到登入界面重新下载");
+            return;
+        }
+        model.saveCode(code);
+        ARouter.getInstance().build(RouterActivityPath.Check.PAGER_Dorm).navigation();
     }
 
     /**
@@ -204,12 +231,8 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
 //                            ToastUtils.showShort("移动");
                         case 1: //wifi网络
 //                            ToastUtils.showShort("wifi网络");
-                            checkModelList=getCheckModel();
-                            if (checkModelList.size()>0){
-                                isUploading.set(true);
-                                Messenger.getDefault().send(isUploading.get(),ConstantMessage.TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD);
-                                upload(checkModelList.get(upLodePos.get()));
-                            }
+                            upLoadCheck();
+//                            uploadDorm();
                             break;
                         case 9:  //网线连接
 //                            ToastUtils.showShort("网线连接");
@@ -222,6 +245,20 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
             }
         }
     };
+
+
+    public void upLoadCheck(){
+        checkModelList=getCheckModel();
+        if (checkModelList.size()>0){
+            isUploading.set(true);
+            Messenger.getDefault().send(isUploading.get(),ConstantMessage.TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD);
+            uploadDorm();
+            upload(checkModelList.get(upLodePos.get()));
+        }else {
+//            isUploading.set(false);
+//            Messenger.getDefault().send(isUploading.get(),ConstantMessage.TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD);
+        }
+    }
 
     /**
      * 获取选中的条目并转换成 CheckModel
@@ -280,6 +317,41 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
                         }
                     }
                 }));
+    }
+
+    public void uploadDorm(){
+        List<DormCheckModel> mDormCheckModelList= DormCheckModelService.getInstance().getNoUpdateDormCheckModelList();
+        if (mDormCheckModelList!=null){
+            isUploading.set(true);
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(mDormCheckModelList));
+            addSubscribe(model.createNightRollCall(model.getToken(),body)
+                    .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
+                    .compose(RxUtils.schedulersTransformer()) //线程调度
+                    .compose(RxUtils.exceptionTransformer()) // 网络错误的异常转换, 这里可以换成自己的ExceptionHandle);
+                    .subscribe(new Consumer<BaseResponse>() {
+                        @Override
+                        public void accept(BaseResponse response) throws Exception {
+                            if (response.isOk()){//更新数据库
+                                for (DormCheckModel dormCheckModel:mDormCheckModelList){
+                                    dormCheckModel.setIsUpdate(true);
+                                }
+                                DormCheckModelService.getInstance().updateChecksModelList(mDormCheckModelList);
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            upLoadCheck();
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            upLoadCheck();
+                        }
+                    }));
+        }else {
+            upLoadCheck();
+        }
     }
 
     @Override

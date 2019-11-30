@@ -52,6 +52,8 @@ public class RouterActivityPath {
         public static final String PAGER_CHECK = CHECK + "/check";
         /*上传文件界面*/
         public static final String PAGER_PHOTO = CHECK + "/photo";
+        /*点名界面*/
+        public static final String PAGER_Dorm = CHECK + "/dorm";
     }
 
     /**

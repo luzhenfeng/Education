@@ -11,6 +11,7 @@ import com.lzf.http.entity.AllCategoryModel;
 import com.lzf.http.entity.AppListModel;
 import com.lzf.http.entity.FloorModel;
 import com.lzf.http.entity.HeadModel;
+import com.lzf.http.entity.LeaveStudentModel;
 import com.lzf.http.entity.LoginModel;
 import com.lzf.http.entity.SycnListModel;
 import com.lzf.http.utils.ErrorUtil;
@@ -93,4 +94,16 @@ public class HttpDataSourceImpl implements HttpDataSource {
     public Observable<BaseResponse> createCheck(String token, RequestBody model) {
         return apiService.createCheck(token,model);
     }
+
+    @Override
+    public Observable<BaseResponse> createNightRollCall(String token, RequestBody model) {
+        return apiService.createNightRollCall(token,model);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<LeaveStudentModel>>> getLeave(String token, String date) {
+        return apiService.getLeave(token,date);
+    }
+
+
 }

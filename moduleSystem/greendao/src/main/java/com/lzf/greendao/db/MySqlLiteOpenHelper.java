@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.lzf.greendao.entity.ChecksModel;
 import com.lzf.greendao.service.greendao.ChecksModelDao;
 import com.lzf.greendao.service.greendao.DaoMaster;
+import com.lzf.greendao.service.greendao.DormCheckModelDao;
+import com.lzf.greendao.service.greendao.StudentModelDao;
 import com.lzf.greendao.service.greendao.UserModelDao;
 
 import org.greenrobot.greendao.database.Database;
@@ -23,7 +25,7 @@ public class MySqlLiteOpenHelper extends DaoMaster.OpenHelper{
 
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
-        new UpgradeHelper().migrate(db, UserModelDao.class, ChecksModelDao.class) ;
+        new UpgradeHelper().migrate(db, UserModelDao.class, ChecksModelDao.class, DormCheckModelDao.class, StudentModelDao.class) ;
     }
 
 }
