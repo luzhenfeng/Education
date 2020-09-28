@@ -170,5 +170,15 @@ public interface LocalDataSource {
      */
     String getPhotos();
 
+    /**
+     * 删除一个月前查寝数据
+     */
+    void deleteMonthAgoDormCheckModeList();
+
+    /**
+     * 删除一个月前检查数据
+     */
+    void deleteMonthAgoChecksModeList();
+
 
 }

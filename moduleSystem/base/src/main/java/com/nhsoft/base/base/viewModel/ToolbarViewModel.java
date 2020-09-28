@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 
+import priv.lzf.mvvmhabit.base.AppManager;
 import priv.lzf.mvvmhabit.base.BaseModel;
 import priv.lzf.mvvmhabit.base.BaseViewModel;
 import priv.lzf.mvvmhabit.binding.command.BindingAction;
@@ -94,7 +95,7 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
     public final BindingCommand backOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            finish();
+            AppManager.getAppManager().currentActivity().finish();
         }
     });
 
@@ -104,12 +105,8 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
             rightTextOnClick();
         }
     });
-    public BindingCommand rightIconOnClick = new BindingCommand(new BindingAction() {
-        @Override
-        public void call() {
-            rightIconOnClick();
-        }
-    });
+
+    public BindingCommand rightIconOnClick ;
 
     /**
      * 右边文字的点击事件，子类可重写
@@ -120,6 +117,7 @@ public class ToolbarViewModel<M extends BaseModel> extends BaseViewModel<M> {
     /**
      * 右边图标的点击事件，子类可重写
      */
-    protected void rightIconOnClick() {
+    public void setRightIconOnClick(BindingCommand bindingCommand) {
+        rightIconOnClick=bindingCommand;
     }
 }

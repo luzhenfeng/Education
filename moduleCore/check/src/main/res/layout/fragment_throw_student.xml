@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+   <data>
+      <import type="com.nhsoft.check.viewModel.ThrowStudentViewModel"/>
+      <variable
+          name="viewModel"
+          type="ThrowStudentViewModel" />
+   </data>
+   <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:context=".ui.fragment.ThrowStudentFragment"
+       android:background="@color/color_EBEBEB">
+      <android.support.design.widget.TabLayout
+          android:id="@+id/tabs"
+          android:layout_width="match_parent"
+          android:layout_height="180px"
+          app:tabIndicatorColor="@color/color_6BB978"
+          app:tabIndicatorHeight="2px"
+          app:tabSelectedTextColor="@color/black"
+          app:tabTextColor="@color/color_666666"
+          android:background="@color/white"
+          android:layout_marginBottom="22px" />
+<!--      binding:onTabSelectedCommand="@{viewModel.entity.onTabSelectedCommand}"-->
+      <android.support.v7.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/white">
+
+      </android.support.v7.widget.RecyclerView>
+   </LinearLayout>
+</layout>

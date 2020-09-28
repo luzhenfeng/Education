@@ -3,6 +3,7 @@ package com.nhsoft.check.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -81,7 +83,7 @@ public class DormRollCallFragment extends BaseFragment<FragmentDormRollCallBindi
                 }
             }
         });
-        viewModel.uc.time.observe(this, new Observer() {
+        viewModel.uc.date.observe(this, new Observer() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onChanged(@Nullable Object o) {
@@ -105,6 +107,24 @@ public class DormRollCallFragment extends BaseFragment<FragmentDormRollCallBindi
 //                datePickerDialog.show();
 //                DatePickerDialog datePickerDialog= new DatePickerDialog(getContext().getApplicationContext());
 //                datePickerDialog.show();
+            }
+        });
+
+        viewModel.uc.time.observe(this, new Observer() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onChanged(@Nullable Object o) {
+                final Calendar cal = Calendar.getInstance();
+                final TimePickerDialog timePickerDialog=new TimePickerDialog(getContext(), AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        cal.set(Calendar.MINUTE,minute);
+                        viewModel.entity.get().date.set(DateUtil.getDate(cal.getTime()));
+                        viewModel.changeRight();
+                    }
+                },cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true);
+                timePickerDialog.show();
             }
         });
 

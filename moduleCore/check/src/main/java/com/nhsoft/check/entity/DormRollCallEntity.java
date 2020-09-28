@@ -19,7 +19,7 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 public class DormRollCallEntity {
     public ObservableField<String> floor=new ObservableField<>("1号楼");
     public ObservableField<String> date=new ObservableField<>(DateUtil.getCurrentTime());
-    public ObservableField<String> noUpdateNum=new ObservableField<>("");
+//    public ObservableField<String> noUpdateNum=new ObservableField<>("");
 
     //给左边RecyclerView添加ObservableList
     public ObservableList<DormLeftItemViewModel> observableLeftList = new ObservableArrayList<>();
@@ -32,7 +32,9 @@ public class DormRollCallEntity {
     public ItemBinding<DormRightItemViewModel> itemRightBinding ;
 
     public BindingCommand tvFloor;
+    public BindingCommand tvDate;
     public BindingCommand tvTime;
     public BindingCommand submit;
     public BindingCommand noUpdateNumSubmit;
+    public BindingCommand throwStudent;
 }

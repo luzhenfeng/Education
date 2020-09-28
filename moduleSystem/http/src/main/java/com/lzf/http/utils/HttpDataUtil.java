@@ -570,7 +570,9 @@ public class HttpDataUtil {
         List<String> photoBase64Str=new ArrayList<>();
         for (String s:photoPathes){
             Bitmap bitmap= BitmapFactory.decodeFile(s);
-            photoBase64Str.add(Bitmap2StrByBase64(bitmap));
+            if (bitmap!=null){
+                photoBase64Str.add(Bitmap2StrByBase64(bitmap));
+            }
         }
         return photoBase64Str;
     }

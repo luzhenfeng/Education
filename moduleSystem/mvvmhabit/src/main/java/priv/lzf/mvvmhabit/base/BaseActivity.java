@@ -9,6 +9,7 @@ import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 import priv.lzf.mvvmhabit.base.BaseViewModel.ParameterField;
 import priv.lzf.mvvmhabit.bus.Messenger;
+import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 
 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.nhsoft.check.viewModel.DateViewModel"/>
+        <variable
+            name="dateViewModel"
+            type="DateViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="48px"
+        android:paddingBottom="48px"
+        android:paddingRight="50px"
+        android:paddingLeft="50px">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="开始日期"
+                    android:textSize="70px"
+                    android:textStyle="bold"
+                    android:textColor="#555555"
+                    android:layout_marginBottom="48px"/>
+
+                <DatePicker
+                    android:id="@+id/datePickerStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@android:style/Widget.DatePicker"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="结束日期"
+                    android:textSize="70px"
+                    android:textStyle="bold"
+                    android:textColor="#555555"
+                    android:layout_marginBottom="48px"/>
+
+                <DatePicker
+                    android:id="@+id/datePickerEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:calendarViewShown="false"
+                    style="@android:style/Widget.DatePicker"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="152px"
+            android:layout_marginTop="80px"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="492px"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_stroke_737373"
+                android:text="取消"
+                android:textSize="70px"
+                android:textColor="@color/color_666666"
+                android:layout_marginRight="180px">
+
+            </Button>
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="492px"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_corner_6bb978"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="70px">
+
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

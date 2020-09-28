@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bingding="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+    <data>
+        <import type="com.nhsoft.check.viewModel.ThrowStudentItemViewModel"/>
+        <import type="com.nhsoft.check.R"/>
+        <variable
+            name="viewModel"
+            type="ThrowStudentItemViewModel" />
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="224px"
+        android:paddingLeft="64px"
+        android:paddingRight="64px"
+        android:layout_marginBottom="1px"
+        android:background="@color/white"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="0px"
+            android:layout_height="158px"
+            android:layout_weight="2"
+            bingding:circle="@{true}"
+            binding:url="@{viewModel.mStudentModel.headPic}"
+            binding:placeholderRes="@{R.drawable.head}">
+
+        </ImageView>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textColor="@color/color_919191"
+            android:textSize="56px"
+            android:gravity="center"
+            android:text="@{viewModel.mStudentModel.studentname}">
+
+        </TextView>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textSize="56px"
+            android:gravity="center"
+            android:text="@{viewModel.mStudentModel.status==2?&quot;晚归&quot;:(viewModel.mStudentModel.status==4?&quot;未归&quot;:(viewModel.mStudentModel.status==8?&quot;请假&quot;:&quot;晚出&quot;))}"
+            android:textStyle="bold"
+            binding:textColorRes="@{viewModel.mStudentModel.status==2?R.color.color_31A8BE:(viewModel.mStudentModel.status==4?R.color.color_FE3939:(viewModel.mStudentModel.status==8?R.color.color_C2B707:R.color.color_3181BE))}">
+
+        </TextView>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textColor="@color/color_919191"
+            android:textSize="56px"
+            android:gravity="center"
+            android:text="@{viewModel.mStudentModel.objectName}">
+
+        </TextView>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textColor="@color/color_919191"
+            android:textSize="56px"
+            android:gravity="center"
+            android:text="@{viewModel.mStudentModel.className}">
+
+        </TextView>
+        <TextView
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:textColor="@color/color_919191"
+            android:textSize="56px"
+            android:gravity="center"
+            android:text="@{viewModel.mStudentModel.checkDate.substring(0,10)}">
+
+        </TextView>
+
+    </LinearLayout>
+</layout>

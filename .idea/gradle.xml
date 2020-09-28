@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <compositeConfiguration>
-          <compositeBuild compositeDefinitionSource="SCRIPT" />
-        </compositeConfiguration>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app1" />
+            <option value="$PROJECT_DIR$/moduleCore" />
+            <option value="$PROJECT_DIR$/moduleCore/check" />
+            <option value="$PROJECT_DIR$/moduleCore/face" />
+            <option value="$PROJECT_DIR$/moduleCore/login" />
+            <option value="$PROJECT_DIR$/moduleCore/upload" />
+            <option value="$PROJECT_DIR$/modulePublic" />
+            <option value="$PROJECT_DIR$/modulePublic/res" />
+            <option value="$PROJECT_DIR$/modulePublic/utils" />
+            <option value="$PROJECT_DIR$/moduleSystem" />
+            <option value="$PROJECT_DIR$/moduleSystem/base" />
+            <option value="$PROJECT_DIR$/moduleSystem/facetrack" />
+            <option value="$PROJECT_DIR$/moduleSystem/greendao" />
+            <option value="$PROJECT_DIR$/moduleSystem/http" />
+            <option value="$PROJECT_DIR$/moduleSystem/mvvmhabit" />
+            <option value="$PROJECT_DIR$/moduleSystem/pxview" />
+            <option value="$PROJECT_DIR$/moduleSystem/takephoto_library" />
+          </set>
+        </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

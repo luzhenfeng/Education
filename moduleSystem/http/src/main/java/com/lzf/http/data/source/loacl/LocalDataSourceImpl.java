@@ -235,4 +235,14 @@ public class LocalDataSourceImpl implements LocalDataSource {
     public String getPhotos() {
         return SPUtils.getInstance().getString("photos","");
     }
+
+    @Override
+    public void deleteMonthAgoDormCheckModeList() {
+        DormCheckModelService.getInstance().deleteMonthAgoDormCheckModeList();
+    }
+
+    @Override
+    public void deleteMonthAgoChecksModeList() {
+        ChecksModelService.getInstance().deleteMonthAgoChecksModeList();
+    }
 }

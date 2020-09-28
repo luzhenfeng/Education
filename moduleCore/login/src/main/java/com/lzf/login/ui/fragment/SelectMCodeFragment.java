@@ -2,6 +2,7 @@ package com.lzf.login.ui.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,12 +38,7 @@ public class SelectMCodeFragment extends BaseFragment<FragmentSelectMcodeBinding
         viewModel.initReceiver(getContext());
         binding.setAdapter(new RecyclerViewBindingAdapter());
         viewModel.initData();
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
         viewModel.setHead(binding.ivHead);
-//            }
-//        });
     }
 
     @Override

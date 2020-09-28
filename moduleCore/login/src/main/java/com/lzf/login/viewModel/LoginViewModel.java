@@ -103,6 +103,8 @@ public class LoginViewModel extends BaseViewModel<Repository> {
         entity.get().password.set(model.getPassword());
         bindingCommand();
         initMessenger();
+        model.deleteMonthAgoChecksModeList();
+        model.deleteMonthAgoDormCheckModeList();
     }
 
     @Override
@@ -470,6 +472,7 @@ public class LoginViewModel extends BaseViewModel<Repository> {
 
     private void startCheck(){
         dismissDialog();
+
         String[] mCodes=model.getCodes().split(",");
         if (mCodes.length>1){
             startActivity(SelectMCodeActivity.class);

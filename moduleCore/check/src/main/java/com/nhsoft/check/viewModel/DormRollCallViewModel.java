@@ -21,6 +21,7 @@ import com.nhsoft.check.entity.DormLeftEntity;
 import com.nhsoft.check.entity.DormRightEntity;
 import com.nhsoft.check.entity.DormRollCallEntity;
 import com.nhsoft.check.message.ConstantMessage;
+import com.nhsoft.check.ui.activity.ThrowStudentActivity;
 import com.nhsoft.check.utils.CustomPopWindowUtil;
 import com.nhsoft.utils.utils.DateUtil;
 import com.nhsoft.utils.utils.LanguageUtils;
@@ -40,6 +41,7 @@ import priv.lzf.mvvmhabit.bus.Messenger;
 import priv.lzf.mvvmhabit.bus.event.SingleLiveEvent;
 import priv.lzf.mvvmhabit.http.BaseResponse;
 import priv.lzf.mvvmhabit.http.ResponseThrowable;
+import priv.lzf.mvvmhabit.utils.KLog;
 import priv.lzf.mvvmhabit.utils.MaterialDialogUtils;
 import priv.lzf.mvvmhabit.utils.RxUtils;
 import priv.lzf.mvvmhabit.utils.ToastUtils;
@@ -84,10 +86,12 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
 
     public class UIChangeObservable {
         public SingleLiveEvent<Integer> selectType = new SingleLiveEvent<>();
+        public SingleLiveEvent date=new SingleLiveEvent();
         public SingleLiveEvent time=new SingleLiveEvent();
         public SingleLiveEvent success=new SingleLiveEvent();
         public SingleLiveEvent update=new SingleLiveEvent();
         public SingleLiveEvent noUpdateNumSubmit=new SingleLiveEvent();
+
     }
 
     public DormRollCallViewModel(@NonNull Application application) {
@@ -133,6 +137,15 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                 uc.selectType.setValue(3);
             }
         });
+
+        entity.get().tvDate=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                LanguageUtils.setLanguageChina(getApplication());
+                uc.date.call();
+            }
+        });
+
         entity.get().tvTime=new BindingCommand(new BindingAction() {
             @Override
             public void call() {
@@ -150,6 +163,12 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                 }
             }
         });
+        entity.get().throwStudent=new BindingCommand(new BindingAction() {
+            @Override
+            public void call() {
+                startActivity(ThrowStudentActivity.class);
+            }
+        });
     }
 
     public void itemBinding() {
@@ -164,10 +183,8 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
         mDormCheckModelList=DormCheckModelService.getInstance().getNoUpdateDormCheckModelList();
         if (mDormCheckModelList!=null){
             noDormCheckNum.set(mDormCheckModelList.size());
-            setNoUpdateNum(mDormCheckModelList.size());
         }else {
             noDormCheckNum.set(0);
-            setNoUpdateNum(0);
         }
         mFloorModelList = HttpDataUtil.getFloorList(getApplication().getBaseContext());
         mFloorNameList = HttpDataUtil.getFloorNameList(1, mFloorModelList);
@@ -177,13 +194,6 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
         }
     }
 
-    /**
-     * 设置一键按钮
-     * @param num
-     */
-    public void setNoUpdateNum(int num){
-        entity.get().noUpdateNum.set("一键上传(未上传"+num+")");
-    }
 
     public void updateAll(){
         mDormCheckModelList=DormCheckModelService.getInstance().getNoUpdateDormCheckModelList();
@@ -198,14 +208,12 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
             if (currentDorm!=null){
                 if (currentDorm.getIsUpdate()){
                     noDormCheckNum.set(noDormCheckNum.get()+1);
-                    setNoUpdateNum(noDormCheckNum.get());
                 }
                 isSave=DormCheckModelService.getInstance().updateChecksModel(currentDorm,setStudentModelList());
             }else {
                 isSave = model.insertDormCheckModel(setDormCheckModel(),setStudentModelList());
                 if (isSave){
                     noDormCheckNum.set(noDormCheckNum.get()+1);
-                    setNoUpdateNum(noDormCheckNum.get());
                 }
             }
             if (isSave){
@@ -274,6 +282,7 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                     rightEntity.name.set(s.getStudentname());
                     rightEntity.bedno.set(s.getBedno());
                     rightEntity.userid.set(s.getUserid());
+                    rightEntity.className.set(s.getClassname());
                     if (isLeave(s.getUserid())){
                         rightEntity.type.set(3);
                     }else {
@@ -378,6 +387,7 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
             studentModel.setUserid(rightItemViewModel.entity.get().userid.get());
             studentModel.setBendno(rightItemViewModel.entity.get().bedno.get()+"");
             studentModel.setStudentname(rightItemViewModel.entity.get().name.get());
+            studentModel.setClassName(rightItemViewModel.entity.get().className.get());
             int type=rightItemViewModel.entity.get().type.get();
             studentModel.setStatus(type==1?1:(type==2?4:(type==3?8:(type==4?2:9))));
             studentModelList.add(studentModel);
@@ -386,6 +396,7 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
     }
 
     public void upload(List<DormCheckModel> dormCheckModelList) {
+        KLog.e( new Gson().toJson(dormCheckModelList));
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(dormCheckModelList));
         addSubscribe(model.createNightRollCall(model.getToken(), body)
                 .compose(RxUtils.bindToLifecycle(getLifecycleProvider())) //请求与View周期同步（过度期，尽量少使用）
@@ -406,7 +417,7 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                             }
                             DormCheckModelService.getInstance().updateChecksModelList(mDormCheckModelList);
                             noDormCheckNum.set(0);
-                            setNoUpdateNum(noDormCheckNum.get());
+                            uc.success.call();
                         } else {
                             ToastUtils.showShort(response.getMsg());
                         }
@@ -419,13 +430,12 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                         if (throwable instanceof ResponseThrowable) {
 //                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
                         }
-                        uc.success.call();
+//                        uc.success.call();
                         clearData();
                     }
                 }, new Action() {
                     @Override
                     public void run() throws Exception {
-                        uc.success.call();
                         clearData();
                         dismissDialog();
                     }

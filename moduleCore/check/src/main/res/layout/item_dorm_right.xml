@@ -12,30 +12,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="42px"
-        android:layout_marginLeft="42px">
+        android:layout_marginLeft="10px">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="440px"
-            android:layout_height="630px"
+            android:layout_width="568px"
+            android:layout_height="728px"
             android:layout_marginLeft="54px"
             android:layout_marginTop="54px"
             android:gravity="center_horizontal"
             binding:backgroundRes="@{viewModel.entity.type==0?R.drawable.shape_stroke_737373:(viewModel.entity.type==1)?R.drawable.shape_stroke_6bb978:(viewModel.entity.type==2)?R.drawable.shape_stroke_fe3939:(viewModel.entity.type==3)?R.drawable.shape_stroke_c2b707:(viewModel.entity.type==4)?R.drawable.shape_stroke_31a8be:R.drawable.shape_stroke_3181be}">
             <ImageView
-                android:layout_width="180px"
-                android:layout_height="180px"
-                android:layout_marginTop="30px"
+                android:layout_width="376px"
+                android:layout_height="376px"
+                android:layout_marginTop="64px"
                 binding:url="@{viewModel.entity.headPic}"
                 binding:placeholderRes="@{R.drawable.head}"
-                binding:circle="@{true}"
                 android:scaleType="centerCrop">
 
             </ImageView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25px"
+                android:layout_marginTop="42px"
                 android:textSize="58px"
                 android:textColor="@color/black"
                 android:text="@{viewModel.entity.name}">
@@ -44,79 +43,70 @@
             <RadioGroup
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="108px"
+                android:layout_height="96px"
                 android:layout_marginTop="48px"
                 android:gravity="center_horizontal"
-                binding:onCheckedChangedCommand="@{viewModel.entity.select}"
-                binding:clearCheck="@{viewModel.entity.type==1||viewModel.entity.type==2||viewModel.entity.type==3?false:true}">
+                binding:onCheckedChangedCommand="@{viewModel.entity.select}">
                 <RadioButton
-                    android:layout_width="108px"
+                    android:layout_width="96px"
                     android:layout_height="match_parent"
                     android:text="到"
                     binding:textColorRes="@{viewModel.entity.type==1?R.color.white:R.color.color_737373}"
-                    android:textSize="70px"
+                    android:textSize="54px"
                     android:gravity="center"
-                    android:layout_marginRight="26px"
+                    android:layout_marginRight="12px"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==1?R.drawable.shape_corner_6bb978:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="108px"
+                    android:layout_width="96px"
                     android:layout_height="match_parent"
                     android:text="缺"
                     binding:textColorRes="@{viewModel.entity.type==2?R.color.white:R.color.color_737373}"
-                    android:textSize="70px"
+                    android:textSize="54px"
                     android:gravity="center"
-                    android:layout_marginRight="26px"
+                    android:layout_marginRight="12px"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==2?R.drawable.shape_corner_fe3939:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="108px"
+                    android:layout_width="96px"
                     android:layout_height="match_parent"
                     android:text="假"
                     binding:textColorRes="@{viewModel.entity.type==3?R.color.white:R.color.color_737373}"
-                    android:textSize="70px"
+                    android:textSize="54px"
                     android:gravity="center"
+                    android:layout_marginRight="12px"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==3?R.drawable.shape_corner_c2b707:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
-
-            </RadioGroup>
-            <RadioGroup
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="108px"
-                android:layout_marginTop="26px"
-                android:gravity="center_horizontal"
-                binding:onCheckedChangedCommand="@{viewModel.entity.select}"
-                binding:clearCheck="@{viewModel.entity.type==1||viewModel.entity.type==2||viewModel.entity.type==3?true:false}">
                 <RadioButton
-                    android:layout_width="108px"
+                    android:layout_width="96px"
                     android:layout_height="match_parent"
                     android:text="晚"
                     binding:textColorRes="@{viewModel.entity.type==4?R.color.white:R.color.color_737373}"
-                    android:textSize="70px"
+                    android:textSize="54px"
                     android:gravity="center"
-                    android:layout_marginRight="26px"
+                    android:layout_marginRight="12px"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==4?R.drawable.shape_corner_31a8be:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="108px"
+                    android:layout_width="96px"
                     android:layout_height="match_parent"
                     android:text="出"
                     binding:textColorRes="@{viewModel.entity.type==5?R.color.white:R.color.color_737373}"
-                    android:textSize="70px"
+                    android:textSize="54px"
                     android:gravity="center"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==5?R.drawable.shape_corner_3181be:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
+
             </RadioGroup>
 
         </LinearLayout>

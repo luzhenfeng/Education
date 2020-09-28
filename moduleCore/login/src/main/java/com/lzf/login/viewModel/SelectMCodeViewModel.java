@@ -252,7 +252,7 @@ public class SelectMCodeViewModel extends BaseViewModel<Repository> {
         if (checkModelList.size()>0){
             isUploading.set(true);
             Messenger.getDefault().send(isUploading.get(),ConstantMessage.TOKEN_SELECTMCODEVIEWMODEL_ISUPLOAD);
-            uploadDorm();
+//            uploadDorm();
             upload(checkModelList.get(upLodePos.get()));
         }else {
 //            isUploading.set(false);

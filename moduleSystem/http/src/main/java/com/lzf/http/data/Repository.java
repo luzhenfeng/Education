@@ -245,4 +245,14 @@ public class Repository extends BaseModel implements HttpDataSource, LocalDataSo
     public String getPhotos() {
         return mLocalDataSource.getPhotos();
     }
+
+    @Override
+    public void deleteMonthAgoDormCheckModeList() {
+        mLocalDataSource.deleteMonthAgoDormCheckModeList();
+    }
+
+    @Override
+    public void deleteMonthAgoChecksModeList() {
+        mLocalDataSource.deleteMonthAgoChecksModeList();
+    }
 }

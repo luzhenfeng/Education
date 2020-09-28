@@ -6,6 +6,7 @@
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
         <import type="priv.lzf.mvvmhabit.binding.viewadapter.recyclerview.LineManagers" />
         <import type="com.nhsoft.check.manager.GridLayoutManagers" />
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="DormRollCallViewModel" />
@@ -67,7 +68,16 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size"
                 android:textColor="@color/black"
-                android:text="@{viewModel.entity.date}"
+                android:text="@{viewModel.entity.date.substring(0,10)}"
+                binding:onClickCommand="@{viewModel.entity.tvDate}">
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size"
+                android:textColor="@color/black"
+                android:text="@{viewModel.entity.date.substring(10)}"
                 binding:onClickCommand="@{viewModel.entity.tvTime}">
 
             </TextView>
@@ -198,17 +208,88 @@
             android:layout_width="match_parent"
             android:layout_height="184px"
             android:layout_alignParentBottom="true">
-            <Button
+            <RelativeLayout
                 android:layout_width="0px"
-                android:layout_height="184px"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/color_C2B707"
-                android:text="@{viewModel.entity.noUpdateNum}"
-                android:textSize="70px"
-                android:textColor="@color/white"
+                android:background="@color/white"
                 binding:onClickCommand="@{viewModel.entity.noUpdateNumSubmit}">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="74px"
+                        android:layout_height="68px"
+                        android:src="@drawable/upload">
 
-            </Button>
+                    </ImageView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="一键上传"
+                        android:textColor="@color/color_6BB978"
+                        android:textStyle="bold"
+                        android:textSize="60px"
+                        android:layout_marginLeft="30px">
+
+                    </TextView>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_upload_num"
+                    android:layout_width="60px"
+                    android:layout_height="60px"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/bg_oval_ff6060"
+                    android:layout_marginTop="22px"
+                    android:layout_marginRight="48px"
+                    android:textColor="@color/white"
+                    android:textSize="32px"
+                    android:gravity="center"
+                    android:visibility="@{viewModel.noDormCheckNum==0?View.GONE:View.VISIBLE}"
+                    android:text="@{viewModel.noDormCheckNum > 99 ? &quot;99+&quot;:String.valueOf(viewModel.noDormCheckNum)}">
+
+                </TextView>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="@color/color_737373"
+                android:layout_above="@id/ll_btn">
+
+            </View>
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                binding:onClickCommand="@{viewModel.entity.throwStudent}">
+                <ImageView
+                    android:layout_width="74px"
+                    android:layout_height="68px"
+                    android:src="@drawable/dorm_throw">
+
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="异常学生"
+                    android:textColor="@color/color_C2B707"
+                    android:textStyle="bold"
+                    android:textSize="60px"
+                    android:layout_marginLeft="30px">
+
+                </TextView>
+            </LinearLayout>
+            <View
+                android:layout_width="2px"
+                android:layout_height="match_parent"
+                android:background="@color/color_737373"
+                android:layout_above="@id/ll_btn">
+
+            </View>
             <Button
                 android:id="@+id/btn_submit"
                 android:layout_width="0px"
@@ -222,13 +303,21 @@
 
             </Button>
         </LinearLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_737373"
+            android:layout_above="@id/ll_btn">
+
+        </View>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll2"
-            android:layout_above="@id/ll_btn">
+            android:layout_above="@id/view">
             <android.support.v7.widget.RecyclerView
                 android:layout_width="328px"
                 android:layout_height="match_parent"

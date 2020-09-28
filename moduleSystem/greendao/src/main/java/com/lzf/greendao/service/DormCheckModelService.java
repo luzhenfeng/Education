@@ -1,5 +1,7 @@
 package com.lzf.greendao.service;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.lzf.greendao.db.DaoManager;
 import com.lzf.greendao.entity.ChecksModel;
@@ -7,9 +9,11 @@ import com.lzf.greendao.entity.DormCheckModel;
 import com.lzf.greendao.entity.StudentModel;
 import com.lzf.greendao.service.greendao.DaoSession;
 import com.lzf.greendao.service.greendao.DormCheckModelDao;
+import com.lzf.greendao.utils.DataUtils;
 import com.lzf.greendao.utils.MatterUtils;
 import com.nhsoft.utils.utils.DateUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -152,6 +156,35 @@ public class DormCheckModelService {
         return null;
     }
 
+    /**
+     * 获取异常的学生数据
+     * @param startDate 开始时间
+     * @param endDate 结束时间
+     * @return
+     */
+    public List<StudentModel> getThrowStudentCheckModel(Context context,String startDate, String endDate){
+        List<StudentModel> studentModelList=new ArrayList<>();
+        List<DormCheckModel> dormCheckModelList=mDaoSession.getDormCheckModelDao().queryBuilder()
+                .where(DormCheckModelDao.Properties.CheckDate.ge((startDate==null?"1990-01-01":startDate)+" 00:00"),
+                        DormCheckModelDao.Properties.CheckDate.le(endDate+" 23:59"),
+                        DormCheckModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
+                .list();
+        if (dormCheckModelList!=null&&dormCheckModelList.size()>0){
+            for (DormCheckModel dormCheckModel:dormCheckModelList){
+                List<StudentModel> studentModels= dormCheckModel.getStudents();
+                for (StudentModel studentModel:studentModels){
+                    if (studentModel.getStatus()!=1){
+                        studentModel.setCheckDate(dormCheckModel.getCheckDate());
+                        studentModel.setObjectName(dormCheckModel.getObjectName());
+                        studentModel.setHeadPic(context.getExternalCacheDir().getPath() + "PhotoFile/"+studentModel.getUserid()+".jpg");
+                        studentModelList.add(studentModel);
+                    }
+                }
+            }
+        }
+        return studentModelList;
+    }
+
 //    /**
 //     * 获取今天提交的数据
 //     * @param  objectId 寝室id
@@ -177,5 +210,15 @@ public class DormCheckModelService {
         return mDaoSession.getDormCheckModelDao().queryBuilder()
                 .where(DormCheckModelDao.Properties.CreateDate.ge(time),DormCheckModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
                 .list();
+    }
+
+    /**
+     * 删除一个月前数据
+     */
+    public void deleteMonthAgoDormCheckModeList(){
+         mDaoSession.getDormCheckModelDao().queryBuilder()
+                .where(DormCheckModelDao.Properties.CreateDate.le(DataUtils.getAMonthAgoData()))
+                .buildDelete()
+                .executeDeleteWithoutDetachingEntities();
     }
 }
