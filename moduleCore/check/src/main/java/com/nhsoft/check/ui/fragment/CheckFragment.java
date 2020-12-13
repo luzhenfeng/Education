@@ -92,6 +92,11 @@ public class CheckFragment extends BaseFragment<FragmentCheckBinding, CheckViewM
                     CustomPopWindowUtil.getInstance().setData(binding.tvRoom.getText().toString(),viewModel.mRoomNameList);
                     viewModel.mPopupViewModel.selectPos.set(viewModel.mRoomNameList.indexOf(binding.tvRoom.getText().toString()));
                     CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(),getView());
+                }else if (integer.intValue()==3){
+                    viewModel.setTitle("选择楼层");
+                    CustomPopWindowUtil.getInstance().setData(binding.tvRoom.getText().toString(),viewModel.mFloorNames);
+                    viewModel.mPopupViewModel.selectPos.set(-1);
+                    CustomPopWindowUtil.getInstance().showAtLocationBottomPopupWindow(getContext(),getView());
                 }
                 CustomPopWindowUtil.getInstance().setAdapter();
             }

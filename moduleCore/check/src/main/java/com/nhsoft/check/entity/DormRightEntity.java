@@ -15,7 +15,7 @@ public class DormRightEntity {
     public ObservableField<String> userid=new ObservableField<>("");
     public ObservableField<String> className=new ObservableField<>("");
     public ObservableInt bedno=new ObservableInt(0);
-    public ObservableInt type=new ObservableInt(0);//0无选择，1到，2缺，3假，4晚，5出
+    public ObservableInt type=new ObservableInt(0);//0无选择，1到，2缺，3假，4晚，5出 6空
     //头像
     public ObservableField<String> headPic=new ObservableField<>("");
     public ObservableInt pos=new ObservableInt(1);

@@ -27,6 +27,12 @@
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:text="@{viewModel.title}"/>
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--        </Spinner>-->
         <TextView
             android:id="@+id/tv_confirm"
             android:layout_width="278px"

@@ -36,6 +36,8 @@ public class DormRightItemViewModel extends ItemViewModel<DormRollCallViewModel>
                     entity.get().type.set(4);
                 }else if (s.equals("出")){
                     entity.get().type.set(5);
+                }else if (s.equals("空")){
+                    entity.get().type.set(6);
                 }
             }
         });

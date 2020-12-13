@@ -84,7 +84,16 @@ public class FloorModel {
         private String id;
         private String name;
         private int totalcount;
+        private int floor;
         private List<ChildrensBean> childrens;
+
+        public int getFloor() {
+            return floor;
+        }
+
+        public void setFloor(int floor) {
+            this.floor = floor;
+        }
 
         public int getTotalcount() {
             return totalcount;

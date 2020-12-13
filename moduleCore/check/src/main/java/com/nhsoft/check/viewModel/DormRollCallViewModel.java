@@ -299,7 +299,7 @@ public class DormRollCallViewModel extends BasePopupViewModel<Repository> {
                     rightEntity.name.set(studentModel.getStudentname());
                     rightEntity.bedno.set(Integer.parseInt(studentModel.getBendno()));
                     rightEntity.userid.set(studentModel.getUserid());
-                    rightEntity.type.set(studentModel.getStatus()==1?1:(studentModel.getStatus()==2?4:(studentModel.getStatus()==4?2:(studentModel.getStatus()==8?3:5))));
+                    rightEntity.type.set(studentModel.getStatus()==1?1:(studentModel.getStatus()==2?4:(studentModel.getStatus()==4?2:(studentModel.getStatus()==8?3:studentModel.getStatus()==7?6:5))));
                     rightEntity.pos.set(currentDorm.getStudents().indexOf(studentModel)+1);
                     rightEntity.headPic.set(getApplication().getBaseContext().getExternalCacheDir().getPath() + "PhotoFile/"+studentModel.getUserid()+".jpg");
                     DormRightItemViewModel rightItemViewModel = new DormRightItemViewModel(this, rightEntity);

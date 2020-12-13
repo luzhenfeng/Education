@@ -16,8 +16,12 @@ import java.util.List;
 
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 import priv.lzf.mvvmhabit.base.BaseApplication;
+import priv.lzf.mvvmhabit.binding.command.BindingAction;
 import priv.lzf.mvvmhabit.binding.command.BindingCommand;
+import priv.lzf.mvvmhabit.binding.command.BindingConsumer;
+import priv.lzf.mvvmhabit.binding.viewadapter.spinner.IKeyAndValue;
 import priv.lzf.mvvmhabit.bus.Messenger;
+import priv.lzf.mvvmhabit.utils.ToastUtils;
 
 /**
  * 作者：Created by 45703
@@ -34,7 +38,7 @@ public class PopupViewModel {
 
     public ObservableField<String> selectAllStr=new ObservableField<>("全选");
 
-    public ObservableInt itemNum=new ObservableInt(4);
+    public ObservableInt itemNum=new ObservableInt(3);
 
     public BindingCommand onClick;
     //给左边RecyclerView添加ObservableList
@@ -46,6 +50,25 @@ public class PopupViewModel {
     public ObservableInt selectPos=new ObservableInt(-1);
 
 
+    public ObservableList<String> mItemDates=new ObservableArrayList<>();
+
+    public BindingCommand<IKeyAndValue> bindingCommand;
+
+    public ObservableField<String> valueReply=new ObservableField<>("全部");
+
+    public PopupViewModel() {
+        bindingCommand();
+    }
+
+
+    public void bindingCommand() {
+//       bindingCommand=new BindingCommand<IKeyAndValue>(new BindingConsumer<IKeyAndValue>() {
+//           @Override
+//           public void call(IKeyAndValue iKeyAndValue) {
+//               ToastUtils.showShort(0);
+//           }
+//       });
+    }
     /**
      * 单选条目选中
      * @param pos

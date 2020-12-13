@@ -213,6 +213,61 @@ public class HttpDataUtil {
     }
 
     /**
+     * 获取单幢楼一层的房间名
+     * @param floor 几楼
+     * @param mFloorModel 所在的楼
+     * @return
+     */
+    public static List<String> getFloorRoomNameList(int floor,FloorModel mFloorModel){
+        List<String> roomNameList=new ArrayList<>();
+        for (FloorModel.RoomModel roomModel:mFloorModel.getChildrens()){
+            if (floor==0){
+                roomNameList.add(roomModel.getName());
+            }else {
+                if (roomModel.getFloor()==floor){
+                    roomNameList.add(roomModel.getName());
+                }
+            }
+        }
+        return roomNameList;
+    }
+
+    /**
+     * 获取单幢楼所有的楼层
+     * @return
+     */
+    public static List<Integer> getFloorList(FloorModel mFloorModel){
+        List<Integer> floorList=new ArrayList<>();
+        a:for (FloorModel.RoomModel roomModel:mFloorModel.getChildrens()){
+            if (floorList.size()>0){
+                for (Integer integer : floorList) {
+                    if (integer.intValue()==roomModel.getFloor()){
+                        continue a;
+                    }
+                }
+                floorList.add(roomModel.getFloor());
+            }else {
+                floorList.add(roomModel.getFloor());
+            }
+        }
+        return floorList;
+    }
+    /**
+     * 获取单幢楼所有的楼层
+     * @return
+     */
+    public static List<String> getFloorNameList(FloorModel mFloorModel){
+        List<String> floorList=new ArrayList<>();
+        List<Integer> integers=getFloorList(mFloorModel);
+        for (Integer integer : integers) {
+            floorList.add(String.valueOf(integer));
+        }
+        floorList.add(0,"全部");
+        return floorList;
+    }
+
+
+    /**
      * 获取当前房间
      * @param roomName 房间名
      * @param mFloorModel 当前楼

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.widget.ArrayAdapter;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -54,6 +55,14 @@ public class BasePopupViewModel<M extends BaseModel> extends BaseViewModel<M> {
         mPopupViewModel.title.set(title);
         mSelectClassBinding.setViewModel(mPopupViewModel);
     }
+
+//    public void setItemList(Context context,List<String> itemList){
+//        mPopupViewModel.mItemDates.clear();
+//        mPopupViewModel.mItemDates.addAll(itemList);
+//        ArrayAdapter arrayAdapter=new ArrayAdapter(getApplication(),android.R.layout.simple_list_item_1,mPopupViewModel.mItemDates);
+//        mSelectClassBinding.spinner.setAdapter(arrayAdapter);
+//        mSelectClassBinding.setViewModel(mPopupViewModel);
+//    }
 
     public void isShowButton(int visiable){
         mPopupViewModel.isShowButton.set(visiable);

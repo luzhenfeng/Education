@@ -5,6 +5,7 @@ import android.app.Application;
 import android.app.DatePickerDialog;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -83,6 +84,12 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
 
     //当前楼所有房间名
     public List<String> mRoomNameList = new ArrayList<>();
+
+    //当前楼所有楼层名称
+    public List<String> mFloorNames = new ArrayList<>();
+
+    //选中的楼层
+    public ObservableInt mSelectFloor=new ObservableInt(0);
 
     //当前楼
     public FloorModel mFloorModel;
@@ -219,11 +226,17 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                 if (isSelect.get() || !entity.get().cameraNum.get().equals("0")) {
                     showClearDialog(2);
                 } else {
-                    uc.selectType.setValue(2);
-                    Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
+                    mFloorNames=HttpDataUtil.getFloorNameList(mFloorModel);
+                    uc.selectType.setValue(3);
                 }
             }
         });
+//        entity.get().tvFloorNum=new BindingCommand(new BindingAction() {
+//            @Override
+//            public void call() {
+//                uc.selectType.setValue(2);
+//            }
+//        });
 
         entity.get().tvTime=new BindingCommand(new BindingAction() {
             @Override
@@ -232,6 +245,11 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
             }
         });
 
+    }
+
+    public void setSelectClass(){
+        uc.selectType.setValue(2);
+        Messenger.getDefault().sendNoMsg(ConstantMessage.TOKEN_CHECKVIEWMODEL_CHANGE);
     }
 
 
@@ -251,6 +269,15 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
                     entity.get().room.set(name);
                     getRoom(name);
                     CustomPopWindowUtil.getInstance().dismiss();
+                } else if (uc.selectType.getValue().intValue() == 3){
+                    String name= mFloorNames.get(i);
+                    int floor=0;
+                    if (!name.equals("全部")){
+                        floor=Integer.valueOf(name);
+                    }
+                    mRoomNameList = HttpDataUtil.getFloorRoomNameList(floor,mFloorModel);
+                    CustomPopWindowUtil.getInstance().dismiss();
+                    setSelectClass();
                 }
             }
         });
@@ -473,7 +500,7 @@ public class CheckViewModel extends BasePopupViewModel<Repository> {
      * 设置房间名列表
      */
     public void setRoomNameList() {
-        mRoomNameList = HttpDataUtil.getRoomNameList(mFloorModel);
+        mRoomNameList = HttpDataUtil.getFloorRoomNameList(0,mFloorModel);
         if (mRoomNameList.size() != 0) {
             entity.get().room.set(mRoomNameList.get(0));
             getRoom(mRoomNameList.get(0));

@@ -43,16 +43,16 @@
             <RadioGroup
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="96px"
+                android:layout_height="80px"
                 android:layout_marginTop="48px"
                 android:gravity="center_horizontal"
                 binding:onCheckedChangedCommand="@{viewModel.entity.select}">
                 <RadioButton
-                    android:layout_width="96px"
+                    android:layout_width="80px"
                     android:layout_height="match_parent"
                     android:text="到"
                     binding:textColorRes="@{viewModel.entity.type==1?R.color.white:R.color.color_737373}"
-                    android:textSize="54px"
+                    android:textSize="48px"
                     android:gravity="center"
                     android:layout_marginRight="12px"
                     android:button="@null"
@@ -60,11 +60,11 @@
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="96px"
+                    android:layout_width="80px"
                     android:layout_height="match_parent"
                     android:text="缺"
                     binding:textColorRes="@{viewModel.entity.type==2?R.color.white:R.color.color_737373}"
-                    android:textSize="54px"
+                    android:textSize="48px"
                     android:gravity="center"
                     android:layout_marginRight="12px"
                     android:button="@null"
@@ -72,11 +72,11 @@
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="96px"
+                    android:layout_width="80px"
                     android:layout_height="match_parent"
                     android:text="假"
                     binding:textColorRes="@{viewModel.entity.type==3?R.color.white:R.color.color_737373}"
-                    android:textSize="54px"
+                    android:textSize="48px"
                     android:gravity="center"
                     android:layout_marginRight="12px"
                     android:button="@null"
@@ -84,11 +84,11 @@
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="96px"
+                    android:layout_width="80px"
                     android:layout_height="match_parent"
                     android:text="晚"
                     binding:textColorRes="@{viewModel.entity.type==4?R.color.white:R.color.color_737373}"
-                    android:textSize="54px"
+                    android:textSize="48px"
                     android:gravity="center"
                     android:layout_marginRight="12px"
                     android:button="@null"
@@ -96,14 +96,27 @@
 
                 </RadioButton>
                 <RadioButton
-                    android:layout_width="96px"
+                    android:layout_width="80px"
                     android:layout_height="match_parent"
                     android:text="出"
                     binding:textColorRes="@{viewModel.entity.type==5?R.color.white:R.color.color_737373}"
-                    android:textSize="54px"
+                    android:textSize="48px"
+                    android:layout_marginRight="12px"
                     android:gravity="center"
                     android:button="@null"
                     binding:backgroundRes="@{viewModel.entity.type==5?R.drawable.shape_corner_3181be:R.drawable.shape_stroke_737373_10}">
+
+                </RadioButton>
+
+                <RadioButton
+                    android:layout_width="80px"
+                    android:layout_height="match_parent"
+                    android:text="空"
+                    binding:textColorRes="@{viewModel.entity.type==6?R.color.white:R.color.color_737373}"
+                    android:textSize="48px"
+                    android:gravity="center"
+                    android:button="@null"
+                    binding:backgroundRes="@{viewModel.entity.type==6?R.drawable.shape_corner_3181be:R.drawable.shape_stroke_737373_10}">
 
                 </RadioButton>
 

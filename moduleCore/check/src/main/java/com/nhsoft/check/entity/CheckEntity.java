@@ -16,6 +16,7 @@ import priv.lzf.mvvmhabit.binding.command.BindingCommand;
 public class CheckEntity {
     public ObservableField<String> floor=new ObservableField<>("1号楼");
     public ObservableField<String> room=new ObservableField<>("001");
+//    public ObservableField<String> floorNum=new ObservableField<>("全部");//第几层
     public ObservableField<String> date=new ObservableField<>(DateUtil.getCurrentTime());
     public ObservableField<String> fractionNum=new ObservableField<>("0");
     public ObservableField<String> uploadNum=new ObservableField<>("0");
@@ -33,4 +34,5 @@ public class CheckEntity {
     public BindingCommand tvFloor;
     public BindingCommand tvRoom;
     public BindingCommand tvTime;
+//    public BindingCommand tvFloorNum;
 }
