@@ -64,8 +64,12 @@ public class ThrowStudentActivity extends BaseActivity<ActivityThrowStudentBindi
                                           int endDayOfMonth) {
                         String textString = String.format("开始时间：%d-%d-%d\n结束时间：%d-%d-%d\n", startYear,
                                 startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-                        String startDate=startYear+"-"+(startMonthOfYear+1)+"-"+startDayOfMonth;
-                        String endDate=endYear+"-"+(endMonthOfYear+1)+"-"+endMonthOfYear;
+                        String startMonthOfYearStr= (startMonthOfYear+1)<10? "0"+(startMonthOfYear+1):""+(startMonthOfYear+1);
+                        String startDayOfMonthStr=startDayOfMonth<10?"0"+startDayOfMonth:""+startDayOfMonth;
+                        String endMonthOfYearStr= (endMonthOfYear+1)<10? "0"+(endMonthOfYear+1):""+(endMonthOfYear+1);
+                        String endDayOfMonthStr=endDayOfMonth<10?"0"+endDayOfMonth:""+endDayOfMonth;
+                        String startDate=startYear+"-"+startMonthOfYearStr+"-"+startDayOfMonthStr;
+                        String endDate=endYear+"-"+endMonthOfYearStr+"-"+endDayOfMonthStr;
                         int index=binding.tabs.getSelectedTabPosition();
                         viewModel.dateChange(startDate,endDate,(index==0?0:(index==1?4:(index==2?2:(index==3?9:8)))));
 

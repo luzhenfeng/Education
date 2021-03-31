@@ -2,6 +2,22 @@
 <project version="4">
   <component name="SQLAndroidSettings">
     <option name="autocommit" value="true" />
+    <option name="databases">
+      <map>
+        <entry key="11111_D:\wokespace\git\Education\AndroidSqlEditorDatabases\">
+          <value>
+            <list>
+              <option value="emulator-5554" />
+              <option value="/databases/education-db" />
+              <option value="11111" />
+              <option value="11111" />
+              <option value="false" />
+              <option value="com.nhsoft.app1" />
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="packageNameByDirectory">
       <map>
         <entry key="D:\wokespace\Education\AndroidSqlEditorDatabases\" value="com.lzf.education" />

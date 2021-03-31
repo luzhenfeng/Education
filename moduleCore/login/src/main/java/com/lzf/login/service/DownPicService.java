@@ -81,19 +81,6 @@ public class DownPicService extends Service {
                 public void onSuccess(ResponseBody responseBody) {
                     KLog.e("Success:"+index);
                     if (index+1 == paths.size()) {
-//                        String picError=SPUtils.getInstance().getString("picError",null);
-//                        if (picError!=null){
-//                            String json=new Gson().toJson(getErrorDownUrls(picError));
-//                            FileUtil.save(getApplication(),json, Constant.avatarsFileName);
-//                            SPUtils.getInstance().remove("picIndex");
-//                            SPUtils.getInstance().remove("picError");
-//                            upLoadPic(getDownUrls(),getPicIndex());
-////                        upLoadPic(getErrorDownUrls(picError),getPicErrorIndex());
-//                        }else {
-//                            ToastUtils.showShort("头像全部下载成功");
-//                            SPUtils.getInstance().put("isDownHeadPicSuccess",true);
-//                            stopService();
-//                        }
                         stopService();
                         return;
                     }
@@ -110,28 +97,6 @@ public class DownPicService extends Service {
                 public void onError(Throwable e) {
                     KLog.e("error:"+index);
                     stopService();
-//                    String picError=SPUtils.getInstance().getString("picError",null);
-//                    if (picError==null){
-//                        SPUtils.getInstance().put("picError",paths.get(index));
-//                    }else {
-//                        SPUtils.getInstance().put("picError",picError+","+paths.get(index));
-//                    }
-//
-//                    if (index+1 == paths.size()) {
-//                        picError=SPUtils.getInstance().getString("picError",null);
-//                        if (picError!=null){
-//                            String json=new Gson().toJson(getErrorDownUrls(picError));
-//                            FileUtil.save(getApplication(),json, Constant.avatarsFileName);
-//                            SPUtils.getInstance().remove("picIndex");
-//                            SPUtils.getInstance().remove("picError");
-//                            upLoadPic(getDownUrls(),getPicIndex());
-////                        upLoadPic(getErrorDownUrls(picError),getPicErrorIndex());
-//                        }
-//                        return;
-//                    }
-//
-//                    SPUtils.getInstance().put("picIndex",index+1);
-//                    upLoadPic(downUrls,getPicIndex());
                 }
             });
         }

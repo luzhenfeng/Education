@@ -5,13 +5,17 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application>
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ui.activity.SelectMCodeActivity" />
-        <activity android:name=".ui.activity.RegisterActivity" />
+        <activity android:name=".ui.activity.SelectMCodeActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MyErrorActivity"
-            android:process=":error_activity" />
+            android:process=":error_activity"
+            android:screenOrientation="portrait"/>
         <provider
             android:name="priv.lzf.mvvmhabit.crash.CaocInitProvider"
             android:authorities="${applicationId}.customactivityoncrashinitprovider"

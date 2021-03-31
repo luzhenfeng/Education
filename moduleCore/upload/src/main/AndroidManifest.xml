@@ -3,7 +3,8 @@
     package="com.nhsoft.upload">
 
     <application>
-        <activity android:name=".ui.activity.UploadActivity"></activity>
+        <activity android:name=".ui.activity.UploadActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

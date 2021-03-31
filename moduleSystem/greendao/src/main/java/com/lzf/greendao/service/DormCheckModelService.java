@@ -13,6 +13,8 @@ import com.lzf.greendao.utils.DataUtils;
 import com.lzf.greendao.utils.MatterUtils;
 import com.nhsoft.utils.utils.DateUtil;
 
+import org.greenrobot.greendao.Property;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -168,6 +170,7 @@ public class DormCheckModelService {
                 .where(DormCheckModelDao.Properties.CheckDate.ge((startDate==null?"1990-01-01":startDate)+" 00:00"),
                         DormCheckModelDao.Properties.CheckDate.le(endDate+" 23:59"),
                         DormCheckModelDao.Properties.Userid.eq(UserService.getInstance().getUserId()))
+                .orderDesc(DormCheckModelDao.Properties.CheckDate)
                 .list();
         if (dormCheckModelList!=null&&dormCheckModelList.size()>0){
             for (DormCheckModel dormCheckModel:dormCheckModelList){

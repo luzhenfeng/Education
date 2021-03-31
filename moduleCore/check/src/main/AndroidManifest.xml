@@ -3,10 +3,14 @@
     package="com.nhsoft.check">
 
     <application>
-        <activity android:name=".ui.activity.DormRollCallActivity"></activity>
-        <activity android:name=".ui.activity.CheckActivity" />
-        <activity android:name=".ui.activity.PhotoActivity" />
-        <activity android:name=".ui.activity.ThrowStudentActivity" />
+        <activity android:name=".ui.activity.DormRollCallActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.activity.CheckActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.PhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.ThrowStudentActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
